@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+<session-factory>
+<property name="hibernate.current_session_context_class">thread</property>
+<property name="hibernate.connection.isolation">2</property>
+<property name="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</property>
+<property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+<property name="hibernate.enable_lazy_load_no_trans">true</property>
+<property
+name="hibernate.connection.provider_class">org.hibernate.c3p0.internal.C3P0ConnectionProvider</property>
+<property name="hibernate.connection.url">
+jdbc:mysql://127.0.0.1:3307/sacibd?zeroDateTimeBehavior=convertToNull
+</property>
+<property name="hibernate.connection.username">root</property>
+<property name="c3p0.autoCommitOnClose">true</property>
+<property name="c3p0.acquire_increment">1</property>
+<property name="c3p0.initialPoolSize">5</property>
+<property name="c3p0.idle_test_period">100</property>
+<property name="hibernate.show_sql">true</property>
+
+<property name="c3p0.max_size">50</property>
+<property name="c3p0.max_statements">0</property>
+<property name="c3p0.min_size">5</property>
+<property name="c3p0.timeout">100</property>
+<!-- Nota: Aqui deben ir todas las entidades que se formaron de su base de datos
+en este caso se crearon las siguiente -->
+<mapping class="alucintech.entidad.Actividad"/>
+<mapping class="alucintech.entidad.Alumno"/>
+<mapping class="alucintech.entidad.Carnet"/>
+<mapping class="alucintech.entidad.Evento"/>
+<mapping class="alucintech.entidad.Facultad"/>
+<mapping class="alucintech.entidad.Identificaadministrador"/>
+<mapping class="alucintech.entidad.Identificaalumno"/>
+<mapping class="alucintech.entidad.Identificacoordinador"/>
+<mapping class="alucintech.entidad.Identificavs"/>
+<mapping class="alucintech.entidad.Programaeducativo"/>
+<mapping class="alucintech.entidad.Sello"/>
+<mapping class="alucintech.entidad.Tienesello"/>
+<mapping class="alucintech.entidad.TieneselloPK"/>
+<mapping class="alucintech.entidad.Usuarios"/>
+</session-factory>
+</hibernate-configuration>
