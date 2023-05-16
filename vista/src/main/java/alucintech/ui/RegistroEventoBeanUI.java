@@ -48,10 +48,12 @@ public class RegistroEventoBeanUI implements Serializable {
 
         Calendar fechaInicio = Calendar.getInstance();
         Calendar fechaFin = Calendar.getInstance();
-
-        fechaInicio.set(2023, 05, 15);
-        fechaFin.set(2023, 05, 22);
-
+        Calendar fechaInicioMin = Calendar.getInstance();
+        Calendar fechaFinMax = Calendar.getInstance();
+        
+        fechaInicio.set(2023, 5, 15);
+        fechaFin.set(2023, 5, 22);
+        
         idAdmin = registroEventoHelper.identificar("admin@uabc.edu.mx");
 
         String appURL = "/index.xhtml";
@@ -67,7 +69,26 @@ public class RegistroEventoBeanUI implements Serializable {
         ev.setEstadoEvento("Postulado");
         ev.setNumEmpleadoAdministradorEvento(idAdmin);
         ev.setComentarioEvento("");
-
+        
+        if(ev.getCicloEscolarEvento().charAt(ev.getCicloEscolarEvento().length() - 1) == '1'){
+            
+            fechaInicioMin.set(ev.getFechaInicioEvento().getYear(), 1, 30);
+            fechaFinMax.set(ev.getFechaInicioEvento().getYear(), 6, 3);
+            
+            if( ev.getFechaInicioEvento().before(fechaInicioMin.getTime()) && ev.getFechaFinEvento().after(fechaFinMax.getTime())){
+                
+            }
+        }
+        if(ev.getCicloEscolarEvento().charAt(ev.getCicloEscolarEvento().length() - 1) == '2'){
+            
+            fechaInicioMin.set(ev.getFechaInicioEvento().getYear(), 8, 7);
+            fechaFinMax.set(ev.getFechaInicioEvento().getYear(), 12, 3);
+            
+            if( ev.getFechaInicioEvento().before(fechaInicioMin.getTime()) && ev.getFechaFinEvento().after(fechaFinMax.getTime())){
+                
+            }
+        }
+        
         registroEventoHelper.RegistroEvento(ev);
 
     }
