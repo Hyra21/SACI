@@ -57,16 +57,16 @@
                         <h:panelGrid columns="2" cellpadding="5" >
                             
                             <h:outputLabel for="correoInstitucional" value="Correo institucional:"/>
-                            <p:inputText id="correoInstitucional" value="#{loginBean.correoInstitucional}" required="true">
+                            <p:inputText id="correoInstitucional" value="#{loginUI.usuarios.correo}" required="true">
                             </p:inputText> 
 
                             <h:outputLabel for="contrasena" value="Contraseña:"/>
-                            <p:password id="contrasena" value="#{loginBean.contrasena}" toggleMask="true" required="true" redisplay="true">
+                            <p:password id="contrasena" value="#{loginUI.usuarios.contrasenaUsuario}" toggleMask="true" required="true" redisplay="true">
                             </p:password> 
 
                                 
                             <f:facet name="footer">
-                                <p:commandButton value="Iniciar sesión" action="#{loginBean.login()}" ajax="false" style="background-color: #32CD32; color: #FFF;"/>
+                                <p:commandButton value="Iniciar sesión" action="#{loginUI.login()}" ajax="false" style="background-color: #32CD32; color: #FFF;"/>
                             </f:facet>
                         </h:panelGrid>
                     </p:panel>

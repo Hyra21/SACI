@@ -42,15 +42,16 @@ public class LoginBeanUI implements Serializable{
         String appURL = "/index.xhtml";
         // los atributos de usuario vienen del xhtml 
         Usuarios us= new Usuarios();
-        us.setCorreo("admin@uabc.edu.mx");
         us = loginHelper.Login(usuario.getCorreo(), usuario.getContrasenaUsuario());
           if(us != null && us.getCorreo()!=null){
             // asigno el usuario encontrado al usuario de esta clase para que 
             // se muestre correctamente en la pagina de informacion
             usuario=us;
             FacesContext.getCurrentInstance().getExternalContext().redirect(FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath() + appURL);
+              System.out.println("AAAAAAAAAAAAAAAAA");
         }else{
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Usuario o contraseña incorrecta:", "Intente de nuevo"));          
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Usuario o contraseña incorrecta:", "Intente de nuevo"));      
+              System.out.println("aaaaaaaaaaaaaaaaaa");
         }
     }
 

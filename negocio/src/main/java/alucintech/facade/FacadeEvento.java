@@ -7,6 +7,7 @@ package alucintech.facade;
 
 import alucintech.delegate.DelegateEvento;
 import alucintech.entidad.Evento;
+import java.util.List;
 
 /**
  *
@@ -20,7 +21,11 @@ public class FacadeEvento {
         this.delegateEvento = new DelegateEvento();
     }
     
-    public void guardarEvento(Evento evento){
+    public List<Evento> ConsultaEvento(){
+        return delegateEvento.ConsultaEvento();
+    }
+    
+    public void RegistrarEvento(Evento evento){
         delegateEvento.saveEvento(evento);
     }
     

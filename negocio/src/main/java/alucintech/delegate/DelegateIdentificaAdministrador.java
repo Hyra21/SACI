@@ -9,7 +9,8 @@ package alucintech.delegate;
 
 import alucintech.entidad.Identificaadministrador;
 import alucintech.integracion.ServiceLocator;
-
+import alucintech.entidad.Usuarios;
+import java.util.List;
 /**
  *
  * @author EduardoCardona <>
@@ -18,10 +19,22 @@ public class DelegateIdentificaAdministrador {
     
     /**
      * Metodo de ejemplo para guardar Alumno
-     * @param facultad de tipo usuario con id 0 para que se cree un id nuevo
+     * @param identificaAdministrador de tipo usuario con id 0 para que se cree un id nuevo
      */
     public void saveIdentificaAdministrador(Identificaadministrador identificaAdministrador){
         ServiceLocator.getInstanceIdentificaadministradorDAO().save(identificaAdministrador);
+    }
+    
+    public Identificaadministrador identificar(String correoAdministrador){
+        Identificaadministrador idAdmin = new Identificaadministrador();
+        List<Identificaadministrador> idAdmins = ServiceLocator.getInstanceIdentificaadministradorDAO().findAll();
+        
+        for(Identificaadministrador id:idAdmins){
+            if(id.getCorreoAdministrador().getCorreo().equalsIgnoreCase(correoAdministrador)){
+                idAdmin = id;
+            }
+        }
+        return idAdmin;
     }
     
 }

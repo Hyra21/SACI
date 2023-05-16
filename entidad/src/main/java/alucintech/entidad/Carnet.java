@@ -51,7 +51,7 @@ public class Carnet implements Serializable {
     private int numeroSellosCarnet;
     @Basic(optional = false)
     @Column(name = "cicloEscolarCarnet")
-    private int cicloEscolarCarnet;
+    private String cicloEscolarCarnet;
     @Basic(optional = false)
     @Column(name = "fechaCreacionCarnet")
     @Temporal(TemporalType.DATE)
@@ -75,7 +75,7 @@ public class Carnet implements Serializable {
         this.numFolio = numFolio;
     }
 
-    public Carnet(Integer numFolio, int numeroSellosCarnet, int cicloEscolarCarnet, Date fechaCreacionCarnet, String estadoCarnet, int codigoCarnet) {
+    public Carnet(Integer numFolio, int numeroSellosCarnet, String cicloEscolarCarnet, Date fechaCreacionCarnet, String estadoCarnet, int codigoCarnet) {
         this.numFolio = numFolio;
         this.numeroSellosCarnet = numeroSellosCarnet;
         this.cicloEscolarCarnet = cicloEscolarCarnet;
@@ -100,11 +100,11 @@ public class Carnet implements Serializable {
         this.numeroSellosCarnet = numeroSellosCarnet;
     }
 
-    public int getCicloEscolarCarnet() {
+    public String getCicloEscolarCarnet() {
         return cicloEscolarCarnet;
     }
 
-    public void setCicloEscolarCarnet(int cicloEscolarCarnet) {
+    public void setCicloEscolarCarnet(String cicloEscolarCarnet) {
         this.cicloEscolarCarnet = cicloEscolarCarnet;
     }
 

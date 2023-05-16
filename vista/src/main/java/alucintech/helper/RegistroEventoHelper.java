@@ -8,16 +8,31 @@ package alucintech.helper;
 import java.io.IOException;
 import java.io.Serializable;
 import javax.faces.context.FacesContext;
-import alucintech.entidad.Alumno;
 import alucintech.entidad.Usuarios;
+import alucintech.entidad.Evento;
 import alucintech.integracion.ServiceFacadeLocator;
-
+import alucintech.entidad.Identificaadministrador;
+import java.util.List;
 /**
  *
  * @author 980014102
  */
 public class RegistroEventoHelper {
-    /**
+    
+    
+    public void RegistroEvento(Evento evento){
+        
+        ServiceFacadeLocator.getInstanceFacadeEvento().RegistrarEvento(evento);
+    }
+    
+    public Identificaadministrador identificar(String correo){
+        return ServiceFacadeLocator.getInstanceFacadeIdentificaAdministrador().IdentificarAdmin(correo);
+    }
+    
+    public List<Evento> Consulta(){
+        return ServiceFacadeLocator.getInstanceFacadeEvento().ConsultaEvento();
+    }
+        /**
      * Metodo para hacer login llamara a la instancia de usuarioFacade
      * @param correo
      * @param password
@@ -26,4 +41,6 @@ public class RegistroEventoHelper {
     public Usuarios Login(String correo, String password){
         return ServiceFacadeLocator.getInstanceFacadeUsuarios().login(password, correo);
     }
+    
+    
 }

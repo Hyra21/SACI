@@ -9,6 +9,7 @@ package alucintech.delegate;
 
 import alucintech.entidad.Evento;
 import alucintech.integracion.ServiceLocator;
+import java.util.List;
 
 /**
  *
@@ -22,6 +23,10 @@ public class DelegateEvento {
      */
     public void saveEvento(Evento evento){
         ServiceLocator.getInstanceEventoDAO().save(evento);
+    }
+    
+    public List<Evento> ConsultaEvento(){
+        return ServiceLocator.getInstanceEventoDAO().findAll();
     }
     
 }

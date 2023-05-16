@@ -20,6 +20,10 @@ public class FacadeIdentificaAdministrador {
         this.delegateIdentificaAdministrador = new DelegateIdentificaAdministrador();
     }
     
+    public Identificaadministrador IdentificarAdmin(String correoAdministrador){
+        return delegateIdentificaAdministrador.identificar(correoAdministrador);
+    }
+    
     public void guardarIdentificaAdministrador(Identificaadministrador identificaAdministrador){
         delegateIdentificaAdministrador.saveIdentificaAdministrador(identificaAdministrador);
     }
