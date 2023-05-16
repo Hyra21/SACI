@@ -1,12 +1,78 @@
-<?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
-    <h:head>
-        <title>Facelet Title</title>
-    </h:head>
-    <h:body>
-        Hello from Facelets
-    </h:body>
-</html>
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
 
+    <h:head>
+        <title>SACI</title>
+
+        <style>
+            *{
+                text-align: center;
+            }
+
+            body {
+                height: 100%;
+                padding-left: 0px;
+            }
+
+            .header{
+                margin-bottom: 50px;
+            }
+            h3{
+                color: #00723F;
+            }
+
+            .customPanelGrid .ui-panelgrid-content {
+                align-items: center;
+            }
+
+            .logo{
+                width: 80px;
+            }
+
+            .text-center{
+                float: none;
+                margin: 0 auto;
+                display: table;
+            }
+        </style>
+    </h:head>
+
+    <h:body>
+        <div class="site-wrapper">
+            <div class="header">
+                <p:panel>
+                    <p:graphicImage url="resources/uabc_escudo.jpg" class="logo"/>
+                    <h3>UNIVERSIDAD AUTÓNOMA DE BAJA CALIFORNIA</h3>
+                    <h5>SACI -Sistema para la Administración del Carnet Institucional</h5>
+                </p:panel>
+
+            </div>
+            
+            <div class="text-center">
+                <h:form>
+                    <p:panel header="Inicio de sesión">
+                        <h:panelGrid columns="2" cellpadding="5" >
+                            
+                            <h:outputLabel for="correoInstitucional" value="Correo institucional:"/>
+                            <p:inputText id="correoInstitucional" value="#{loginBean.correoInstitucional}" required="true">
+                            </p:inputText> 
+
+                            <h:outputLabel for="contrasena" value="Contraseña:"/>
+                            <p:password id="contrasena" value="#{loginBean.contrasena}" toggleMask="true" required="true" redisplay="true">
+                            </p:password> 
+
+                                
+                            <f:facet name="footer">
+                                <p:commandButton value="Iniciar sesión" action="#{loginBean.login()}" ajax="false" style="background-color: #32CD32; color: #FFF;"/>
+                            </f:facet>
+                        </h:panelGrid>
+                    </p:panel>
+                </h:form>
+            </div>
+        </div>
+    </h:body>
+
+</html>
