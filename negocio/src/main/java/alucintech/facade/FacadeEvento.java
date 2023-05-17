@@ -29,4 +29,7 @@ public class FacadeEvento {
         delegateEvento.saveEvento(evento);
     }
     
+    public int[] validarEvento(Evento evento){
+        return delegateEvento.validarEvento(evento);
+    }
 }

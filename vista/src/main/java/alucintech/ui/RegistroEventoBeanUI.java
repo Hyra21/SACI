@@ -15,8 +15,10 @@ import javax.faces.context.FacesContext;
 import alucintech.entidad.Usuarios;
 import alucintech.entidad.Identificaadministrador;
 import alucintech.entidad.Evento;
+import alucintech.entidad.Facultad;
 import alucintech.helper.RegistroEventoHelper;
 import java.util.Calendar;
+import java.util.List;
 
 /**
  *
@@ -29,6 +31,7 @@ public class RegistroEventoBeanUI implements Serializable {
     private RegistroEventoHelper registroEventoHelper;
     private Evento evento;
     private Identificaadministrador idAdmin;
+    private List<Facultad> facultadesEvento;
 
     public RegistroEventoBeanUI() {
         registroEventoHelper = new RegistroEventoHelper();
@@ -46,11 +49,11 @@ public class RegistroEventoBeanUI implements Serializable {
 
     public void Registro() throws IOException {
 
+        int[] errores = new int[3];
+        
         Calendar fechaInicio = Calendar.getInstance();
         Calendar fechaFin = Calendar.getInstance();
-        Calendar fechaInicioMin = Calendar.getInstance();
-        Calendar fechaFinMax = Calendar.getInstance();
-        
+
         fechaInicio.set(2023, 5, 15);
         fechaFin.set(2023, 5, 22);
         
@@ -69,27 +72,18 @@ public class RegistroEventoBeanUI implements Serializable {
         ev.setEstadoEvento("Postulado");
         ev.setNumEmpleadoAdministradorEvento(idAdmin);
         ev.setComentarioEvento("");
+        ev.setFacultadList(facultadesEvento);
         
-        if(ev.getCicloEscolarEvento().charAt(ev.getCicloEscolarEvento().length() - 1) == '1'){
-            
-            fechaInicioMin.set(ev.getFechaInicioEvento().getYear(), 1, 30);
-            fechaFinMax.set(ev.getFechaInicioEvento().getYear(), 6, 3);
-            
-            if( ev.getFechaInicioEvento().before(fechaInicioMin.getTime()) && ev.getFechaFinEvento().after(fechaFinMax.getTime())){
-                
-            }
+        errores = registroEventoHelper.validarEvento(ev);
+        
+        if(errores[0]==1){
+            System.out.println("La fecha no está denttro del rango permitido");
         }
-        if(ev.getCicloEscolarEvento().charAt(ev.getCicloEscolarEvento().length() - 1) == '2'){
-            
-            fechaInicioMin.set(ev.getFechaInicioEvento().getYear(), 8, 7);
-            fechaFinMax.set(ev.getFechaInicioEvento().getYear(), 12, 3);
-            
-            if( ev.getFechaInicioEvento().before(fechaInicioMin.getTime()) && ev.getFechaFinEvento().after(fechaFinMax.getTime())){
-                
-            }
+        if(errores[1]==1){
+            System.out.println("Ya existe este evento");
         }
         
-        registroEventoHelper.RegistroEvento(ev);
+        
 
     }
     /* getters y setters*/

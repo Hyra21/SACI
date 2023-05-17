@@ -37,6 +37,13 @@
                 margin: 0 auto;
                 display: table;
             }
+
+            @font-face {
+                font-family: "SourceSansPro";
+                src: url("resources/SourceSansPro-Light.ttf") format("truetype");
+                font-family: "Roboto";
+                src: url("resources/Roboto-Light.ttf") format("truetype");
+            }
         </style>
     </h:head>
 
@@ -45,17 +52,17 @@
             <div class="header">
                 <p:panel>
                     <p:graphicImage url="resources/uabc_escudo.jpg" class="logo"/>
-                    <h3>UNIVERSIDAD AUTÓNOMA DE BAJA CALIFORNIA</h3>
-                    <h5>SACI -Sistema para la Administración del Carnet Institucional</h5>
+                    <h3 style= "font-family: 'SourceSansPro'">UNIVERSIDAD AUTÓNOMA DE BAJA CALIFORNIA</h3>
+                    <h5 style="font-family: 'Roboto', sans-serif;">SACI -Sistema para la Administración del Carnet Institucional</h5>
                 </p:panel>
 
             </div>
-            
+
             <div class="text-center">
                 <h:form>
                     <p:panel header="Inicio de sesión">
                         <h:panelGrid columns="2" cellpadding="5" >
-                            
+
                             <h:outputLabel for="correoInstitucional" value="Correo institucional:"/>
                             <p:inputText id="correoInstitucional" value="#{loginUI.usuarios.correo}" required="true">
                             </p:inputText> 
@@ -64,7 +71,7 @@
                             <p:password id="contrasena" value="#{loginUI.usuarios.contrasenaUsuario}" toggleMask="true" required="true" redisplay="true">
                             </p:password> 
 
-                                
+
                             <f:facet name="footer">
                                 <p:commandButton value="Iniciar sesión" action="#{loginUI.login()}" ajax="false" style="background-color: #32CD32; color: #FFF;"/>
                             </f:facet>

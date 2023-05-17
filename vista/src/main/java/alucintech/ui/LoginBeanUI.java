@@ -48,7 +48,19 @@ public class LoginBeanUI implements Serializable{
             // se muestre correctamente en la pagina de informacion
             usuario=us;
             if(us.getTipoUsuario().compareToIgnoreCase("Administrador de eventos")==0){
-                FacesContext.getCurrentInstance().getExternalContext().redirect(FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath() + "/index.xhtm");
+                FacesContext.getCurrentInstance().getExternalContext().redirect(FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath() + "/menu.xhtml");
+            }
+            if(us.getTipoUsuario().compareToIgnoreCase("Cordinador de carrera")==0){
+                
+            }
+            if(us.getTipoUsuario().compareToIgnoreCase("Subdireccion")==0){
+                
+            }
+            if(us.getTipoUsuario().compareToIgnoreCase("Encargad@ de vinculacion")==0){
+                
+            }
+            if(us.getTipoUsuario().compareToIgnoreCase("Alumno")==0){
+                
             }
                        
         }else{

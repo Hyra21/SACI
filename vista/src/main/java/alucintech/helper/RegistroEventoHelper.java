@@ -25,6 +25,11 @@ public class RegistroEventoHelper {
         ServiceFacadeLocator.getInstanceFacadeEvento().RegistrarEvento(evento);
     }
     
+    public int[] validarEvento(Evento evento){
+        return ServiceFacadeLocator.getInstanceFacadeEvento().validarEvento(evento);
+    }
+            
+    
     public Identificaadministrador identificar(String correo){
         return ServiceFacadeLocator.getInstanceFacadeIdentificaAdministrador().IdentificarAdmin(correo);
     }

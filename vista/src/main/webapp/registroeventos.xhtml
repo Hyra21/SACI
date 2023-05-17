@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>SACI-RE</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    <h:body>
+        <div class="site-wrapper">
+            <div class="card">
+                <p:tabMenu activeIndex="#{param.i}">
+                    <p:menuitem value="Home" outcome="menu.xhtml" icon="pi pi-fw pi-home">
+                        <f:param name="i" value="0"/>
+                    </p:menuitem>
+                    <p:menuitem value="Agregar" outcome="registroeventos.xhtml" icon="pi pi-fw pi-plus-circle">
+                        <f:param name="i" value="1"/>
+                    </p:menuitem>
+                    <p:menuitem value="Modificar" outcome="inicioSesion.xhtml" icon="pi pi-fw pi-pencil">
+                        <f:param name="i" value="2"/>
+                    </p:menuitem>
+                    <p:menuitem value="Eliminar" outcome="inicioSesion.xhtml" icon="pi pi-fw pi-trash">
+                        <f:param name="i" value="3"/>
+                    </p:menuitem>
+                    <p:menuitem value="Cerrar Sesión" outcome="inicioSesion.xhtml" icon="pi pi-fw pi-sign-out">
+                        <f:param name="i" value="4"/>
+                    </p:menuitem>
+                </p:tabMenu>
+
+            </div>
+
+            <div class="text-center">
+                <h:form>
+                    <p:panel header="Registro de Eventos">
+                        <h:panelGrid columns="2" cellpadding="5" >
+                            
+                            <h:outputLabel for="nombre" value="Nombre del evento:"/>
+                            <p:inputText id="nombre" value="#{loginBean.nombre}" required="true">
+                            </p:inputText> 
+
+                            <h:outputLabel for="cicloEscolar" value="Ciclo escolar:"/>
+                            <p:inputText id="cicloEscolar" value="#{loginBean.cicloEscolar}" required="true">
+                            </p:inputText> 
+                            
+                            <p:outputLabel for="fechaI" value="Fecha de inicio:"/>
+                            <p:datePicker id="fechaI" value="#{calendarView.date7}" showIcon="true"/>
+                                
+                            <p:outputLabel for="fechaF" value="Fecha de fin:"/>
+                            <p:datePicker id="fechaF" value="#{calendarView.date8}" showIcon="true"/>
+                            
+                            <h:outputLabel for="descripcion" value="Descripción:"/>
+                            <p:inputText id="descripcion" value="#{loginBean.descripcion}" required="true">
+                            </p:inputText> 
+                            
+                            <h:outputLabel for="estado" value="Estado:"/>
+                            <p:inputText id="estado" value="#{loginBean.estado}" required="true">
+                            </p:inputText>
+                            
+                            <h:outputLabel for="numeroE" value="Número de empleado:"/>
+                            <p:inputText id="numeroE" value="#{loginBean.numeroE}" required="true">
+                            </p:inputText>
+                            
+                            <h:outputLabel for="comentarios" value="Comentarios:"/>
+                            <p:inputTextarea id="comentarios" value="#{loginBean.comentarios}" rows="6" cols="33"/>
+                                
+                            <f:facet name="footer">
+                                <p:commandButton styleClass="button" value="Enviar" action="#{loginBean.login()}" ajax="false" style="background-color: #32CD32; color: #FFF;"/>
+                            </f:facet>
+                        </h:panelGrid>
+                    </p:panel>
+                </h:form>
+            </div>
+        </div>
+    </h:body>
+</html>
