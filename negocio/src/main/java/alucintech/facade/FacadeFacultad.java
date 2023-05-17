@@ -24,4 +24,8 @@ public class FacadeFacultad {
         delegateFacultad.saveFacultad(facultad);
     }
     
+    public Facultad identificarFacultad(String nombreFacultad){
+        return delegateFacultad.identificarFacultad(nombreFacultad);
+    }
+    
 }

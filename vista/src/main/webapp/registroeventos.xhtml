@@ -38,36 +38,34 @@
                         <h:panelGrid columns="2" cellpadding="5" >
                             
                             <h:outputLabel for="nombre" value="Nombre del evento:"/>
-                            <p:inputText id="nombre" value="#{loginBean.nombre}" required="true">
+                            <p:inputText id="nombre" value="#{RegistroEventoUI.evento.nombreEvento}" required="true">
                             </p:inputText> 
 
                             <h:outputLabel for="cicloEscolar" value="Ciclo escolar:"/>
-                            <p:inputText id="cicloEscolar" value="#{loginBean.cicloEscolar}" required="true">
+                            <p:inputText id="cicloEscolar" value="#{RegistroEventoUI.evento.cicloEscolarEvento}" required="true">
+                            </p:inputText> 
+                            
+                            <h:outputLabel for="facultad" value="Facultad:"/>
+                            <p:inputText id="nombreFacultad" value="#{RegistroEventoUI.nombreFacultad}" required="true">
                             </p:inputText> 
                             
                             <p:outputLabel for="fechaI" value="Fecha de inicio:"/>
-                            <p:datePicker id="fechaI" value="#{calendarView.date7}" showIcon="true"/>
+                            <p:datePicker id="fechaI" value="#{RegistroEventoUI.evento.fechaInicioEvento}" showIcon="true"/>
                                 
                             <p:outputLabel for="fechaF" value="Fecha de fin:"/>
-                            <p:datePicker id="fechaF" value="#{calendarView.date8}" showIcon="true"/>
+                            <p:datePicker id="fechaF" value="#{RegistroEventoUI.evento.fechaFinEvento}" showIcon="true"/>
                             
                             <h:outputLabel for="descripcion" value="Descripción:"/>
-                            <p:inputText id="descripcion" value="#{loginBean.descripcion}" required="true">
+                            <p:inputText id="descripcion" value="#{RegistroEventoUI.evento.descripcionEvento}" required="true">
                             </p:inputText> 
                             
-                            <h:outputLabel for="estado" value="Estado:"/>
-                            <p:inputText id="estado" value="#{loginBean.estado}" required="true">
-                            </p:inputText>
-                            
-                            <h:outputLabel for="numeroE" value="Número de empleado:"/>
-                            <p:inputText id="numeroE" value="#{loginBean.numeroE}" required="true">
-                            </p:inputText>
-                            
                             <h:outputLabel for="comentarios" value="Comentarios:"/>
-                            <p:inputTextarea id="comentarios" value="#{loginBean.comentarios}" rows="6" cols="33"/>
+                            <p:inputTextarea id="comentarios" value="#{RegistroEventoUI.evento.comentarioEvento}" rows="6" cols="33"/>
+                            
+                            <h:outputLabel for="" value="#{RegistroEventoUI.setCorreo(loginUI.usuarios.correo)}"/>
                                 
                             <f:facet name="footer">
-                                <p:commandButton styleClass="button" value="Enviar" action="#{loginBean.login()}" ajax="false" style="background-color: #32CD32; color: #FFF;"/>
+                                <p:commandButton styleClass="button" value="Enviar" action="#{RegistroEventoUI.registro()}" ajax="false" style="background-color: #32CD32; color: #FFF;"/>
                             </f:facet>
                         </h:panelGrid>
                     </p:panel>

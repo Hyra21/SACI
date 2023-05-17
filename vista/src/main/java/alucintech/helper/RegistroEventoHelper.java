@@ -10,6 +10,7 @@ import java.io.Serializable;
 import javax.faces.context.FacesContext;
 import alucintech.entidad.Usuarios;
 import alucintech.entidad.Evento;
+import alucintech.entidad.Facultad;
 import alucintech.integracion.ServiceFacadeLocator;
 import alucintech.entidad.Identificaadministrador;
 import java.util.List;
@@ -29,6 +30,9 @@ public class RegistroEventoHelper {
         return ServiceFacadeLocator.getInstanceFacadeEvento().validarEvento(evento);
     }
             
+    public Facultad identificarFacultad(String nombreFacultad){
+        return ServiceFacadeLocator.getInstanceFacadeFacultad().identificarFacultad(nombreFacultad);
+    }
     
     public Identificaadministrador identificar(String correo){
         return ServiceFacadeLocator.getInstanceFacadeIdentificaAdministrador().IdentificarAdmin(correo);

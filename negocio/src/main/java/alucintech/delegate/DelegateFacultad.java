@@ -9,6 +9,7 @@ package alucintech.delegate;
 
 import alucintech.entidad.Facultad;
 import alucintech.integracion.ServiceLocator;
+import java.util.List;
 
 /**
  *
@@ -23,5 +24,15 @@ public class DelegateFacultad {
     public void saveFacultad(Facultad facultad){
         ServiceLocator.getInstanceFacultadDAO().save(facultad);
     }
-    
+    public Facultad identificarFacultad(String nombreFacultad){
+        Facultad facultad = new Facultad();
+        List<Facultad> facultadList = ServiceLocator.getInstanceFacultadDAO().findAll();
+        
+        for(Facultad f:facultadList){
+            if(f.getNombreFacultad().equalsIgnoreCase(nombreFacultad)){
+                facultad = f;
+            }
+        }
+        return facultad;
+    }
 }
