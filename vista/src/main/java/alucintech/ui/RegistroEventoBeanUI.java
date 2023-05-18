@@ -74,18 +74,26 @@ public class RegistroEventoBeanUI implements Serializable {
         
         errores = registroEventoHelper.validarEvento(evento);
 
-        if (errores[0] == 1) {
-            System.out.println("La fecha no está denttro del rango permitido");
-        }
-        if (errores[1] == 1) {
-            System.out.println("Ya existe este evento");
+        if (errores[0] == 1 || errores[1]== 1) {
+            error = true;
         }
 
         if (error == false) {
             registroEventoHelper.RegistroEvento(evento);
+            FacesContext.getCurrentInstance().getExternalContext().redirect(FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath() + "/menu.xhtml");
+        }else{
+            if(errores[0] == 1 && errores[1]==1){
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "El evento ya existe y la fecha no está dentro del rango permitido:", "Intente de nuevo"));      
+            }
+            if(errores[0] == 1 && errores[1]==0){
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "La fecha no está dentro del rango permitido:", "Intente de nuevo"));
+            }
+            if(errores[0] == 0 && errores[1]==1){
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "El evento ya existe", "Intente de nuevo"));
+            }
         }
 
-        FacesContext.getCurrentInstance().getExternalContext().redirect(FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath() + "/menu.xhtml");
+        
     }
 
     /* getters y setters*/
