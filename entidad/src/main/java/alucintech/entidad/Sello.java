@@ -37,6 +37,11 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Sello.findByCantidad", query = "SELECT s FROM Sello s WHERE s.cantidad = :cantidad")})
 public class Sello implements Serializable {
 
+    @Basic(optional = false)
+    @Lob
+    @Column(name = "imagenSello")
+    private byte[] imagenSello;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,10 +51,6 @@ public class Sello implements Serializable {
     @Basic(optional = false)
     @Column(name = "cantidad")
     private int cantidad;
-    @Basic(optional = false)
-    @Lob
-    @Column(name = "imagenSello")
-    private byte[] imagenSello;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "sello")
     private List<Tienesello> tieneselloList;
     @JoinColumn(name = "idActividad", referencedColumnName = "idActividad")
@@ -85,13 +86,6 @@ public class Sello implements Serializable {
         this.cantidad = cantidad;
     }
 
-    public byte[] getImagenSello() {
-        return imagenSello;
-    }
-
-    public void setImagenSello(byte[] imagenSello) {
-        this.imagenSello = imagenSello;
-    }
 
     @XmlTransient
     public List<Tienesello> getTieneselloList() {
@@ -133,6 +127,14 @@ public class Sello implements Serializable {
     @Override
     public String toString() {
         return "alucintech.entidad.Sello[ idSello=" + idSello + " ]";
+    }
+
+    public byte[] getImagenSello() {
+        return imagenSello;
+    }
+
+    public void setImagenSello(byte[] imagenSello) {
+        this.imagenSello = imagenSello;
     }
     
 }

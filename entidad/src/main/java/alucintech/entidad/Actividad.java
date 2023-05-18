@@ -40,6 +40,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Actividad.findByIdActividad", query = "SELECT a FROM Actividad a WHERE a.idActividad = :idActividad")
     , @NamedQuery(name = "Actividad.findByNombreActividad", query = "SELECT a FROM Actividad a WHERE a.nombreActividad = :nombreActividad")
     , @NamedQuery(name = "Actividad.findByDescripcionActividad", query = "SELECT a FROM Actividad a WHERE a.descripcionActividad = :descripcionActividad")
+    , @NamedQuery(name = "Actividad.findByTipoActividad", query = "SELECT a FROM Actividad a WHERE a.tipoActividad = :tipoActividad")
     , @NamedQuery(name = "Actividad.findByFechaActividad", query = "SELECT a FROM Actividad a WHERE a.fechaActividad = :fechaActividad")
     , @NamedQuery(name = "Actividad.findByHorarioInicioActividad", query = "SELECT a FROM Actividad a WHERE a.horarioInicioActividad = :horarioInicioActividad")
     , @NamedQuery(name = "Actividad.findByHorarioFinActividad", query = "SELECT a FROM Actividad a WHERE a.horarioFinActividad = :horarioFinActividad")
@@ -50,6 +51,14 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Actividad.findByEnlaceVirtual", query = "SELECT a FROM Actividad a WHERE a.enlaceVirtual = :enlaceVirtual")
     , @NamedQuery(name = "Actividad.findByComentarioActividad", query = "SELECT a FROM Actividad a WHERE a.comentarioActividad = :comentarioActividad")})
 public class Actividad implements Serializable {
+
+    @Lob
+    @Column(name = "imagenActividad")
+    private byte[] imagenActividad;
+
+    @Basic(optional = false)
+    @Column(name = "tipoActividad")
+    private String tipoActividad;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -89,9 +98,6 @@ public class Actividad implements Serializable {
     private String modalidadActividad;
     @Column(name = "enlaceVirtual")
     private String enlaceVirtual;
-    @Lob
-    @Column(name = "imagenActividad")
-    private byte[] imagenActividad;
     @Column(name = "comentarioActividad")
     private String comentarioActividad;
     @ManyToMany(mappedBy = "actividadList")
@@ -213,13 +219,6 @@ public class Actividad implements Serializable {
         this.enlaceVirtual = enlaceVirtual;
     }
 
-    public byte[] getImagenActividad() {
-        return imagenActividad;
-    }
-
-    public void setImagenActividad(byte[] imagenActividad) {
-        this.imagenActividad = imagenActividad;
-    }
 
     public String getComentarioActividad() {
         return comentarioActividad;
@@ -286,6 +285,22 @@ public class Actividad implements Serializable {
     @Override
     public String toString() {
         return "alucintech.entidad.Actividad[ idActividad=" + idActividad + " ]";
+    }
+
+    public String getTipoActividad() {
+        return tipoActividad;
+    }
+
+    public void setTipoActividad(String tipoActividad) {
+        this.tipoActividad = tipoActividad;
+    }
+
+    public byte[] getImagenActividad() {
+        return imagenActividad;
+    }
+
+    public void setImagenActividad(byte[] imagenActividad) {
+        this.imagenActividad = imagenActividad;
     }
     
 }

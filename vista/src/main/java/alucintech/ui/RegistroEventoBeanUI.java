@@ -58,23 +58,8 @@ public class RegistroEventoBeanUI implements Serializable {
     public void registro() throws IOException {
 
         int[] errores = new int[3];
+        boolean error = false;
 
-        //Calendar fechaInicio = Calendar.getInstance();
-        //Calendar fechaFin = Calendar.getInstance();
-        //fechaInicio.set(2023, 5, 15);
-        //fechaFin.set(2023, 5, 22);
-        //String appURL = "/index.xhtml";
-// los atributos del evento vienen del xhtml 
-//        Evento ev = new Evento();
-/*
-        ev.setNombreEvento("Feria del libro");
-        ev.setCicloEscolarEvento("2023-1");
-        ev.setFechaInicioEvento(fechaInicio.getTime());
-        ev.setFechaFinEvento(fechaFin.getTime());
-        ev.setDescripcionEvento("Prueba de descripción de evento");
-        ev.setComentarioEvento("");
-        ev.setFacultadList(facultadesEvento);
-         */
         facultad = registroEventoHelper.identificarFacultad(nombreFacultad);
         idAdmin = registroEventoHelper.identificar(correo);
 
@@ -85,6 +70,8 @@ public class RegistroEventoBeanUI implements Serializable {
         evento.setNumEmpleadoAdministradorEvento(idAdmin);
         evento.setEstadoEvento("Postulado");
         evento.setFacultadList(facultadesEvento);
+        
+        
         errores = registroEventoHelper.validarEvento(evento);
 
         if (errores[0] == 1) {
@@ -93,20 +80,15 @@ public class RegistroEventoBeanUI implements Serializable {
         if (errores[1] == 1) {
             System.out.println("Ya existe este evento");
         }
-        System.out.println(evento.getNombreEvento());
-        System.out.println(evento.getCicloEscolarEvento());
-        System.out.println(evento.getFacultadList().toString());
-        System.out.println("NUMERO DE EMPLEADO "+evento.getNumEmpleadoAdministradorEvento().getNumEmpleado());
-        System.out.println(evento.getEstadoEvento());
-        System.out.println(evento.getFechaInicioEvento().toString() + " HASTA " + evento.getFechaFinEvento().toString());
-        
-        registroEventoHelper.RegistroEvento(evento);
-        
+
+        if (error == false) {
+            registroEventoHelper.RegistroEvento(evento);
+        }
+
         FacesContext.getCurrentInstance().getExternalContext().redirect(FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath() + "/menu.xhtml");
     }
 
     /* getters y setters*/
-
     public Evento getEvento() {
         return evento;
     }
