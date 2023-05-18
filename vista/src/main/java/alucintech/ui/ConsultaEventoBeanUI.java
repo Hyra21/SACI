@@ -39,7 +39,14 @@ public class ConsultaEventoBeanUI implements Serializable{
      public void consultaEvento() throws IOException{
         
     }
-
-    
     /* getters y setters*/
+
+    public List<Evento> getListaEventos() {
+        return listaEventos;
+    }
+
+    public void setListaEventos(List<Evento> listaEventos) {
+        this.listaEventos = listaEventos;
+    }
+     
 }

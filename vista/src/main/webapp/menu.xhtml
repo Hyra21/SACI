@@ -35,41 +35,41 @@
             <h:form>
                 <h3>CONSULTA DE EVENTOS</h3>
                 <div class="card">
-                    <p:dataTable var="product" value="#{dtBasicView.products}" showGridlines="true">
+                    <p:dataTable var="ev" value="#{ConsultaEventoUI.listaEventos}" showGridlines="true">
                         <p:column headerText="ID">
-                            <h:outputText value="#{product.code}" />
+                            <h:outputText value="#{ev.idEvento}" />
                         </p:column>
 
                         <p:column headerText="Nombre">
-                            <h:outputText value="#{product.name}" />
+                            <h:outputText value="#{ev.nombreEvento}" />
                         </p:column>
 
                         <p:column headerText="Ciclo Escolar">
-                            <h:outputText value="#{product.category}" />
+                            <h:outputText value="#{ev.cicloEscolarEvento}" />
                         </p:column>
 
                         <p:column headerText="Fecha de inicio">
-                            <h:outputText value="#{product.quantity}" />
+                            <h:outputText value="#{ev.fechaInicioEvento}" />
                         </p:column>
                         
                         <p:column headerText="Fecha de fin">
-                            <h:outputText value="#{product.quantity}" />
+                            <h:outputText value="#{ev.fechaFinEvento}" />
                         </p:column>
                         
                         <p:column headerText="Descripción">
-                            <h:outputText value="#{product.quantity}" />
+                            <h:outputText value="#{ev.descripcionEvento}" />
                         </p:column>
                         
                         <p:column headerText="Estado">
-                            <h:outputText value="#{product.quantity}" />
+                            <h:outputText value="#{ev.estadoEvento}" />
                         </p:column>
                         
                         <p:column headerText="Numero de empleado">
-                            <h:outputText value="#{product.quantity}" />
+                            <h:outputText value="#{ev.numEmpleadoAdministradorEvento.numEmpleado}" />
                         </p:column>
                         
                         <p:column headerText="Comentarios">
-                            <h:outputText value="#{product.quantity}" />
+                            <h:outputText value="#{ev.comentarioEvento}" />
                         </p:column>
                     </p:dataTable>
                 </div>
