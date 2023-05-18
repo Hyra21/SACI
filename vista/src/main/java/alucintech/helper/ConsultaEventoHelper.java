@@ -17,7 +17,7 @@ import java.util.List;
  *
  * @author 980014102
  */
-public class ConsultaEventoHelper {
+public class ConsultaEventoHelper implements Serializable{
     public List<Evento> listaEventos(){
         return  ServiceFacadeLocator.getInstanceFacadeEvento().ConsultaEvento();
     }

@@ -18,7 +18,7 @@ import java.util.List;
  *
  * @author 980014102
  */
-public class RegistroEventoHelper {
+public class RegistroEventoHelper implements Serializable{
     
     
     public void RegistroEvento(Evento evento){

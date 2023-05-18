@@ -13,13 +13,11 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import alucintech.entidad.Usuarios;
 import alucintech.entidad.Identificaadministrador;
 import alucintech.entidad.Evento;
 import alucintech.entidad.Facultad;
 import alucintech.helper.RegistroEventoHelper;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -36,6 +34,7 @@ public class RegistroEventoBeanUI implements Serializable {
     private String nombreFacultad;
     private Facultad facultad;
     private String correo;
+    private List<Evento> idEventos;
     private List<Facultad> facultadesEvento;
 
     public RegistroEventoBeanUI() {
@@ -56,21 +55,21 @@ public class RegistroEventoBeanUI implements Serializable {
     }
 
     public void registro() throws IOException {
-
         int[] errores = new int[3];
         boolean error = false;
 
         facultad = registroEventoHelper.identificarFacultad(nombreFacultad);
         idAdmin = registroEventoHelper.identificar(correo);
-
+        idEventos = registroEventoHelper.Consulta();
+        
         facultadesEvento = new ArrayList();
         facultadesEvento.add(facultad);
-
-        evento.setIdEvento(1);
+                
+        evento.setIdEvento(idEventos.get(idEventos.size() - 1).getIdEvento() + 1);
+        
         evento.setNumEmpleadoAdministradorEvento(idAdmin);
         evento.setEstadoEvento("Postulado");
         evento.setFacultadList(facultadesEvento);
-        
         
         errores = registroEventoHelper.validarEvento(evento);
 
