@@ -9,7 +9,7 @@
         <title>SACI-CE</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <style>
-            
+
         </style>
     </h:head>
     <h:body>
@@ -36,7 +36,7 @@
                     </p:menuitem>
                 </p:tabMenu>
             </div>
-
+            <f:event type="preRenderView" listener="#{ConsultaEventoUI.actualizarListaEventos()}" />
             <h:form>
                 <p:panel header="Consulta de Eventos">
                     <div class="card">
@@ -75,8 +75,8 @@
 
                         </p:dataTable>
                         <f:facet name="footer">
-                                <p:commandButton styleClass="button" value="Enviar" action="#{ConsultaEventoUI.actualizarListaEventos()}" ajax="false" style="background-color: #32CD32; color: #FFF"/> 
-                            </f:facet>
+                            <p:commandButton styleClass="button" value="Actualizar" action="#{ConsultaEventoUI.actualizarListaEventos()}" ajax="false" style="background-color: #32CD32; color: #FFF"/> 
+                        </f:facet>
                     </div>
                 </p:panel>
             </h:form>

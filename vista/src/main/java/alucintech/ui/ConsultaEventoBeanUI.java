@@ -21,7 +21,6 @@ public class ConsultaEventoBeanUI implements Serializable {
 
     private ConsultaEventoHelper consultaEventoHelper;
     private List<Evento> listaEventos;
-    private ConsultaEventoBeanUI c;
 
     public ConsultaEventoBeanUI() throws IOException {
         consultaEventoHelper = new ConsultaEventoHelper();
