@@ -33,9 +33,6 @@ public class ConsultaEventoBeanUI implements Serializable {
     @PostConstruct
     public void init() {
         listaEventos = consultaEventoHelper.listaEventos();
-        if (listaEventos.isEmpty()) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "No hay eventos registrados", ""));
-        }
     }
 
     public void actualizarListaEventos() {
