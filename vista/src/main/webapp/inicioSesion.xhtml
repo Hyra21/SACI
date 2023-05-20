@@ -60,17 +60,17 @@
 
             <div class="text-center">
                 <h:form>
-                    <p:messages id="messages" showDetail="true" closable="true">
+                    <p:messages id="messages" showDetail="true" closable="true" globalOnly="true">
                     </p:messages>
                     <p:panel header="Inicio de sesión">
                         <h:panelGrid columns="2" cellpadding="10" >
 
                             <h:outputLabel for="correoInstitucional" value="Correo institucional:"/>
-                            <p:inputText id="correoInstitucional" value="#{loginUI.usuarios.correo}" required="true">
+                            <p:inputText id="correoInstitucional" value="#{loginUI.usuarios.correo}" required="true" requiredMessage="Un correo es requerido">
                             </p:inputText> 
 
                             <h:outputLabel for="contrasena" value="Contraseña:"/>
-                            <p:password id="contrasena" value="#{loginUI.usuarios.contrasenaUsuario}" toggleMask="true" required="true" redisplay="true">
+                            <p:password id="contrasena" value="#{loginUI.usuarios.contrasenaUsuario}" toggleMask="true" required="true" redisplay="true" requiredMessage="Ingrese una contraseña">
                             </p:password> 
 
 
