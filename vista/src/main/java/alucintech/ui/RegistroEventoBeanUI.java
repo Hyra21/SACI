@@ -61,38 +61,38 @@ public class RegistroEventoBeanUI implements Serializable {
         facultad = registroEventoHelper.identificarFacultad(nombreFacultad);
         idAdmin = registroEventoHelper.identificar(correo);
         idEventos = registroEventoHelper.Consulta();
-        
+
         facultadesEvento = new ArrayList();
         facultadesEvento.add(facultad);
-                
+
         evento.setIdEvento(idEventos.get(idEventos.size() - 1).getIdEvento() + 1);
-        
+
         evento.setNumEmpleadoAdministradorEvento(idAdmin);
         evento.setEstadoEvento("Postulado");
         evento.setFacultadList(facultadesEvento);
-        
+
         errores = registroEventoHelper.validarEvento(evento);
 
-        if (errores[0] == 1 || errores[1]== 1) {
+        if (errores[0] == 1 || errores[1] == 1) {
             error = true;
+
         }
 
         if (error == false) {
             registroEventoHelper.RegistroEvento(evento);
             FacesContext.getCurrentInstance().getExternalContext().redirect(FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath() + "/menu.xhtml");
-        }else{
-            if(errores[0] == 1 && errores[1]==1){
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "El evento ya existe y la fecha no está dentro del rango permitido:", "Intente de nuevo"));      
+        } else {
+            if (errores[0] == 1 && errores[1] == 1) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "El evento ya existe y la fecha no está dentro del rango permitido:", "Intente de nuevo"));
             }
-            if(errores[0] == 1 && errores[1]==0){
+            if (errores[0] == 1 && errores[1] == 0) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "La fecha no está dentro del rango permitido:", "Intente de nuevo"));
             }
-            if(errores[0] == 0 && errores[1]==1){
+            if (errores[0] == 0 && errores[1] == 1) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "El evento ya existe", "Intente de nuevo"));
             }
         }
 
-        
     }
 
     /* getters y setters*/

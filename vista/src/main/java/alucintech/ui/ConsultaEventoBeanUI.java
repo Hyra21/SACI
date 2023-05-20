@@ -21,8 +21,9 @@ public class ConsultaEventoBeanUI implements Serializable{
     private ConsultaEventoHelper consultaEventoHelper;
     private Evento evento;
     private List<Evento> listaEventos;
+    private ConsultaEventoBeanUI c;
     
-    public ConsultaEventoBeanUI() {
+    public ConsultaEventoBeanUI() throws IOException{
         consultaEventoHelper = new ConsultaEventoHelper();
     }
     
@@ -34,11 +35,11 @@ public class ConsultaEventoBeanUI implements Serializable{
     public void init(){
         evento = new Evento();
         listaEventos = consultaEventoHelper.listaEventos();
+        if(listaEventos.isEmpty()){
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "No hay eventos registrados", ""));
+        }
     }
-
-     public void consultaEvento() throws IOException{
-        
-    }
+    
     /* getters y setters*/
 
     public List<Evento> getListaEventos() {
