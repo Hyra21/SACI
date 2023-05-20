@@ -17,31 +17,33 @@ import java.util.List;
  */
 @ManagedBean(name = "ConsultaEventoUI")
 @SessionScoped
-public class ConsultaEventoBeanUI implements Serializable{
+public class ConsultaEventoBeanUI implements Serializable {
+
     private ConsultaEventoHelper consultaEventoHelper;
-    private Evento evento;
     private List<Evento> listaEventos;
     private ConsultaEventoBeanUI c;
-    
-    public ConsultaEventoBeanUI() throws IOException{
+
+    public ConsultaEventoBeanUI() throws IOException {
         consultaEventoHelper = new ConsultaEventoHelper();
     }
-    
+
     /**
-     * Metodo postconstructor todo lo que este dentro de este metodo
-     * sera la primero que haga cuando cargue la pagina
+     * Metodo postconstructor todo lo que este dentro de este metodo sera la
+     * primero que haga cuando cargue la pagina
      */
     @PostConstruct
-    public void init(){
-        evento = new Evento();
+    public void init() {
         listaEventos = consultaEventoHelper.listaEventos();
-        if(listaEventos.isEmpty()){
+        if (listaEventos.isEmpty()) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "No hay eventos registrados", ""));
         }
     }
-    
-    /* getters y setters*/
 
+    public void actualizarListaEventos() {
+        listaEventos = consultaEventoHelper.listaEventos();
+    }
+
+    /* getters y setters*/
     public List<Evento> getListaEventos() {
         return listaEventos;
     }
@@ -49,5 +51,5 @@ public class ConsultaEventoBeanUI implements Serializable{
     public void setListaEventos(List<Evento> listaEventos) {
         this.listaEventos = listaEventos;
     }
-     
+
 }

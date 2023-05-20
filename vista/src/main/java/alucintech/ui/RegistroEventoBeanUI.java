@@ -5,7 +5,7 @@
  */
 package alucintech.ui;
 
-import alucintech.ui.LoginBeanUI;
+import alucintech.ui.ConsultaEventoBeanUI;
 import java.io.IOException;
 import java.io.Serializable;
 import javax.annotation.PostConstruct;
@@ -57,7 +57,7 @@ public class RegistroEventoBeanUI implements Serializable {
     public void registro() throws IOException {
         int[] errores = new int[3];
         boolean error = false;
-
+        ConsultaEventoBeanUI consultaEventoBeanUI = new ConsultaEventoBeanUI(); 
         facultad = registroEventoHelper.identificarFacultad(nombreFacultad);
         idAdmin = registroEventoHelper.identificar(correo);
         idEventos = registroEventoHelper.Consulta();
@@ -80,7 +80,8 @@ public class RegistroEventoBeanUI implements Serializable {
 
         if (error == false) {
             registroEventoHelper.RegistroEvento(evento);
-            FacesContext.getCurrentInstance().getExternalContext().redirect(FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath() + "/menu.xhtml");
+            FacesContext.getCurrentInstance().getExternalContext().redirect(FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath() + "/consulta.xhtml");
+            
         } else {
             if (errores[0] == 1 && errores[1] == 1) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "El evento ya existe y la fecha no está dentro del rango permitido:", "Intente de nuevo"));

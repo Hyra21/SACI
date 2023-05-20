@@ -74,6 +74,9 @@
                             </p:column>
 
                         </p:dataTable>
+                        <f:facet name="footer">
+                                <p:commandButton styleClass="button" value="Enviar" action="#{ConsultaEventoUI.actualizarListaEventos()}" ajax="false" style="background-color: #32CD32; color: #FFF"/> 
+                            </f:facet>
                     </div>
                 </p:panel>
             </h:form>
