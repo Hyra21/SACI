@@ -8,16 +8,30 @@
     <h:head>
         <title>SACI-RE</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+        <style>
+            .button{
+                float: right;
+            }
+
+            .text-center{
+                width: 85%;
+                height: 90%;
+            }
+        </style>
     </h:head>
     <h:body>
         <div class="site-wrapper">
             <div class="card">
-                <p:tabMenu activeIndex="#{param.i}">
-                    <p:menuitem value="Home" outcome="menu.xhtml" icon="pi pi-fw pi-home">
+                <p:tabMenu activeIndex="1">
+                    <p:menuitem value="" outcome="menu.xhtml" icon="pi pi-fw pi-home">
                         <f:param name="i" value="0"/>
                     </p:menuitem>
                     <p:menuitem value="Agregar" outcome="registroeventos.xhtml" icon="pi pi-fw pi-plus-circle">
                         <f:param name="i" value="1"/>
+                    </p:menuitem>
+                    <p:menuitem value="Consultar" outcome="consulta.xhtml" icon="pi pi-fw pi-search">
+                        <f:param name="i" value="2"/>
                     </p:menuitem>
                     <p:menuitem value="Modificar" outcome="inicioSesion.xhtml" icon="pi pi-fw pi-pencil">
                         <f:param name="i" value="2"/>
@@ -33,10 +47,10 @@
             </div>
 
             <div class="text-center">
-                <h:form>
+                <h:form id="form">
                     <p:panel header="Registro de Eventos">
-                        <h:panelGrid columns="2" cellpadding="5" >
-                            
+                        <h:panelGrid id="panel" columns="6" cellpadding="10" >
+
                             <h:outputLabel for="nombre" value="Nombre del evento:"/>
                             <p:inputText id="nombre" value="#{RegistroEventoUI.evento.nombreEvento}" required="true">
                             </p:inputText> 
@@ -44,28 +58,25 @@
                             <h:outputLabel for="cicloEscolar" value="Ciclo escolar:"/>
                             <p:inputText id="cicloEscolar" value="#{RegistroEventoUI.evento.cicloEscolarEvento}" required="true">
                             </p:inputText> 
-                            
-                            <h:outputLabel for="facultad" value="Facultad:"/>
-                            <p:inputText id="nombreFacultad" value="#{RegistroEventoUI.nombreFacultad}" required="true">
-                            </p:inputText> 
-                            
+
                             <p:outputLabel for="fechaI" value="Fecha de inicio:"/>
                             <p:datePicker id="fechaI" value="#{RegistroEventoUI.evento.fechaInicioEvento}" showIcon="true"/>
-                                
-                            <p:outputLabel for="fechaF" value="Fecha de fin:"/>
-                            <p:datePicker id="fechaF" value="#{RegistroEventoUI.evento.fechaFinEvento}" showIcon="true"/>
-                            
+
                             <h:outputLabel for="descripcion" value="Descripción:"/>
                             <p:inputText id="descripcion" value="#{RegistroEventoUI.evento.descripcionEvento}" required="true">
-                            </p:inputText> 
-                            
-                            <h:outputLabel for="comentarios" value="Comentarios:"/>
-                            <p:inputTextarea id="comentarios" value="#{RegistroEventoUI.evento.comentarioEvento}" rows="6" cols="33"/>
-                            
+                            </p:inputText>
+
+                            <h:outputLabel for="facultad" value="Facultad:"/>
+                            <p:inputText id="nombreFacultad" value="#{RegistroEventoUI.nombreFacultad}" required="true">
+                            </p:inputText>
+
+                            <p:outputLabel for="fechaF" value="Fecha de fin:"/>
+                            <p:datePicker id="fechaF" value="#{RegistroEventoUI.evento.fechaFinEvento}" showIcon="true"/>
+
                             <h:outputLabel for="" value="#{RegistroEventoUI.setCorreo(loginUI.usuarios.correo)}"/>
-                                
+
                             <f:facet name="footer">
-                                <p:commandButton styleClass="button" value="Enviar" action="#{RegistroEventoUI.registro()}" ajax="false" style="background-color: #32CD32; color: #FFF;"/>
+                                <p:commandButton styleClass="button" value="Enviar" action="#{RegistroEventoUI.registro()}" ajax="false" style="background-color: #32CD32; color: #FFF"/> 
                             </f:facet>
                         </h:panelGrid>
                     </p:panel>

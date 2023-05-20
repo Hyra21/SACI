@@ -60,8 +60,10 @@
 
             <div class="text-center">
                 <h:form>
+                    <p:messages id="messages" showDetail="true" closable="true">
+                    </p:messages>
                     <p:panel header="Inicio de sesión">
-                        <h:panelGrid columns="2" cellpadding="5" >
+                        <h:panelGrid columns="2" cellpadding="10" >
 
                             <h:outputLabel for="correoInstitucional" value="Correo institucional:"/>
                             <p:inputText id="correoInstitucional" value="#{loginUI.usuarios.correo}" required="true">
@@ -73,7 +75,7 @@
 
 
                             <f:facet name="footer">
-                                <p:commandButton  value="Iniciar sesión" action="#{loginUI.login()}" ajax="false" style="background-color: #32CD32; color: #FFF;"/>
+                                <p:commandButton  value="Enviar" action="#{loginUI.login()}" ajax="false" style="background-color: #32CD32; color: #FFF;"/>
                             </f:facet>
                         </h:panelGrid>
                     </p:panel>
