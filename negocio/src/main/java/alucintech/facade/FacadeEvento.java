@@ -7,6 +7,7 @@ package alucintech.facade;
 
 import alucintech.delegate.DelegateEvento;
 import alucintech.entidad.Evento;
+import alucintech.entidad.Identificaadministrador;
 import java.util.List;
 
 /**
@@ -25,11 +26,27 @@ public class FacadeEvento {
         return delegateEvento.ConsultaEvento();
     }
     
+    public Evento eventoSeleccionado(int id){
+        return delegateEvento.eventoSeleccionado(id);
+    }
+    
     public void RegistrarEvento(Evento evento){
         delegateEvento.saveEvento(evento);
     }
     
+    public void ModificarEvento(Evento evento){
+        delegateEvento.modificarEvento(evento);
+    }
+    
+    public List<Evento> listaEventoAdmin(Identificaadministrador admin){
+        return delegateEvento.listaEventoAdmin(admin);
+    }
+    
     public int[] validarEvento(Evento evento){
         return delegateEvento.validarEvento(evento);
+    }
+    
+    public void eliminarEvento(Evento evento){
+        delegateEvento.eliminarEvento(evento);
     }
 }

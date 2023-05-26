@@ -7,6 +7,7 @@ package alucintech.facade;
 
 import alucintech.delegate.DelegateFacultad;
 import alucintech.entidad.Facultad;
+import java.util.List;
 
 /**
  *
@@ -26,6 +27,10 @@ public class FacadeFacultad {
     
     public Facultad identificarFacultad(String nombreFacultad){
         return delegateFacultad.identificarFacultad(nombreFacultad);
+    }
+    
+    public List<Facultad> obtenerFacultades(){
+        return delegateFacultad.obtenerFacultades();
     }
     
 }

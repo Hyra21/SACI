@@ -14,42 +14,35 @@ import alucintech.entidad.Facultad;
 import alucintech.integracion.ServiceFacadeLocator;
 import alucintech.entidad.Identificaadministrador;
 import java.util.List;
+
 /**
  *
  * @author 980014102
  */
-public class RegistroEventoHelper implements Serializable{
-    
-    
-    public void RegistroEvento(Evento evento){
-        
+public class RegistroEventoHelper implements Serializable {
+
+    public void RegistroEvento(Evento evento) {
+
         ServiceFacadeLocator.getInstanceFacadeEvento().RegistrarEvento(evento);
     }
-    
-    public int[] validarEvento(Evento evento){
+
+    public int[] validarEvento(Evento evento) {
         return ServiceFacadeLocator.getInstanceFacadeEvento().validarEvento(evento);
     }
-            
-    public Facultad identificarFacultad(String nombreFacultad){
+
+    public Facultad identificarFacultad(String nombreFacultad) {
         return ServiceFacadeLocator.getInstanceFacadeFacultad().identificarFacultad(nombreFacultad);
     }
-    
-    public Identificaadministrador identificar(String correo){
+
+    public Identificaadministrador identificar(String correo) {
         return ServiceFacadeLocator.getInstanceFacadeIdentificaAdministrador().IdentificarAdmin(correo);
     }
-    
-    public List<Evento> Consulta(){
+
+    public List<Evento> Consulta() {
         return ServiceFacadeLocator.getInstanceFacadeEvento().ConsultaEvento();
     }
-        /**
-     * Metodo para hacer login llamara a la instancia de usuarioFacade
-     * @param correo
-     * @param password
-     * @return 
-     */
-    public Usuarios Login(String correo, String password){
-        return ServiceFacadeLocator.getInstanceFacadeUsuarios().login(password, correo);
+
+    public List<Facultad> obtenerFacultades(){
+        return ServiceFacadeLocator.getInstanceFacadeFacultad().obtenerFacultades();
     }
-    
-    
 }

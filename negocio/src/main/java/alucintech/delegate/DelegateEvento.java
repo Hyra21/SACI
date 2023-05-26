@@ -7,6 +7,8 @@ package alucintech.delegate;
  */
 import alucintech.entidad.Evento;
 import alucintech.integracion.ServiceLocator;
+import alucintech.entidad.Identificaadministrador;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -24,9 +26,24 @@ public class DelegateEvento {
     public void saveEvento(Evento evento) {
         ServiceLocator.getInstanceEventoDAO().save(evento);
     }
+    
+    public void modificarEvento(Evento evento){
+        ServiceLocator.getInstanceEventoDAO().update(evento);
+    }
 
     public List<Evento> ConsultaEvento() {
         return ServiceLocator.getInstanceEventoDAO().findAll();
+    }
+    
+    public Evento eventoSeleccionado(int id){
+        List<Evento> listaEventos = ServiceLocator.getInstanceEventoDAO().findAll();
+        Evento evento = new Evento();
+        for(Evento ev:listaEventos){
+            if(ev.getIdEvento() == id){
+                evento = ev;
+            }
+        }
+        return evento;
     }
 
     public int[] validarEvento(Evento evento) {
@@ -70,6 +87,21 @@ public class DelegateEvento {
             }
         }
         return errores;
+    }
+    
+    public List<Evento> listaEventoAdmin(Identificaadministrador admin){
+        List<Evento> listaEventos = ServiceLocator.getInstanceEventoDAO().findAll();
+        List<Evento> listaEventosAdmin = new ArrayList();
+        for(Evento ev:listaEventos){
+            if(admin.getNumEmpleado() == ev.getNumEmpleadoAdministradorEvento().getNumEmpleado()){
+                listaEventosAdmin.add(ev);
+            }
+        }
+        return listaEventosAdmin;
+    }
+    
+    public void eliminarEvento(Evento evento){
+        ServiceLocator.getInstanceEventoDAO().delete(evento);
     }
 
 }

@@ -35,4 +35,7 @@ public class DelegateFacultad {
         }
         return facultad;
     }
+    public List<Facultad> obtenerFacultades(){
+        return ServiceLocator.getInstanceFacultadDAO().findAll();
+    }
 }

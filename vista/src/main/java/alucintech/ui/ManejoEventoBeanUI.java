@@ -5,17 +5,17 @@
  */
 package alucintech.ui;
 
-import java.io.IOException;
 import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import alucintech.entidad.Identificaadministrador;
 import alucintech.entidad.Evento;
 import alucintech.entidad.Facultad;
-import alucintech.helper.RegistroEventoHelper;
+import alucintech.entidad.Identificaadministrador;
+import alucintech.helper.ManejoEventoHelper;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,60 +23,44 @@ import java.util.List;
  *
  * @author 980014102
  */
-@ManagedBean(name = "RegistroEventoUI")
+@ManagedBean(name = "ModificarEventoUI")
 @SessionScoped
-public class RegistroEventoBeanUI implements Serializable {
+public class ManejoEventoBeanUI implements Serializable {
 
-    private RegistroEventoHelper registroEventoHelper;
+    private ManejoEventoHelper manejoEventoHelper;
     private Evento evento;
+    private String correo;
     private Identificaadministrador idAdmin;
     private String nombreFacultad;
     private Facultad facultad;
-    private String correo;
-    private List<Evento> idEventos;
+    private List<Evento> listaEventos;
     private List<Facultad> facultadesEvento;
-    private List<Facultad> facultadesEventoTemp;
 
-    public RegistroEventoBeanUI() {
-        registroEventoHelper = new RegistroEventoHelper();
+    ManejoEventoBeanUI() {
+        manejoEventoHelper = new ManejoEventoHelper();
     }
 
-    /**
-     * Metodo postconstructor todo lo que este dentro de este metodo sera la
-     * primero que haga cuando cargue la pagina
-     */
     @PostConstruct
     public void init() {
         evento = new Evento();
-        idAdmin = new Identificaadministrador();
-        correo = new String();
         facultad = new Facultad();
-        facultadesEvento = registroEventoHelper.obtenerFacultades();
-        facultadesEventoTemp = new ArrayList();
         nombreFacultad = new String();
+        idAdmin = manejoEventoHelper.identificar(correo);
+        listaEventos = manejoEventoHelper.listaEventoAdmin(idAdmin);
     }
 
-    public void registro() throws IOException {
+    public void modificarEvento() throws IOException {
         int[] errores = new int[3];
         boolean error = false;
-        facultad = registroEventoHelper.identificarFacultad(nombreFacultad);
-        idAdmin = registroEventoHelper.identificar(correo);
-        idEventos = registroEventoHelper.Consulta();
+
+        facultad = manejoEventoHelper.identificarFacultad(nombreFacultad);
 
         facultadesEvento = new ArrayList();
         facultadesEvento.add(facultad);
-        
-        if(idEventos.isEmpty()){
-            evento.setIdEvento(1);
-        }else{
-            evento.setIdEvento(idEventos.get(idEventos.size() - 1).getIdEvento() + 1);
-        }
-        
-        evento.setNumEmpleadoAdministradorEvento(idAdmin);
-        evento.setEstadoEvento("Postulado");
-        evento.setFacultadList(facultadesEvento);
 
-        errores = registroEventoHelper.validarEvento(evento);
+        errores = manejoEventoHelper.validarEvento(evento);
+
+        evento.setFacultadList(facultadesEvento);
 
         if (errores[0] == 1 || errores[1] == 1) {
             error = true;
@@ -84,7 +68,7 @@ public class RegistroEventoBeanUI implements Serializable {
         }
 
         if (error == false) {
-            registroEventoHelper.RegistroEvento(evento);
+            manejoEventoHelper.modificarEvento(evento);
             FacesContext.getCurrentInstance().getExternalContext().redirect(FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath() + "/consulta.xhtml");
 
         } else {
@@ -101,32 +85,20 @@ public class RegistroEventoBeanUI implements Serializable {
 
     }
 
-    public void actualizarDatosEvento(){
-        evento = new Evento();
+    public void eliminarEvento() {
+        manejoEventoHelper.eliminarEvento(manejoEventoHelper.eventoSeleccionado(evento.getIdEvento()));
     }
-    /* getters y setters*/
+
+    public void actualizarObjetoEvento() {
+        evento = manejoEventoHelper.eventoSeleccionado(evento.getIdEvento());
+    }
+
     public Evento getEvento() {
         return evento;
     }
 
     public void setEvento(Evento evento) {
         this.evento = evento;
-    }
-
-    public List<Facultad> getFacultadesEvento() {
-        return facultadesEvento;
-    }
-
-    public void setFacultadesEvento(List<Facultad> facultadesEvento) {
-        this.facultadesEvento = facultadesEvento;
-    }
-
-    public String getCorreo() {
-        return correo;
-    }
-
-    public void setCorreo(String correo) {
-        this.correo = correo;
     }
 
     public String getNombreFacultad() {
@@ -137,12 +109,28 @@ public class RegistroEventoBeanUI implements Serializable {
         this.nombreFacultad = nombreFacultad;
     }
 
-    public List<Facultad> getFacultadesEventoTemp() {
-        return facultadesEventoTemp;
+    public Facultad getFacultad() {
+        return facultad;
     }
 
-    public void setFacultadesEventoTemp(List<Facultad> facultadesEventoTemp) {
-        this.facultadesEventoTemp = facultadesEventoTemp;
+    public void setFacultad(Facultad facultad) {
+        this.facultad = facultad;
+    }
+
+    public List<Evento> getListaEventos() {
+        return listaEventos;
+    }
+
+    public void setListaEventos(List<Evento> listaEventos) {
+        this.listaEventos = listaEventos;
+    }
+
+    public List<Facultad> getFacultadesEvento() {
+        return facultadesEvento;
+    }
+
+    public void setFacultadesEvento(List<Facultad> facultadesEvento) {
+        this.facultadesEvento = facultadesEvento;
     }
 
 }
