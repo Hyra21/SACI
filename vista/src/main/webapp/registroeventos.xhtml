@@ -34,7 +34,7 @@
                         <p:menuitem value="Consultar" outcome="consulta.xhtml" icon="pi pi-fw pi-search">
                             <f:param name="i" value="2"/>
                         </p:menuitem>
-                        <p:menuitem value="Modificar" outcome="login.xhtml" icon="pi pi-fw pi-pencil">
+                        <p:menuitem value="Modificar" outcome="modificacion.xhtml" icon="pi pi-fw pi-pencil">
                             <f:param name="i" value="3"/>
                         </p:menuitem>
                         <p:menuitem value="Eliminar" outcome="login.xhtml" icon="pi pi-fw pi-trash">
@@ -53,30 +53,29 @@
                         <h:panelGrid id="panel" columns="6" cellpadding="18" >
 
                             <h:outputLabel for="nombre" value="Nombre del evento:"/>
-                            <p:inputText id="nombre" value="#{RegistroEventoUI.evento.nombreEvento}" required="true" requiredMessage="Ingrese el nombre del evento">
+                            <p:inputText id="nombre" value="#{RegistroEventoUI.evento.nombreEvento}" required="true" placeholder="Ingrese el nombre" requiredMessage="Ingrese el nombre del evento">
                             </p:inputText> 
 
                             <h:outputLabel for="cicloEscolar" value="Ciclo escolar:"/>
-                            <p:inputText id="cicloEscolar" value="#{RegistroEventoUI.evento.cicloEscolarEvento}" required="true" requiredMessage="Ingrese el ciclo escolar">
+                            <p:inputText id="cicloEscolar" value="#{RegistroEventoUI.evento.cicloEscolarEvento}" required="true" placeholder="Ingrese el ciclo escolar" requiredMessage="Ingrese el ciclo escolar">
                             </p:inputText> 
 
                             <p:outputLabel for="fechaI" value="Fecha de inicio:"/>
-                            <p:datePicker id="fechaI" value="#{RegistroEventoUI.evento.fechaInicioEvento}" showIcon="true" required="true" requiredMessage="Ingrese la fecha de inicio"/>
+                            <p:datePicker id="fechaI" value="#{RegistroEventoUI.evento.fechaInicioEvento}" showIcon="true" required="true" placeholder="Ingrese la fecha de inicio" requiredMessage="Ingrese la fecha de inicio"/>
 
                             <h:outputLabel for="descripcion" value="Descripción:"/>
-                            <p:inputText id="descripcion" value="#{RegistroEventoUI.evento.descripcionEvento}" required="true" requiredMessage="Ingrese una descripción">
+                            <p:inputText id="descripcion" value="#{RegistroEventoUI.evento.descripcionEvento}" required="true" placeholder="Ingrese la descripción" requiredMessage="Ingrese una descripción">
                             </p:inputText>
 
                             <h:outputLabel for="facultad" value="Facultad:"/>
-                            <p:selectCheckboxMenu id="menu" value="#{RegistroEventoUI.facultadesEventoTemp}" label="Escoge" style="width: 15rem"
+                            <p:selectCheckboxMenu id="menu" value="#{RegistroEventoUI.facultadesEventoTemp}" label="Seleccione" style="width: 15rem"
                                                   filter="true" filterMatchMode="startsWith" panelStyle="width: 15rem" scrollHeight="250"
                                                   dynamic="true">
                                 <f:selectItems value="#{RegistroEventoUI.facultadesEvento}"/>
                             </p:selectCheckboxMenu>
-                            </p:inputText>
 
                             <p:outputLabel for="fechaF" value="Fecha de fin:"/>
-                            <p:datePicker id="fechaF" value="#{RegistroEventoUI.evento.fechaFinEvento}" showIcon="true" required="true" requiredMessage="Ingrese la fecha de fin"/>
+                            <p:datePicker id="fechaF" value="#{RegistroEventoUI.evento.fechaFinEvento}" showIcon="true" required="true" placeholder="Ingrese la fecha de fin" requiredMessage="Ingrese la fecha de fin"/>
 
                             <h:outputLabel for="" value="#{RegistroEventoUI.setCorreo(loginUI.usuarios.correo)}"/>
 
