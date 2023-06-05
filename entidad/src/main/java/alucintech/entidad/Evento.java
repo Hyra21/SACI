@@ -14,6 +14,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -40,9 +41,12 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Evento.findByFechaInicioEvento", query = "SELECT e FROM Evento e WHERE e.fechaInicioEvento = :fechaInicioEvento")
     , @NamedQuery(name = "Evento.findByFechaFinEvento", query = "SELECT e FROM Evento e WHERE e.fechaFinEvento = :fechaFinEvento")
     , @NamedQuery(name = "Evento.findByDescripcionEvento", query = "SELECT e FROM Evento e WHERE e.descripcionEvento = :descripcionEvento")
-    , @NamedQuery(name = "Evento.findByEstadoEvento", query = "SELECT e FROM Evento e WHERE e.estadoEvento = :estadoEvento")
-    , @NamedQuery(name = "Evento.findByComentarioEvento", query = "SELECT e FROM Evento e WHERE e.comentarioEvento = :comentarioEvento")})
+    , @NamedQuery(name = "Evento.findByEstadoEvento", query = "SELECT e FROM Evento e WHERE e.estadoEvento = :estadoEvento")})
 public class Evento implements Serializable {
+
+    @Lob
+    @Column(name = "imagenEvento")
+    private byte[] imagenEvento;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -69,8 +73,6 @@ public class Evento implements Serializable {
     @Basic(optional = false)
     @Column(name = "estadoEvento")
     private String estadoEvento;
-    @Column(name = "comentarioEvento")
-    private String comentarioEvento;
     @ManyToMany(mappedBy = "eventoList")
     private List<Facultad> facultadList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idEvento")
@@ -86,7 +88,7 @@ public class Evento implements Serializable {
         this.idEvento = idEvento;
     }
 
-    public Evento(Integer idEvento, String nombreEvento, String cicloEscolarEvento, Date fechaInicioEvento, Date fechaFinEvento, String descripcionEvento, String estadoEvento) {
+    public Evento(Integer idEvento, String nombreEvento, String cicloEscolarEvento, Date fechaInicioEvento, Date fechaFinEvento, String descripcionEvento, String estadoEvento, byte[] imagenEvento) {
         this.idEvento = idEvento;
         this.nombreEvento = nombreEvento;
         this.cicloEscolarEvento = cicloEscolarEvento;
@@ -94,6 +96,7 @@ public class Evento implements Serializable {
         this.fechaFinEvento = fechaFinEvento;
         this.descripcionEvento = descripcionEvento;
         this.estadoEvento = estadoEvento;
+        this.imagenEvento = imagenEvento;
     }
 
     public Integer getIdEvento() {
@@ -152,14 +155,6 @@ public class Evento implements Serializable {
         this.estadoEvento = estadoEvento;
     }
 
-    public String getComentarioEvento() {
-        return comentarioEvento;
-    }
-
-    public void setComentarioEvento(String comentarioEvento) {
-        this.comentarioEvento = comentarioEvento;
-    }
-
     @XmlTransient
     public List<Facultad> getFacultadList() {
         return facultadList;
@@ -209,6 +204,14 @@ public class Evento implements Serializable {
     @Override
     public String toString() {
         return "alucintech.entidad.Evento[ idEvento=" + idEvento + " ]";
+    }
+
+    public byte[] getImagenEvento() {
+        return imagenEvento;
+    }
+
+    public void setImagenEvento(byte[] imagenEvento) {
+        this.imagenEvento = imagenEvento;
     }
     
 }

@@ -12,7 +12,7 @@ import java.util.List;
 
 /**
  *
- * @author EduardoCardona <>
+ * @author 980014102 <>
  */
 public class FacadeEvento {
     
@@ -22,19 +22,19 @@ public class FacadeEvento {
         this.delegateEvento = new DelegateEvento();
     }
     
-    public List<Evento> ConsultaEvento(){
-        return delegateEvento.ConsultaEvento();
+    public List<Evento> consultarEventos(){
+        return delegateEvento.consultarEventos();
     }
     
     public Evento eventoSeleccionado(int id){
         return delegateEvento.eventoSeleccionado(id);
     }
     
-    public void RegistrarEvento(Evento evento){
-        delegateEvento.saveEvento(evento);
+    public void registrarEvento(Evento evento){
+        delegateEvento.registrarEvento(evento);
     }
     
-    public void ModificarEvento(Evento evento){
+    public void modificarEvento(Evento evento){
         delegateEvento.modificarEvento(evento);
     }
     
@@ -48,5 +48,14 @@ public class FacadeEvento {
     
     public void eliminarEvento(Evento evento){
         delegateEvento.eliminarEvento(evento);
+    }
+    
+    /**
+     * Método que elimina la lista de eventos enviados como parámetro de la base
+     * de datos.- Se utiiza para eliminar eventos cancelados.
+     * @param eventos 
+     */
+    public void eliminarListaEventos(List<Evento> eventos) {
+        delegateEvento.eliminarListaEventos(eventos);
     }
 }

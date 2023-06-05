@@ -14,43 +14,62 @@ import java.util.List;
 
 /**
  *
- * @author EduardoCardona <>
+ * @author 980014102 <>
  */
 public class DelegateEvento {
 
     /**
-     * Metodo de ejemplo para guardar Alumno
+     * Método para registrar un evento en la base de datos.
      *
-     * @param evento de tipo usuario con id 0 para que se cree un id nuevo
+     * @param evento
      */
-    public void saveEvento(Evento evento) {
+    public void registrarEvento(Evento evento) {
         ServiceLocator.getInstanceEventoDAO().save(evento);
     }
-    
-    public void modificarEvento(Evento evento){
+
+    /**
+     * Método que actualiza el registro del evento en la base de datos con el
+     * evento enviado como parámetro.
+     *
+     * @param evento
+     */
+    public void modificarEvento(Evento evento) {
         ServiceLocator.getInstanceEventoDAO().update(evento);
     }
 
-    public List<Evento> ConsultaEvento() {
+    /**
+     * Regresa una lista de los eventos registrados en la base de datos.
+     *
+     * @return
+     */
+    public List<Evento> consultarEventos() {
         return ServiceLocator.getInstanceEventoDAO().findAll();
     }
-    
-    public Evento eventoSeleccionado(int id){
+
+    public Evento eventoSeleccionado(int id) {
         List<Evento> listaEventos = ServiceLocator.getInstanceEventoDAO().findAll();
         Evento evento = new Evento();
-        for(Evento ev:listaEventos){
-            if(ev.getIdEvento() == id){
+        for (Evento ev : listaEventos) {
+            if (ev.getIdEvento() == id) {
                 evento = ev;
             }
         }
         return evento;
     }
 
+    /**
+     * Método que valida la información del ovjeto evento para que concuerde con
+     * las reglas de negocio. Evita que se registre un evento con información
+     * contradictoria o inválida
+     *
+     * @param evento
+     * @return
+     */
     public int[] validarEvento(Evento evento) {
         Calendar fechaInicioMin = Calendar.getInstance();
         Calendar fechaFinMax = Calendar.getInstance();
         int[] errores = new int[3];
-        List<Evento> eventos = ConsultaEvento();
+        List<Evento> eventos = consultarEventos();
 
         //Verificar Fecha de inicio y fecha de fin
         if (evento.getCicloEscolarEvento().charAt(evento.getCicloEscolarEvento().length() - 1) == '1') {
@@ -88,20 +107,46 @@ public class DelegateEvento {
         }
         return errores;
     }
-    
-    public List<Evento> listaEventoAdmin(Identificaadministrador admin){
+
+    /**
+     * Regresa una lista de los eventos registrados por el administrador de
+     * eventos enviado como parámetro Se utiliza para que solo el administrador
+     * de eventos que creo los eventos pueda modificarlos al mostrarle
+     * únicamente los que ha creado.
+     *
+     * @param admin
+     * @return
+     */
+    public List<Evento> listaEventoAdmin(Identificaadministrador admin) {
         List<Evento> listaEventos = ServiceLocator.getInstanceEventoDAO().findAll();
         List<Evento> listaEventosAdmin = new ArrayList();
-        for(Evento ev:listaEventos){
-            if(admin.getNumEmpleado() == ev.getNumEmpleadoAdministradorEvento().getNumEmpleado()){
+        for (Evento ev : listaEventos) {
+            if (admin.getNumEmpleado() == ev.getNumEmpleadoAdministradorEvento().getNumEmpleado()) {
                 listaEventosAdmin.add(ev);
             }
         }
         return listaEventosAdmin;
     }
-    
-    public void eliminarEvento(Evento evento){
+
+    /**
+     * Método que elimina el evento enviado como parámetro de la base de datos.-
+     * Se utiiza para eliminar eventos cancelados.
+     *
+     * @param evento
+     */
+    public void eliminarEvento(Evento evento) {
         ServiceLocator.getInstanceEventoDAO().delete(evento);
+    }
+
+    /**
+     * Método que elimina la lista de eventos enviados como parámetro de la base
+     * de datos.- Se utiiza para eliminar eventos cancelados.
+     * @param eventos 
+     */
+    public void eliminarListaEventos(List<Evento> eventos) {
+        for (Evento ev : eventos) {
+            ServiceLocator.getInstanceEventoDAO().delete(ev);
+        }
     }
 
 }

@@ -16,16 +16,23 @@ import alucintech.entidad.Usuarios;
 import alucintech.helper.LoginHelper;
 
 /**
+ * Clase que se encargará de ejecutar las acciones requeridas por el archivo
+ * login.xhtml
  *
- * @author Kevin
+ * @author 980014102
  */
+//Nombre por el cual la clase será reconocida en el archivo login.xhtml
 @ManagedBean(name = "loginUI")
 @SessionScoped
+
 public class LoginBeanUI implements Serializable {
 
+    //Objeto loginHelper que ejecutará los métodos necesarios.
     private LoginHelper loginHelper;
+    //Objeto Usuarios que recibirá los valores ingresados en login.xhtml
     private Usuarios usuario;
 
+    //Constructor
     public LoginBeanUI() {
         loginHelper = new LoginHelper();
     }
@@ -39,17 +46,26 @@ public class LoginBeanUI implements Serializable {
         usuario = new Usuarios();
     }
 
+    /**
+     * Método encargado de iniciar sesión en la página validando las
+     * credenciales ingresadas
+     *
+     * @throws IOException
+     */
     public void login() throws IOException {
-        // los atributos de usuario vienen del xhtml 
-        Usuarios us = new Usuarios();
+        // los atributos de "usuario" vienen del xhtml 
+        // "us" recibirá lo que se obtenga del método Login que utiliza el loginHelper
 
+        Usuarios us = new Usuarios();
         us = loginHelper.Login(usuario.getCorreo(), usuario.getContrasenaUsuario());
+
+        //Este if sirve para decidiri a que ventana enviar al usuario 
+        //dependiendo de su tipo y además para mostrar el mensaje de error 
+        //en caso de que la validación no regrese un objeto evento.
         if (us != null && us.getCorreo() != null) {
-            // asigno el usuario encontrado al usuario de esta clase para que 
-            // se muestre correctamente en la pagina de informacion
             usuario = us;
             if (us.getTipoUsuario().compareToIgnoreCase("Administrador de eventos") == 0) {
-                FacesContext.getCurrentInstance().getExternalContext().redirect(FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath() + "/menu.xhtml");
+                FacesContext.getCurrentInstance().getExternalContext().redirect(FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath() + "/index.xhtml");
             }
             if (us.getTipoUsuario().compareToIgnoreCase("Cordinador de carrera") == 0) {
 

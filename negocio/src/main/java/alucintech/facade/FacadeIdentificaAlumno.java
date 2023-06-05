@@ -20,8 +20,4 @@ public class FacadeIdentificaAlumno {
         this.delegateIdentificaAlumno = new DelegateIdentificaAlumno();
     }
     
-    public void guardarIdentificaAlumno(Identificaalumno identificaAlumno){
-        delegateIdentificaAlumno.saveIdentificaAlumno(identificaAlumno);
-    }
-    
 }

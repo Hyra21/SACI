@@ -19,9 +19,4 @@ public class FacadeAlumno {
     public FacadeAlumno() {
         this.delegateAlumno = new DelegateAlumno();
     }
-    
-    public void guardarAlumno(Alumno alumno){
-        delegateAlumno.saveAlumno(alumno);
-    }
-    
 }

@@ -20,8 +20,4 @@ public class FacadeTieneSello {
         this.delegateTieneSello = new DelegateTieneSello();
     }
     
-    public void guardarTieneSello(Tienesello tieneSello){
-        delegateTieneSello.saveTieneSello(tieneSello);
-    }
-    
 }

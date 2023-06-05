@@ -11,7 +11,6 @@
     </h:head>
 
     <style>
-
         body {
             height: 100%;
             padding-left: 0px;
@@ -19,13 +18,37 @@
 
         }
 
+
         .header{
             margin-bottom: 50px;
-            text-align: left;
+            border-width: 5px; /* Grosor del borde de 5 píxeles */
+            border-color: #FEBE10; /* Color amarillo */
+            border-style: solid;
+            border-radius: 9px; /* Redondea todas las esquinas con un radio de 9 píxeles */
         }
 
+        .right{
+            text-align: right;
+        }
+
+        .custom-menubar .ui-menuitem {
+            float: right;
+        }
         .card{
             background-color: #FFF;
+            border-width: 3px; /* Grosor del borde de 5 píxeles */
+            border-color: #FEBE10; /* Color amarillo */
+            border-style: solid;
+            border-radius: 9px; /* Redondea todas las esquinas con un radio de 9 píxeles */
+        }
+
+        .card2{
+            margin-bottom: 5px;
+            background-color: #FFF;
+            border-width: 3px; /* Grosor del borde de 5 píxeles */
+            border-color: #FEBE10; /* Color amarillo */
+            border-style: solid;
+            border-radius: 9px; /* Redondea todas las esquinas con un radio de 9 píxeles */
         }
 
         h3{
@@ -54,7 +77,7 @@
             src: url("resources/Roboto-Light.ttf") format("truetype");
         }
     </style>
-    <body
+    <body>
         <!-- AQUI EMPIEZA EL ENCABEZADO. -->
         <div class="header">
             <p:panel>
@@ -74,8 +97,8 @@
 
                     <p:divider layout="vertical"/>
 
-                    <p:menuitem value="Cerrar sesión" icon="pi pi-fw pi-sign-out"/>
                     <p:menuitem value="Ayuda" icon="pi pi-fw pi-question-circle"/>
+                    <p:menuitem value="Cerrar sesión" outcome="login.xhtml" icon="pi pi-fw pi-sign-out"/>
 
                 </p:menubar>
             </h:form>
@@ -89,30 +112,30 @@
                 <p:toolbar>
 
                     <p:toolbarGroup>
-                        <p:commandButton value="Agregar" icon="pi pi-plus" actionListener="#{crudView.openNew}"
+                        <p:commandButton value="Agregar" icon="pi pi-plus" actionListener="#{ManejoEventoUI.actualizarDatosEvento()}"
                                          update=":dialogs:manage-product-content" oncomplete="PF('manageProductDialog').show()"
                                          styleClass="ui-button-success" style="margin-right: .5rem">
                             <p:resetInput target=":dialogs:manage-product-content" />
                         </p:commandButton>
-                        <p:commandButton id="delete-products-button" value="#{crudView.deleteButtonMessage}"
-                                         icon="pi pi-trash" actionListener="#{crudView.deleteSelectedProducts}"
-                                         styleClass="ui-button-danger" disabled="#{!crudView.hasSelectedProducts()}" update="@this">
-                            <p:confirm header="Confirmation" message="Delete the selected products?"
+                        <p:commandButton id="delete-products-button" value="#{ManejoEventoUI.mensajeBotonEliminar}"
+                                         icon="pi pi-trash" actionListener="#{ManejoEventoUI.eliminarListaEventos()}"
+                                         styleClass="ui-button-danger" disabled="#{!ManejoEventoUI.hayEventosSeleccionados()}" update="@this">
+                            <p:confirm header="Confirmation" message="¿Desea eliminar los eventos seleccionados?"
                                        icon="pi pi-exclamation-triangle" />
                         </p:commandButton>
                     </p:toolbarGroup>
-                    
+
                     <p:toolbarGroup align="right">
-                                    <span class="filter-container ui-input-icon-right"> <i class="pi pi-search"></i>
-                                        <p:inputText id="globalFilter" onkeyup="PF('dtProducts').filter()" placeholder="Buscar" />
-                                    </span>
+                        <span class="filter-container ui-input-icon-right"> <i class="pi pi-search"></i>
+                            <p:inputText id="globalFilter" onkeyup="PF('dtProducts').filter()" placeholder="Buscar" />
+                        </span>
                     </p:toolbarGroup>
                 </p:toolbar> <!-- AQUI TERMINAN LAS OPCIONES -->
 
                 <!-- AQUI EMPIEZA LA TABLA DE CONSULTA -->
-                <p:dataTable id="dt-products" widgetVar="dtProducts" var="product" value="#{crudView.products}"
-                             reflow="true" styleClass="products-table" selection="#{crudView.selectedProducts}"
-                             rowKey="#{product.id}" paginator="false" rows="10" rowSelectMode="add">
+                <p:dataTable id="dt-products" widgetVar="dtProducts" var="ev" value="#{ManejoEventoUI.listaEventos}"
+                             reflow="true" styleClass="products-table" selection="#{ManejoEventoUI.listaEventosTemp}"
+                             rowKey="#{ev.idEvento}" paginator="false" rows="10" rowSelectMode="add">
                     <f:facet name="header">
                         <div class="products-table-header">
                             <span style="font-weight: bold">Lista de Eventos</span>
@@ -127,52 +150,49 @@
 
                     <p:column selectionMode="multiple" exportable="false"></p:column>
 
-                    <p:column headerText="Nombre" sortBy="#{product.nombre}" filterBy="#{product.nombre}">
-
+                    <p:column headerText="Nombre" sortBy="#{ev.nombreEvento}" filterBy="#{ev.nombreEvento}">
+                        <h:outputText value="#{ev.nombreEvento}" />
                     </p:column>
-                    <p:column headerText="Ciclo escolar" sortBy="#{product.ciclo}" filterBy="#{product.ciclo}">
-                        <p:selectOneMenu id="hideNoselectionOption" value="#{selectOneMenuView.hideNoSelectOption}"
-                                         hideNoSelectionOption="#{not empty selectOneMenuView.hideNoSelectOption}">
-                            <p:ajax update="@this" process="@this"/>
-                            <f:selectItem itemLabel="2023-1" itemValue="Option1"/>
-                            <f:selectItem itemLabel="2023-2" itemValue="Option2"/>
-                        </p:selectOneMenu>
+                    <p:column headerText="Ciclo escolar" sortBy="#{ev.cicloEscolarEvento}" filterBy="#{ev.cicloEscolarEvento}">
+                        <h:outputText value="#{ev.cicloEscolarEvento}" />
                     </p:column>
                     <p:column headerText="Flyer" exportable="false">
-                        <p:graphicImage name="images/product/#{product.image}" library="demo" styleClass="product-image" />
+                        <p:graphicImage name="images/product/#{ev.imagenEvento}" library="demo" styleClass="product-image" />
                     </p:column>
 
-                    <p:column headerText="Fecha de inicio" sortBy="#{product.rating}">
+                    <p:column headerText="Fecha de inicio" sortBy="#{ev.fechaInicioEvento}">
+                        <h:outputText value="#{ev.fechaInicioEvento}" />
                     </p:column>
 
-                    <p:column headerText="Fecha de fin" sortBy="#{product.rating}">
+                    <p:column headerText="Fecha de fin" sortBy="#{ev.fechaFinEvento}">
+                        <h:outputText value="#{ev.fechaFinEvento}" />
                     </p:column>
 
-                    <p:column headerText="Facultad" sortBy="#{product.facultad}" filterBy="#{product.facultad}">
-                        <h:outputText value="#{product.facultad}" />
+                    <p:column headerText="Facultad" sortBy="#{ev.facultadList}" filterBy="#{ev.facultadList}">
+                        <h:outputText value="#{ev.facultadList}" />
                     </p:column>
 
-                    <p:column headerText="Estado" sortBy="#{product.inventoryStatus}"
-                              filterBy="#{product.inventoryStatus}">
-                        <h:outputText styleClass="product-badge status-#{product.inventoryStatus.name().toLowerCase()}"
-                                      value="#{product.inventoryStatus.text}" />
+                    <p:column headerText="Estado" sortBy="#{ev.estadoEvento}"
+                              filterBy="#{ev.estadoEvento}">
+                        <h:outputText styleClass="product-badge status-#{ev.estadoEvento.toLowerCase()}"
+                                      value="#{ev.estadoEvento}" />
                     </p:column>
 
-                    <p:column headerText="Correo del administrador" sortBy="#{product.correo}" filterBy="#{product.correo}">
-                        <h:outputText value="#{product.correo}" />
+                    <p:column headerText="Correo del administrador" sortBy="#{ev.numEmpleadoAdministradorEvento.correoAdministrador.correo}" filterBy="#{ev.numEmpleadoAdministradorEvento.correoAdministrador.correo}">
+                        <h:outputText value="#{ev.numEmpleadoAdministradorEvento.correoAdministrador.correo}" />
                     </p:column>
 
                     <p:column exportable="false">
                         <p:commandButton icon="pi pi-pencil" update=":dialogs:manage-product-content"
                                          oncomplete="PF('manageProductDialog').show()"
                                          styleClass="edit-button rounded-button ui-button-success" process="@this">
-                            <f:setPropertyActionListener value="#{product}" target="#{crudView.selectedProduct}" />
+                            <f:setPropertyActionListener value="#{ev}" target="#{ManejoEventoUI.evento}" />
                             <p:resetInput target=":dialogs:manage-product-content" />
                         </p:commandButton>
                         <p:commandButton class="ui-button-warning rounded-button" icon="pi pi-trash"
                                          process="@this"
                                          oncomplete="PF('deleteProductDialog').show()">
-                            <f:setPropertyActionListener value="#{product}" target="#{crudView.selectedProduct}" />
+                            <f:setPropertyActionListener value="#{ev}" target="#{ManejoEventoUI.evento}" />
                         </p:commandButton>
                     </p:column>
 
@@ -181,48 +201,62 @@
 
             <!-- AQUI EMPIEZA EL CÓDIGO PARA LA INFORMACIÓN DEL EVENTO -->
             <h:form id="dialogs">
-                <p:dialog header="Product Details" showEffect="fade" modal="true" widgetVar="manageProductDialog"
+                <p:dialog header="Información del evento" showEffect="fade" modal="true" widgetVar="manageProductDialog"
                           responsive="true">
                     <p:outputPanel id="manage-product-content" class="ui-fluid">
-                        <p:outputPanel rendered="#{not empty crudView.selectedProduct}">
-                            <p:graphicImage name="images/product/#{crudView.selectedProduct.image}" library="demo"
-                                            styleClass="product-image" rendered="#{not empty crudView.selectedProduct.image}" />
+
+                        <p:outputPanel rendered="#{not empty ManejoEventoUI.evento}">
+                            <p:graphicImage name="images/product/#{ManejoEventoUI.evento.imagenEvento}" library="demo"
+                                            styleClass="product-image" rendered="#{not empty ManejoEventoUI.evento.imagenEvento}" />
+                            <p:messages id="messages" showDetail="true" closable="true" globalOnly="true">
+                            </p:messages>
                             <div class="field">
-                                <p:outputLabel for="name">Name</p:outputLabel>
-                                <p:inputText id="name" value="#{crudView.selectedProduct.name}" required="true" />
+                                <p:outputLabel for="name">Nombre</p:outputLabel>
+                                <p:inputText id="name" value="#{ManejoEventoUI.evento.nombreEvento}" required="true" placeholder="Ingrese el nombre del evento" requiredMessage="Ingrese el nombre del evento"/>
+                                <p:message for="name" />
                             </div>
                             <div class="field">
-                                <p:outputLabel for="description">Description</p:outputLabel>
-                                <p:inputTextarea id="description" value="#{crudView.selectedProduct.description}" />
+                                <p:selectOneMenu id="option" value="#{ManejoEventoUI.evento.cicloEscolarEvento}" required="true" requiredMessage="Ingrese la fecha de inicio">
+                                    <f:selectItem itemLabel="2023-1" itemValue="2023-1"/>
+                                    <f:selectItem itemLabel="2023-2" itemValue="2023-2"/>
+                                    <f:facet name="footer">
+                                        <p:divider styleClass="mt-0" />
+                                        <h:outputText value="2 options" style="font-weight:bold;"/>
+                                    </f:facet>
+                                </p:selectOneMenu>
+                                <p:message for="cicloEscolar" />
                             </div>
                             <div class="field">
-                                <p:outputLabel for="category">Category</p:outputLabel>
-                                <p:selectOneRadio id="category" value="#{crudView.selectedProduct.category}"
-                                                  layout="responsive" columns="2">
-                                    <f:selectItem itemLabel="Accessories" itemValue="Accessories" />
-                                    <f:selectItem itemLabel="Clothing" itemValue="Clothing" />
-                                    <f:selectItem itemLabel="Electronics" itemValue="Electronics" />
-                                    <f:selectItem itemLabel="Fitness" itemValue="Fitness" />
-                                </p:selectOneRadio>
+                                <h:outputLabel for="facultad" value="Facultad:"/>
+                                <br></br>
+                                <p:selectCheckboxMenu id="multiple" value="#{ManejoEventoUI.evento.facultadList}" label="Facultades" style="min-width: 15rem" required="true" requiredMessage="Ingrese la fecha de inicio"
+                                                      multiple="true" filter="true" filterMatchMode="startsWith" panelStyle="width: 30rem" scrollHeight="250"
+                                                      emptyLabel="Seleccione" updateLabel="true">
+                                    <f:selectItems value="#{ManejoEventoUI.facultadesEvento}" var="facultad" itemLabel="#{facultad.nombreFacultad}" itemValue="#{facultad}"/>
+                                </p:selectCheckboxMenu>
                             </div>
-                            <div class="formgrid grid">
-                                <div class="field col">
-                                    <p:outputLabel for="price">Price</p:outputLabel>
-                                    <p:inputNumber id="price" value="#{crudView.selectedProduct.price}" symbol=" USD"
-                                                   symbolPosition="s" decimalSeparator="." thousandSeparator="," />
-                                </div>
-                                <div class="field col">
-                                    <p:outputLabel for="quantity">Quantity</p:outputLabel>
-                                    <p:spinner id="quantity" min="0" value="#{crudView.selectedProduct.quantity}" />
-                                </div>
+                            <div class="field">
+                                <p:outputLabel for="fechaI" value="Fecha de inicio:"/>
+                                <p:datePicker id="fechaI" value="#{ManejoEventoUI.evento.fechaInicioEvento}" showIcon="true" required="true" placeholder="Ingrese la fecha de inicio" requiredMessage="Ingrese la fecha de inicio"/>
+                                <p:message for="fechaI" />
+                            </div>
+                            <div class="field">
+                                <p:outputLabel for="fechaF" value="Fecha de fin:"/>
+                                <p:datePicker id="fechaF" value="#{ManejoEventoUI.evento.fechaFinEvento}" showIcon="true" required="true" placeholder="Ingrese la fecha de fin" requiredMessage="Ingrese la fecha de fin"/>
+                                <p:message for="fechaF" />
+                            </div>
+                            <div class="field">
+                                <p:outputLabel for="descripcion">Descripción</p:outputLabel>
+                                <p:inputTextarea id="descripcion" value="#{ManejoEventoUI.evento.descripcionEvento}" required="true" placeholder="Ingrese el ciclo escolar" requiredMessage="Ingrese el ciclo escolar"/>
+                                <p:message for="descripcion" />
                             </div>
                         </p:outputPanel>
                     </p:outputPanel>
 
                     <f:facet name="footer">
-                        <p:commandButton value="Save" icon="pi pi-check" actionListener="#{crudView.saveProduct}"
+                        <p:commandButton value="Guardar" icon="pi pi-check" actionListener="#{ManejoEventoUI.registroEvento()}"
                                          update="manage-product-content" process="manage-product-content @this" />
-                        <p:commandButton value="Cancel" icon="pi pi-times" onclick="PF('manageProductDialog').hide()"
+                        <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('manageProductDialog').hide()"
                                          class="ui-button-secondary" type="button" />
                     </f:facet>
                 </p:dialog> <!-- AQUI TERMINA EL CÓDIGO PARA LA INFORMACIÓN DEL EVENTO -->
@@ -230,21 +264,22 @@
 
                 <!-- AQUI EMPIEZAN LOS MENSAJES DE CONFIRMACIÓN -->
                 <p:confirmDialog widgetVar="deleteProductDialog" showEffect="fade" width="300"
-                                 message="Delete the product?" header="Confirm" severity="warn">
-                    <p:commandButton value="Yes" icon="pi pi-check" actionListener="#{crudView.deleteProduct}"
+                                 message="¿Desea eliminar el evento?" header="Confirm" severity="warn">
+                    <p:commandButton value="Aceptar" icon="pi pi-check" actionListener="#{ManejoEventoUI.eliminarEvento()}"
                                      process="@this" update=":form:delete-products-button"
                                      oncomplete="PF('deleteProductDialog').hide()" />
-                    <p:commandButton value="No" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
+                    <p:commandButton value="Cancelar" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
                                      onclick="PF('deleteProductDialog').hide()" />
                 </p:confirmDialog>
 
                 <p:confirmDialog global="true" showEffect="fade" width="300">
-                    <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
-                    <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ui-button-secondary"
+                    <p:commandButton value="Aceptar" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+                    <p:commandButton value="Cancelar" type="button" styleClass="ui-confirmdialog-no ui-button-secondary"
                                      icon="pi pi-times" />
                 </p:confirmDialog>
                 <!-- AQUI TERMINAN LOS MENSAJES DE CONFIRMACIÓN -->
             </h:form>
         </div>
+        <h:outputLabel for="" value="#{ManejoEventoUI.setCorreo(loginUI.usuarios.correo)}"/>
     </body>
 </html>

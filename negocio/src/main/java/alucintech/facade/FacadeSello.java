@@ -19,9 +19,4 @@ public class FacadeSello {
     public FacadeSello() {
         this.delegateSello = new DelegateSello();
     }
-    
-    public void guardarSello(Sello sello){
-        delegateSello.saveSello(sello);
-    }
-    
 }

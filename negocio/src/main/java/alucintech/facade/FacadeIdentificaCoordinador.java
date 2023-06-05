@@ -20,8 +20,4 @@ public class FacadeIdentificaCoordinador {
         this.delegateIdentificaCoordinador = new DelegateIdentificaCoordinador();
     }
     
-    public void guardarIdentificaCoordinador(Identificacoordinador identificaCoordinador){
-        delegateIdentificaCoordinador.saveIdentificaCoordinador(identificaCoordinador);
-    }
-    
 }

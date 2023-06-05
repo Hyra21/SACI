@@ -20,8 +20,4 @@ public class FacadeActividad {
         this.delegateActividad = new DelegateActividad();
     }
     
-    public void guardarAlumno(Actividad actividad){
-        delegateActividad.saveActividad(actividad);
-    }
-    
 }

@@ -16,13 +16,5 @@ import alucintech.integracion.ServiceLocator;
  */
 public class DelegateTieneSello {
     
-    /**
-     * Metodo de ejemplo para guardar Alumno
-     * @param tieneSello de tipo usuario con id 0 para que se cree un id nuevo
-     */
-    public void saveTieneSello(Tienesello tieneSello){
-        ServiceLocator.getInstanceTieneselloDAO().save(tieneSello);
-    }
-    
 }
 

@@ -18,20 +18,24 @@ import java.util.List;
 public class DelegateIdentificaAdministrador {
     
     /**
-     * Metodo de ejemplo para guardar Alumno
-     * @param identificaAdministrador de tipo usuario con id 0 para que se cree un id nuevo
+     * Método que regresa el objeto Identificaadministrador que concuerde con el
+     * parametro "correo". Sirve para identificar al administrador de eventos al
+     * que le pertenece el correo.
+     *
+     * @param correo
+     * @return
      */
-    public void saveIdentificaAdministrador(Identificaadministrador identificaAdministrador){
-        ServiceLocator.getInstanceIdentificaadministradorDAO().save(identificaAdministrador);
-    }
-    
-    public Identificaadministrador identificar(String correoAdministrador){
+    public Identificaadministrador identificarAdmin(String correoAdministrador){
         Identificaadministrador idAdmin = new Identificaadministrador();
         List<Identificaadministrador> idAdmins = ServiceLocator.getInstanceIdentificaadministradorDAO().findAll();
         
         for(Identificaadministrador id:idAdmins){
+            System.out.println("HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH"+ id.getCorreoAdministrador().getCorreo());
+            System.out.println("HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH"+ correoAdministrador);
             if(id.getCorreoAdministrador().getCorreo().equalsIgnoreCase(correoAdministrador)){
+                System.out.println("HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH"+ id.getCorreoAdministrador().getCorreo());
                 idAdmin = id;
+                System.out.println("HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH"+ idAdmin.getCorreoAdministrador().getCorreo());
             }
         }
         return idAdmin;

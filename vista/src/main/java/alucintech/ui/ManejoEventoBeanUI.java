@@ -18,58 +18,93 @@ import alucintech.helper.ManejoEventoHelper;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import org.primefaces.PrimeFaces;
+import org.primefaces.event.UnselectEvent;
 
 /**
+ * Clase que se encargará de ejecutar las acciones requeridas por el archivo
+ * ManejoEventos.xhtml
  *
  * @author 980014102
  */
-@ManagedBean(name = "ModificarEventoUI")
+//Nombre por el cual la clase será reconocida en el archivo ManejoEventos.xhtml
+@ManagedBean(name = "ManejoEventoUI")
 @SessionScoped
+
 public class ManejoEventoBeanUI implements Serializable {
 
     private ManejoEventoHelper manejoEventoHelper;
     private Evento evento;
     private String correo;
     private Identificaadministrador idAdmin;
-    private String nombreFacultad;
-    private Facultad facultad;
+    private List<Evento> listaEventosAdmin;
     private List<Evento> listaEventos;
+    private List<Evento> listaEventosTemp;
+    private List<Facultad> facultadesEventoTemp;
     private List<Facultad> facultadesEvento;
 
-    ManejoEventoBeanUI() {
+    //Constructor
+    public ManejoEventoBeanUI() {
         manejoEventoHelper = new ManejoEventoHelper();
     }
 
+    /**
+     * Metodo postconstructor todo lo que este dentro de este metodo sera la
+     * primero que haga cuando cargue la pagina
+     */
     @PostConstruct
     public void init() {
+
+        //Objeto evento que recibirá los valores ingresados en la página.
         evento = new Evento();
-        facultad = new Facultad();
-        nombreFacultad = new String();
-        idAdmin = manejoEventoHelper.identificar(correo);
-        listaEventos = manejoEventoHelper.listaEventoAdmin(idAdmin);
+
+        //Este string servirá para identificar al administrador de eventos mediante el correo ingresado en el lógin
+        correo = new String();
+
+        //Lista de eventos que se encuentran en la base de datos.
+        listaEventos = manejoEventoHelper.listaEventos();
+
+        //Lista de eventos seleccionados por el usuario.
+        listaEventosTemp = new ArrayList();
+
+        //Lista de facultades seleccionadas por el usuario.
+        facultadesEventoTemp = new ArrayList();
+
+        //Lista de facultades existentes en la base de datos.
+        facultadesEvento = manejoEventoHelper.obtenerFacultades();
     }
 
+    /**
+     * Método que que actualiza el registro del evento.
+     *
+     * @throws IOException
+     */
     public void modificarEvento() throws IOException {
+        //Arreglo de enteros que almacena los errores encontrados en la validación del evento
         int[] errores = new int[3];
+
+        //Variable que indica si un error ha sido encontrado.
         boolean error = false;
 
-        facultad = manejoEventoHelper.identificarFacultad(nombreFacultad);
-
-        facultadesEvento = new ArrayList();
-        facultadesEvento.add(facultad);
-
+        //Aquí se llena el arreglo dependiendo de los errores encontrados. 
         errores = manejoEventoHelper.validarEvento(evento);
 
-        evento.setFacultadList(facultadesEvento);
+        //Las facultades seleccionadas se asignan al objeto evento.
+        evento.setFacultadList(facultadesEventoTemp);
 
+        //Este if se encarga de cambiar la variable "error" a true en caso de que el arreglo se haya llenado.
         if (errores[0] == 1 || errores[1] == 1) {
             error = true;
 
         }
 
+        //Este if valida si se lleva a cabo la modificación o se muestra algún mensaje de error tomando en cuenta la variable "error"
         if (error == false) {
             manejoEventoHelper.modificarEvento(evento);
-            FacesContext.getCurrentInstance().getExternalContext().redirect(FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath() + "/consulta.xhtml");
+            actualizarListaEventos();
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Evento actualizado"));
+            PrimeFaces.current().executeScript("PF('manageProductDialog').hide()");
+            PrimeFaces.current().ajax().update("form:messages", "form:dt-products");
 
         } else {
             if (errores[0] == 1 && errores[1] == 1) {
@@ -82,15 +117,198 @@ public class ManejoEventoBeanUI implements Serializable {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "El evento ya existe", "Intente de nuevo"));
             }
         }
+        
 
     }
 
+    public void registroEvento() throws IOException {
+
+        if (evento.getIdEvento() == null) {
+            int[] errores = new int[3];
+            boolean error = false;
+            idAdmin = manejoEventoHelper.identificarAdmin(correo);
+            listaEventos = manejoEventoHelper.listaEventos();
+
+            if (listaEventos.isEmpty()) {
+                evento.setIdEvento(1);
+            } else {
+                evento.setIdEvento(listaEventos.get(listaEventos.size() - 1).getIdEvento() + 1);
+            }
+
+            evento.setNumEmpleadoAdministradorEvento(idAdmin);
+            evento.setEstadoEvento("Postulado");
+            evento.setFacultadList(facultadesEventoTemp);
+
+            errores = manejoEventoHelper.validarEvento(evento);
+
+            if (errores[0] == 1 || errores[1] == 1) {
+                error = true;
+
+            }
+
+            if (error == false) {
+                manejoEventoHelper.registroEvento(evento);
+                actualizarListaEventos();
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Evento registrado"));
+                PrimeFaces.current().executeScript("PF('manageProductDialog').hide()");
+                PrimeFaces.current().ajax().update("form:messages", "form:dt-products");
+
+            } else {
+                if (errores[0] == 1 && errores[1] == 1) {
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "El evento ya existe y la fecha no está dentro del rango permitido:", "Intente de nuevo"));
+                }
+                if (errores[0] == 1 && errores[1] == 0) {
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "La fecha no está dentro del rango permitido:", "Intente de nuevo"));
+                }
+                if (errores[0] == 0 && errores[1] == 1) {
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "El evento ya existe", "Intente de nuevo"));
+                }
+            }
+            
+        } else {
+            modificarEvento();
+        }
+
+    }
+
+    public String getMensajeBotonEliminar() {
+        if (hayEventosSeleccionados()) {
+            int size = this.listaEventosTemp.size();
+            return size > 1 ? size + " Eventos seleccionados" : "1 Evento seleccionado";
+        }
+
+        return "Eliminar";
+    }
+
+    public boolean hayEventosSeleccionados() {
+        return this.listaEventosTemp != null && !this.listaEventosTemp.isEmpty();
+    }
+
+    public void onItemUnselect(UnselectEvent event) {
+        FacesMessage msg = new FacesMessage();
+        msg.setSummary("Item unselected: " + event.getObject().toString());
+        msg.setSeverity(FacesMessage.SEVERITY_INFO);
+
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
+
+    /**
+     * Método encargado de eliminar el evento.
+     */
     public void eliminarEvento() {
-        manejoEventoHelper.eliminarEvento(manejoEventoHelper.eventoSeleccionado(evento.getIdEvento()));
+
+        //Objeto identificaadmin para asignarle un administrador de eventos al objeto evento.
+        idAdmin = manejoEventoHelper.identificarAdmin(correo);
+        System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+        //Lista de eventos creados por el administrador de eventos.
+        listaEventosAdmin = manejoEventoHelper.listaEventoAdmin(idAdmin);
+
+        this.evento = manejoEventoHelper.eventoSeleccionado(this.evento.getIdEvento());
+        boolean borradoIlegal = true;
+        for (Evento evAdmin : listaEventosAdmin) {
+            System.out.println("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
+            if (evAdmin.getNumEmpleadoAdministradorEvento().getCorreoAdministrador().getCorreo().equalsIgnoreCase(this.evento.getNumEmpleadoAdministradorEvento().getCorreoAdministrador().getCorreo())) {
+                System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+                borradoIlegal = false;
+            }
+        }
+
+        if (borradoIlegal) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Solo puede eliminar eventos creados por usted"));
+        } else {
+            System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+            manejoEventoHelper.eliminarEvento(evento);
+            actualizarListaEventos();
+            evento = null;
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Evento eliminado"));
+            PrimeFaces.current().ajax().update("form:messages", "form:dt-products");
+        }
     }
 
-    public void actualizarObjetoEvento() {
-        evento = manejoEventoHelper.eventoSeleccionado(evento.getIdEvento());
+    /**
+     * Método que elimina la lista de eventos enviados como parámetro de la base
+     * de datos.- Se utiiza para eliminar eventos cancelados.
+     *
+     * @param eventos
+     */
+    public void eliminarListaEventos() {
+        boolean borradoIlegal = true;
+
+        //Objeto identificaadmin para asignarle un administrador de eventos al objeto evento.
+        idAdmin = manejoEventoHelper.identificarAdmin(correo);
+
+        //Lista de eventos creados por el administrador de eventos.
+        listaEventosAdmin = manejoEventoHelper.listaEventoAdmin(idAdmin);
+
+        for (Evento evTemp : listaEventosTemp) {
+            borradoIlegal = true;
+            System.out.println("CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC");
+            for (Evento evAdmin : listaEventosAdmin) {
+                if (evAdmin.getNumEmpleadoAdministradorEvento().getCorreoAdministrador().getCorreo().equalsIgnoreCase(evTemp.getNumEmpleadoAdministradorEvento().getCorreoAdministrador().getCorreo())) {
+                    borradoIlegal = false;
+                    System.out.println("DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD");
+                }
+            }
+        }
+
+        if (borradoIlegal) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Solo se pueden eliminar eventos creados por usted:", "Seleccione eventos propios"));
+        } else {
+            manejoEventoHelper.eliminarListaEventos(listaEventosTemp);
+            actualizarListaEventos();
+            listaEventosTemp = null;
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Eventos eliminados"));
+            PrimeFaces.current().ajax().update("form:messages", "form:dt-products");
+            PrimeFaces.current().executeScript("PF('dtProducts').clearFilters()");
+        }
+    }
+
+    /**
+     * Método que reinicia los valores del objeto evento. Este método se activa
+     * al cargar la página otra vez
+     */
+    public void actualizarDatosEvento() {
+        this.evento = new Evento();
+    }
+
+    /**
+     * Método que actualiza la lista de eventos.
+     */
+    public void actualizarListaEventos() {
+        listaEventos = manejoEventoHelper.listaEventos();
+    }
+
+    // Getters y setters    
+    public List<Evento> getListaEventosTemp() {
+        return listaEventosTemp;
+    }
+
+    public void setListaEventosTemp(List<Evento> listaEventosTemp) {
+        this.listaEventosTemp = listaEventosTemp;
+    }
+
+    public String getCorreo() {
+        return correo;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
+
+    public List<Evento> getListaEventosAdmin() {
+        return listaEventosAdmin;
+    }
+
+    public void setListaEventosAdmin(List<Evento> listaEventosAdmin) {
+        this.listaEventosAdmin = listaEventosAdmin;
+    }
+
+    public List<Facultad> getFacultadesEventoTemp() {
+        return facultadesEventoTemp;
+    }
+
+    public void setFacultadesEventoTemp(List<Facultad> facultadesEventoTemp) {
+        this.facultadesEventoTemp = facultadesEventoTemp;
     }
 
     public Evento getEvento() {
@@ -99,22 +317,6 @@ public class ManejoEventoBeanUI implements Serializable {
 
     public void setEvento(Evento evento) {
         this.evento = evento;
-    }
-
-    public String getNombreFacultad() {
-        return nombreFacultad;
-    }
-
-    public void setNombreFacultad(String nombreFacultad) {
-        this.nombreFacultad = nombreFacultad;
-    }
-
-    public Facultad getFacultad() {
-        return facultad;
-    }
-
-    public void setFacultad(Facultad facultad) {
-        this.facultad = facultad;
     }
 
     public List<Evento> getListaEventos() {

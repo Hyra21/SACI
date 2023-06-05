@@ -12,16 +12,8 @@ import alucintech.integracion.ServiceLocator;
 
 /**
  *
- * @author EduardoCardona <>
+ * @author 980014102 <>
  */
 public class DelegateActividad {
-    
-    /**
-     * Metodo de ejemplo para guardar Alumno
-     * @param Actividad de tipo usuario con id 0 para que se cree un id nuevo
-     */
-    public void saveActividad(Actividad actividad){
-        ServiceLocator.getInstanceActividadDAO().save(actividad);
-    }
     
 }

@@ -15,13 +15,6 @@ import alucintech.integracion.ServiceLocator;
  * @author EduardoCardona <>
  */
 public class DelegateProgramaEducativo {
-    
-    /**
-     * Metodo de ejemplo para guardar Alumno
-     * @param programaEducativo de tipo usuario con id 0 para que se cree un id nuevo
-     */
-    public void saveProgramaEducativo(Programaeducativo programaEducativo){
-        ServiceLocator.getInstanceProgramaeducativoDAO().save(programaEducativo);
-    }
+
     
 }

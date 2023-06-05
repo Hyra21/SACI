@@ -16,12 +16,4 @@ import alucintech.integracion.ServiceLocator;
  */
 public class DelegateTieneSelloPK {
     
-    /**
-     * Metodo de ejemplo para guardar Alumno
-     * @param tieneSelloPK de tipo usuario con id 0 para que se cree un id nuevo
-     */
-    public void saveTieneSelloPK(TieneselloPK tieneSelloPK){
-        ServiceLocator.getInstanceTieneselloPKDAO().save(tieneSelloPK);
-    }
-    
 }

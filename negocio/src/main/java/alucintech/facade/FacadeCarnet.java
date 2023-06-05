@@ -20,8 +20,4 @@ public class FacadeCarnet {
         this.delegateCarnet = new DelegateCarnet();
     }
     
-    public void guardarCarnet(Carnet carnet){
-        delegateCarnet.saveCarnet(carnet);
-    }
-    
 }

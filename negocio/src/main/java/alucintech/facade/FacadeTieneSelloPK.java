@@ -19,9 +19,4 @@ public class FacadeTieneSelloPK {
     public FacadeTieneSelloPK() {
         this.delegateTieneSelloPK = new DelegateTieneSelloPK();
     }
-    
-    public void guardarTieneSelloPK(TieneselloPK tieneSelloPK){
-        delegateTieneSelloPK.saveTieneSelloPK(tieneSelloPK);
-    }
-    
 }

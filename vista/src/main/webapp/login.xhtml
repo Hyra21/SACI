@@ -52,27 +52,34 @@
             <div class="header">
                 <p:panel>
                     <p:graphicImage url="resources/uabc_escudo.jpg" class="logo"/>
-                    <h3 style= "font-family: 'SourceSansPro'">UNIVERSIDAD AUTÓNOMA DE BAJA CALIFORNIA</h3>
-                    <h5 style="font-family: 'Roboto', sans-serif;">SACI -Sistema para la Administración del Carnet Institucional</h5>
+                    <h1 style= "font-family: 'SourceSansPro'">UNIVERSIDAD AUTÓNOMA DE BAJA CALIFORNIA</h1>
+                    <h2 style="font-family: 'Roboto', sans-serif;">SACI -Sistema para la Administración del Carnet Institucional</h2>
                 </p:panel>
 
             </div>
 
             <div class="text-center">
                 <h:form>
+
+
+                    <br></br>
                     <p:messages id="messages" showDetail="true" closable="true" globalOnly="true">
                     </p:messages>
+
                     <p:panel header="Inicio de sesión">
-                        <h:panelGrid columns="2" cellpadding="10" >
+                        <h:panelGrid columns="3" cellpadding="10" >
 
                             <h:outputLabel for="correoInstitucional" value="Correo institucional:"/>
                             <p:inputText id="correoInstitucional" value="#{loginUI.usuarios.correo}" required="true" placeholder="Ingrese correo" requiredMessage="Un correo es requerido">
                             </p:inputText> 
 
+                            <p:message for="correoInstitucional" />
+
                             <h:outputLabel for="contrasena" value="Contraseña:"/>
                             <p:password id="contrasena" value="#{loginUI.usuarios.contrasenaUsuario}" toggleMask="true" required="true" redisplay="true" placeholder="Ingrese contraseña" requiredMessage="Ingrese una contraseña">
                             </p:password> 
 
+                            <p:message for="contrasena" />
 
                             <f:facet name="footer">
                                 <p:commandButton  value="Enviar" action="#{loginUI.login()}" ajax="false" style="background-color: #32CD32; color: #FFF;"/>

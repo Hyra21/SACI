@@ -13,14 +13,16 @@ import alucintech.entidad.Usuarios;
 import alucintech.integracion.ServiceFacadeLocator;
 
 /**
+ * Clase de apoyo para la clase LoginBeanUI que le permitirá utilizar los
+ * métodos que interactúan con la base de datos.
  *
- * @author Kevin
+ * @author 980014102
  */
 public class LoginHelper implements Serializable{
     
 
     /**
-     * Metodo para hacer login llamara a la instancia de usuarioFacade
+     * Metodo para hacer login y validar el correo y contraseña; llamara a la instancia de FacadeUsuarios.
      * @param correo
      * @param password
      * @return 

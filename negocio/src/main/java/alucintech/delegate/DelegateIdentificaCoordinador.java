@@ -16,12 +16,4 @@ import alucintech.integracion.ServiceLocator;
  */
 public class DelegateIdentificaCoordinador {
     
-    /**
-     * Metodo de ejemplo para guardar Alumno
-     * @param identificaCoordinador de tipo usuario con id 0 para que se cree un id nuevo
-     */
-    public void saveIdentificaCoordinador(Identificacoordinador identificaCoordinador){
-        ServiceLocator.getInstanceIdentificacoordinadorDAO().save(identificaCoordinador);
-    }
-    
 }

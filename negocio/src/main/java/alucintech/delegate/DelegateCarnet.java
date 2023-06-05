@@ -16,12 +16,4 @@ import alucintech.integracion.ServiceLocator;
  */
 public class DelegateCarnet {
     
-    /**
-     * Metodo de ejemplo para guardar Alumno
-     * @param carnet de tipo usuario con id 0 para que se cree un id nuevo
-     */
-    public void saveCarnet(Carnet carnet){
-        ServiceLocator.getInstanceCarnetDAO().save(carnet);
-    }
-    
 }

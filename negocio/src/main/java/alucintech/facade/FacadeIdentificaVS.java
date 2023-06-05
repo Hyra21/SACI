@@ -20,8 +20,4 @@ public class FacadeIdentificaVS {
         this.delegateIdentificaVS = new DelegateIdentificaVS();
     }
     
-    public void guardarIdentificaCoordinador(Identificavs identificaVS){
-        delegateIdentificaVS.saveIdentificaVS(identificaVS);
-    }
-    
 }

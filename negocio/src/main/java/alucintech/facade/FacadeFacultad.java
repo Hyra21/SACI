@@ -21,14 +21,6 @@ public class FacadeFacultad {
         this.delegateFacultad = new DelegateFacultad();
     }
     
-    public void guardarFacultad(Facultad facultad){
-        delegateFacultad.saveFacultad(facultad);
-    }
-    
-    public Facultad identificarFacultad(String nombreFacultad){
-        return delegateFacultad.identificarFacultad(nombreFacultad);
-    }
-    
     public List<Facultad> obtenerFacultades(){
         return delegateFacultad.obtenerFacultades();
     }

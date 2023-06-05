@@ -20,8 +20,4 @@ public class FacadeProgramaEducativo {
         this.delegateProgramaEducativo = new DelegateProgramaEducativo();
     }
     
-    public void guardarProgramaEducativo(Programaeducativo programaEducativo){
-        delegateProgramaEducativo.saveProgramaEducativo(programaEducativo);
-    }
-    
 }

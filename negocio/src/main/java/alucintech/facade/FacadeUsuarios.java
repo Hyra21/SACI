@@ -9,8 +9,8 @@ import alucintech.delegate.DelegateUsuarios;
 import alucintech.entidad.Usuarios;
 
 /**
- *
- * @author EduardoCardona <>
+ * Clase que llamará a DelegateUsuarios para acceder a los métodos que interactuán con la base de datos.
+ * @author 980014102 <>
  */
 public class FacadeUsuarios {
     
@@ -19,11 +19,12 @@ public class FacadeUsuarios {
     public FacadeUsuarios() {
         this.delegateUsuarios = new DelegateUsuarios();
     }
-    
-    public void guardarUsuarios(Usuarios usuarios){
-        delegateUsuarios.saveUsuarios(usuarios);
-    }
-    
+    /**
+     * Metodo para hacer login y validar el correo y contraseña; llamara a la instancia de DelegateUsuarios.
+     * @param correo
+     * @param password
+     * @return 
+     */
     public Usuarios login(String password, String correo){
         return delegateUsuarios.login(password, correo);
     }
