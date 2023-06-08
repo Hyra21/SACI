@@ -24,4 +24,9 @@ public class DelegateFacultad {
     public List<Facultad> obtenerFacultades() {
         return ServiceLocator.getInstanceFacultadDAO().findAll();
     }
+    
+    public void actualizarFacultad(Facultad facultad){
+        ServiceLocator.getInstanceFacultadDAO().update(facultad);
+    }
+    
 }

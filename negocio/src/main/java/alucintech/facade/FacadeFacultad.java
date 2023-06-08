@@ -25,4 +25,8 @@ public class FacadeFacultad {
         return delegateFacultad.obtenerFacultades();
     }
     
+        public void actualizarFacultad(Facultad facultad) {
+        delegateFacultad.actualizarFacultad(facultad);
+    }
+    
 }

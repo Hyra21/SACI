@@ -127,4 +127,8 @@ public class ManejoEventoHelper implements Serializable {
     public List<Facultad> obtenerFacultades() {
         return ServiceFacadeLocator.getInstanceFacadeFacultad().obtenerFacultades();
     }
+    
+    public void actualizarFacultad(Facultad facultad){
+        ServiceFacadeLocator.getInstanceFacadeFacultad().actualizarFacultad(facultad);
+    }
 }
