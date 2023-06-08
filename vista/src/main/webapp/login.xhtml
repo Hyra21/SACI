@@ -59,27 +59,29 @@
         <div class="site-wrapper">
             <div class="header">
                 <p:panel>
-                    <p:graphicImage url="resources/uabc_escudo.jpg" class="logo"/>
-                    <h1 style= "font-family: 'SourceSansPro'">UNIVERSIDAD AUTÓNOMA DE BAJA CALIFORNIA</h1>
-                    <h2 style="font-family: 'Roboto', sans-serif;">SACI -Sistema para la Administración del Carnet Institucional</h2>
+                    <p:graphicImage url="resources/uabc_escudo.jpg" class="logo"/> <!-- Se inserta la imagen del logo -->
+                    <h1 style= "font-family: 'SourceSansPro'">UNIVERSIDAD AUTÓNOMA DE BAJA CALIFORNIA</h1> <!-- Se inserta el tipo de fuente de letra -->
+                    <h2 style="font-family: 'Roboto', sans-serif;">SACI -Sistema para la Administración del Carnet Institucional</h2> <!-- Se inserta el tipo de fuente de letra -->
                 </p:panel>
             </div>
 
             <div class="text-center">
+                <!-- Empieza el código para el formulario de inicio de sesión -->
                 <h:form>
                     
+                    <!-- El componente messages se usa para mostrar los mensajes de error -->
                     <p:messages id="messages" showDetail="true" closable="true" globalOnly="true">
                     </p:messages>
 
-                    <p:panel header="Inicio de sesión">
-                        <h:panelGrid columns="3" cellpadding="10" >
-
+                    <p:panel header="Inicio de sesión" style="font-family: 'SourceSansPro', sans-serif;">
+                        <h:panelGrid columns="4" cellpadding="6" >
+                            <!-- Se pide al usuario su correo institucional -->
                             <h:outputLabel for="correoInstitucional" value="Correo institucional:"/>
                             <p:inputText id="correoInstitucional" value="#{loginUI.usuarios.correo}" required="true" placeholder="Ingrese correo" requiredMessage="Ingrese un correo">
                             </p:inputText> 
 
                             <p:message for="correoInstitucional" />
-
+                            <!-- Se pide al usuario su contraseña -->
                             <h:outputLabel for="contrasena" value="Contraseña:"/>
                             <p:password id="contrasena" value="#{loginUI.usuarios.contrasenaUsuario}" toggleMask="true" required="true" redisplay="true" placeholder="Ingrese contraseña" requiredMessage="Ingrese una contraseña">
                             </p:password> 
@@ -87,11 +89,12 @@
                             <p:message for="contrasena" />
 
                             <f:facet name="footer">
+                                <!-- Botón para enviar las credenciales y validarlas en la base de datos -->
                                 <p:commandButton  value="Enviar" action="#{loginUI.login()}" ajax="false" style="background-color: #32CD32; color: #FFF;"/>
                             </f:facet>
                         </h:panelGrid>
                     </p:panel>
-                </h:form>
+                </h:form> <!-- Termina el código para el formulario de inicio de sesión -->
             </div>
         </div>
     </h:body>

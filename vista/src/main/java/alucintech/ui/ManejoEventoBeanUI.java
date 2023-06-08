@@ -102,7 +102,7 @@ public class ManejoEventoBeanUI implements Serializable {
         if (error == false) {
             manejoEventoHelper.modificarEvento(evento);
             actualizarListaEventos();
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Evento actualizado"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Evento actualizado",""));
             PrimeFaces.current().executeScript("PF('manageProductDialog').hide()");
             PrimeFaces.current().ajax().update("form:messages", "form:dt-products");
 
@@ -149,7 +149,7 @@ public class ManejoEventoBeanUI implements Serializable {
             if (error == false) {
                 manejoEventoHelper.registroEvento(evento);
                 actualizarListaEventos();
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Evento registrado"));
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Evento registrado",""));
                 PrimeFaces.current().executeScript("PF('manageProductDialog').hide()");
                 PrimeFaces.current().ajax().update("form:messages", "form:dt-products");
 
@@ -166,7 +166,8 @@ public class ManejoEventoBeanUI implements Serializable {
             }
             
         } else {
-            modificarEvento();
+            PrimeFaces.current().executeScript("PF('manageProductDialog3').show()");
+            
         }
 
     }
@@ -177,7 +178,7 @@ public class ManejoEventoBeanUI implements Serializable {
             return size > 1 ? size + " Eventos seleccionados" : "1 Evento seleccionado";
         }
 
-        return "Eliminación Multiple";
+        return "Eliminación Múltiple";
     }
 
     public boolean hayEventosSeleccionados() {
@@ -220,7 +221,7 @@ public class ManejoEventoBeanUI implements Serializable {
             manejoEventoHelper.eliminarEvento(evento);
             actualizarListaEventos();
             evento = null;
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Evento eliminado"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Evento eliminado",""));
             PrimeFaces.current().ajax().update("form:messages", "form:dt-products");
         }
     }
@@ -257,7 +258,7 @@ public class ManejoEventoBeanUI implements Serializable {
             manejoEventoHelper.eliminarListaEventos(listaEventosTemp);
             actualizarListaEventos();
             listaEventosTemp = null;
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Eventos eliminados"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Eventos eliminados",""));
             PrimeFaces.current().ajax().update("form:messages", "form:dt-products");
             PrimeFaces.current().executeScript("PF('dtProducts').clearFilters()");
         }

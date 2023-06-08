@@ -74,18 +74,15 @@
             border-color: #FEBE10; /* Color amarillo de los bordes  */
         }
 
-        .custom-menuitem {
-            float: left;
-            padding-right: 10px;
-        }
-
         /* Para que se posicione en el centro  */
         .text-center{
             float: none;
             margin: 0 auto;
             display: table;
         }
+       
 
+        
         /* Aqui se menciona la familia del font que se usara para la letra  */
         @font-face {
             font-family: "SourceSansPro";
@@ -99,7 +96,8 @@
         <div class="header">
             <p:panel>
                 <p:graphicImage url="resources/facu_logo.png" class="logo"/> <!-- Se inserta la imagen del logo -->
-                <h3 style="font-family: 'Roboto', sans-serif;">SAEA -Sistema para la Administración de Eventos y Actividades</h3> <!-- Se inserta el tipo de fuente de letra -->
+                <h3 style="font-family: 'Roboto', sans-serif;">
+                    SAEA -Sistema para la Administración de Eventos y Actividades</h3> <!-- Se inserta el tipo de fuente de letra -->
             </p:panel>
         </div><!-- Termina el encabezado -->
 
@@ -114,8 +112,8 @@
 
                     <p:divider layout="vertical"/>
 
-                    <p:menuitem value="Ayuda" icon="pi pi-fw pi-question-circle" styleClass="custom-menuitem" />
-                    <p:menuitem value="Cerrar sesión" outcome="login.xhtml" icon="pi pi-fw pi-sign-out" styleClass="custom-menuitem" />
+                    <p:menuitem value="Ayuda" icon="pi pi-fw pi-question-circle" />
+                    <p:menuitem value="Cerrar sesión" outcome="login.xhtml" icon="pi pi-fw pi-sign-out" />
                 </p:menubar>
             </h:form>
         </div> <!-- Termina el Menú -->
@@ -201,11 +199,11 @@
                     </p:column>
 
                     <!-- Botones para visualizar, modificar y eliminar -->
-                    <p:column exportable="false">
+                    <p:column exportable="false" width="9%">
                         
                         <!-- Botón para visualizar la información del evento -->
                         <p:commandButton update=":dialogs:manage-product-content" oncomplete="PF('manageproductDialog').show()"
-                                         icon="pi pi-search"
+                                         icon="pi pi-eye"
                                          process="@this"
                                          styleClass="search-button rounded-button"
                                          title="Haz clic para visualizar el evento">
@@ -235,9 +233,11 @@
             </h:form> <!-- Termina la tabla de consulta -->
 
             <!-- Empieza el código para el registro del evento -->
+            
             <h:form id="dialogs">
                 <p:dialog header="Información del evento" showEffect="fade" modal="true" widgetVar="manageProductDialog"
-                          responsive="true">
+                          responsive="true" resizable="true">
+                    
                     <p:outputPanel id="manage-product-content" class="ui-fluid">
 
                         <p:outputPanel rendered="#{not empty ManejoEventoUI.evento}">
@@ -255,10 +255,6 @@
                                 <p:selectOneMenu id="cicloEscolar" value="#{ManejoEventoUI.evento.cicloEscolarEvento}" required="true" requiredMessage="Ingrese la fecha de inicio">
                                     <f:selectItem itemLabel="2023-1" itemValue="2023-1"/>
                                     <f:selectItem itemLabel="2023-2" itemValue="2023-2"/>
-                                    <f:facet name="footer">
-                                        <p:divider styleClass="mt-0" />
-                                        <h:outputText value="2 options" style="font-weight:bold;"/>
-                                    </f:facet>
                                 </p:selectOneMenu>
                                 <p:message for="cicloEscolar" />
                             </div>
@@ -292,15 +288,26 @@
                     </p:outputPanel>
 
                     <f:facet name="footer">
-                        <p:commandButton value="Guardar" icon="pi pi-check" actionListener="#{ManejoEventoUI.registroEvento()}"
+                        <p:commandButton value="Aceptar" icon="pi pi-check" actionListener="#{ManejoEventoUI.registroEvento()}"
                                          update="manage-product-content" process="manage-product-content @this" style="background-color: #50B848; color: #FFF;" />
                         <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('manageProductDialog').hide()"
                                          class="ui-button-secondary" type="button" style="background-color: red; color: #FFF;" />
                     </f:facet>
+            
                 </p:dialog> 
                 <!-- Termina el código para el registro del evento -->
-
-
+                
+                <!-- Empiezan los mensajes de confirmación para modificar un evento -->    
+                <p:confirmDialog widgetVar="manageProductDialog3" showEffect="fade" width="300"
+                                 message="¿Desea modificar el evento?" header="Confirmación" severity="warn">
+                    <p:commandButton value="Aceptar" icon="pi pi-check" actionListener="#{ManejoEventoUI.modificarEvento()}"
+                                     process="@this" update="manage-product-content"
+                                     oncomplete="PF('manageProductDialog3').hide()" style="background-color: #50B848; color: #FFF;" />
+                    <p:commandButton value="Cancelar" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
+                                     onclick="PF('manageProductDialog3').hide()" style="background-color: red; color: #FFF;" />
+                </p:confirmDialog>
+                <!-- Terminan los mensajes de confirmación para modificar un evento -->
+                
                 <!-- Empiezan los mensajes de confirmación para eliminar un evento -->
                 <p:confirmDialog widgetVar="deleteProductDialog" showEffect="fade" width="300"
                                  message="¿Desea eliminar el evento?" header="Confirmación" severity="warn">
@@ -319,6 +326,9 @@
                 </p:confirmDialog>
                 <!-- Terminan los mensajes de confirmación para la eliminacion multiple de los eventos -->
             </h:form>
+            
+            
+            
         </div>
         <!-- Se asigna el correo del tipo de usuario -->
         <h:outputLabel for="correo" value="#{ManejoEventoUI.setCorreo(loginUI.usuarios.correo)}"/>
