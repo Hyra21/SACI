@@ -213,5 +213,4 @@ public class Evento implements Serializable {
     public void setImagenEvento(byte[] imagenEvento) {
         this.imagenEvento = imagenEvento;
     }
-    
 }

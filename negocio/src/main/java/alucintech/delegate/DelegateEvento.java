@@ -104,6 +104,11 @@ public class DelegateEvento {
             if (ev.getNombreEvento().compareToIgnoreCase(evento.getNombreEvento()) == 0 && ev.getCicloEscolarEvento().compareToIgnoreCase(evento.getCicloEscolarEvento()) == 0) {
                 errores[1] = 1;
             }
+            if(evento.getIdEvento()!=null){
+                if (ev.getIdEvento() == evento.getIdEvento()) {
+                    errores[1] = 0;
+                }
+            }
         }
         return errores;
     }

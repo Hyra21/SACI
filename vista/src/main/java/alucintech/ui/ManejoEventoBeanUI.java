@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package alucintech.ui;
 
 import java.io.Serializable;
@@ -17,9 +12,14 @@ import alucintech.entidad.Identificaadministrador;
 import alucintech.helper.ManejoEventoHelper;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Base64;
+import java.util.Calendar;
 import java.util.List;
 import org.primefaces.PrimeFaces;
+import org.primefaces.context.PrimeFacesContext;
+import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.UnselectEvent;
+import org.primefaces.model.file.UploadedFile;
 
 /**
  * Clase que se encargará de ejecutar las acciones requeridas por el archivo
@@ -36,12 +36,15 @@ public class ManejoEventoBeanUI implements Serializable {
     private ManejoEventoHelper manejoEventoHelper;
     private Evento evento;
     private String correo;
-    private Identificaadministrador idAdmin;
+    private Identificaadministrador admin;
     private List<Evento> listaEventosAdmin;
     private List<Evento> listaEventos;
     private List<Evento> listaEventosTemp;
     private List<Facultad> facultadesEventoTemp;
     private List<Facultad> facultadesEvento;
+    private String fecha;
+    private Calendar cal;
+    private UploadedFile archivoImagen;
 
     //Constructor
     public ManejoEventoBeanUI() {
@@ -72,6 +75,10 @@ public class ManejoEventoBeanUI implements Serializable {
 
         //Lista de facultades existentes en la base de datos.
         facultadesEvento = manejoEventoHelper.obtenerFacultades();
+
+        //Se obtiene la fecha actual para establecer los ciclos escolares que aparecerán en los nuevos registros
+        String fecha = new String();
+
     }
 
     /**
@@ -92,64 +99,33 @@ public class ManejoEventoBeanUI implements Serializable {
         //Las facultades seleccionadas se asignan al objeto evento.
         evento.setFacultadList(facultadesEventoTemp);
 
+        admin = manejoEventoHelper.identificarAdmin(correo);
+        listaEventosAdmin = manejoEventoHelper.listaEventoAdmin(admin);
+
         //Este if se encarga de cambiar la variable "error" a true en caso de que el arreglo se haya llenado.
         if (errores[0] == 1 || errores[1] == 1) {
             error = true;
 
         }
-
-        //Este if valida si se lleva a cabo la modificación o se muestra algún mensaje de error tomando en cuenta la variable "error"
-        if (error == false) {
-            manejoEventoHelper.modificarEvento(evento);
-            actualizarListaEventos();
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Evento actualizado"));
-            PrimeFaces.current().executeScript("PF('manageProductDialog').hide()");
-            PrimeFaces.current().ajax().update("form:messages", "form:dt-products");
-
-        } else {
-            if (errores[0] == 1 && errores[1] == 1) {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "El evento ya existe y la fecha no está dentro del rango permitido:", "Intente de nuevo"));
-            }
-            if (errores[0] == 1 && errores[1] == 0) {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "La fecha no está dentro del rango permitido:", "Intente de nuevo"));
-            }
-            if (errores[0] == 0 && errores[1] == 1) {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "El evento ya existe", "Intente de nuevo"));
+        boolean modificacionIlegal = true;
+        for (Evento evAdmin : listaEventosAdmin) {
+            if (evAdmin.getNumEmpleadoAdministradorEvento().getCorreoAdministrador().getCorreo().equalsIgnoreCase(this.evento.getNumEmpleadoAdministradorEvento().getCorreoAdministrador().getCorreo())) {
+                modificacionIlegal = false;
             }
         }
-        
 
-    }
+        if (modificacionIlegal) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Solo puede modificar eventos creados por usted"));
+            PrimeFaces.current().executeScript("PF('manageProductDialog').hide()");
+            PrimeFaces.current().ajax().update("form:messages", "form:dt-products");
+        } else {
 
-    public void registroEvento() throws IOException {
-
-        if (evento.getIdEvento() == null) {
-            int[] errores = new int[3];
-            boolean error = false;
-            idAdmin = manejoEventoHelper.identificarAdmin(correo);
-            listaEventos = manejoEventoHelper.listaEventos();
-
-            if (listaEventos.isEmpty()) {
-                evento.setIdEvento(1);
-            } else {
-                evento.setIdEvento(listaEventos.get(listaEventos.size() - 1).getIdEvento() + 1);
-            }
-
-            evento.setNumEmpleadoAdministradorEvento(idAdmin);
-            evento.setEstadoEvento("Postulado");
-            evento.setFacultadList(facultadesEventoTemp);
-
-            errores = manejoEventoHelper.validarEvento(evento);
-
-            if (errores[0] == 1 || errores[1] == 1) {
-                error = true;
-
-            }
-
+            //Este if valida si se lleva a cabo la modificación o se muestra algún mensaje de error tomando en cuenta la variable "error"
             if (error == false) {
-                manejoEventoHelper.registroEvento(evento);
+                
+                manejoEventoHelper.modificarEvento(evento);
                 actualizarListaEventos();
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Evento registrado"));
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Evento actualizado",""));
                 PrimeFaces.current().executeScript("PF('manageProductDialog').hide()");
                 PrimeFaces.current().ajax().update("form:messages", "form:dt-products");
 
@@ -164,9 +140,54 @@ public class ManejoEventoBeanUI implements Serializable {
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "El evento ya existe", "Intente de nuevo"));
                 }
             }
-            
+        }
+    }
+
+    public void registroEvento() throws IOException {
+
+        if (evento.getIdEvento() == null) {
+            int[] errores = new int[3];
+            boolean error = false;
+            admin = manejoEventoHelper.identificarAdmin(correo);
+            listaEventos = manejoEventoHelper.listaEventos();
+
+            evento.setNumEmpleadoAdministradorEvento(admin);
+            evento.setEstadoEvento("Postulado");
+            evento.setFacultadList(facultadesEventoTemp);
+
+            errores = manejoEventoHelper.validarEvento(evento);
+
+            if (errores[0] == 1 || errores[1] == 1) {
+                error = true;
+
+            }
+
+            if (error == false) {
+                if (listaEventos.isEmpty()) {
+                    evento.setIdEvento(1);
+                } else {
+                    evento.setIdEvento(listaEventos.get(listaEventos.size() - 1).getIdEvento() + 1);
+                }
+                manejoEventoHelper.registroEvento(evento);
+                actualizarListaEventos();
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Evento registrado",""));
+                PrimeFaces.current().executeScript("PF('manageProductDialog').hide()");
+                PrimeFaces.current().ajax().update("form:messages", "form:dt-products");
+
+            } else {
+                if (errores[0] == 1 && errores[1] == 1) {
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "El evento ya existe y la fecha no está dentro del rango permitido:", "Intente de nuevo"));
+                }
+                if (errores[0] == 1 && errores[1] == 0) {
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "La fecha no está dentro del rango permitido:", "Intente de nuevo"));
+                }
+                if (errores[0] == 0 && errores[1] == 1) {
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "El evento ya existe", "Intente de nuevo"));
+                }
+            }
+
         } else {
-            modificarEvento();
+            PrimeFaces.current().executeScript("PF('manageProductDialog3').show()");
         }
 
     }
@@ -177,7 +198,7 @@ public class ManejoEventoBeanUI implements Serializable {
             return size > 1 ? size + " Eventos seleccionados" : "1 Evento seleccionado";
         }
 
-        return "Eliminación Multiple";
+        return "Eliminar";
     }
 
     public boolean hayEventosSeleccionados() {
@@ -198,29 +219,26 @@ public class ManejoEventoBeanUI implements Serializable {
     public void eliminarEvento() {
 
         //Objeto identificaadmin para asignarle un administrador de eventos al objeto evento.
-        idAdmin = manejoEventoHelper.identificarAdmin(correo);
-        System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+        admin = manejoEventoHelper.identificarAdmin(correo);
         //Lista de eventos creados por el administrador de eventos.
-        listaEventosAdmin = manejoEventoHelper.listaEventoAdmin(idAdmin);
+        listaEventosAdmin = manejoEventoHelper.listaEventoAdmin(admin);
 
         this.evento = manejoEventoHelper.eventoSeleccionado(this.evento.getIdEvento());
         boolean borradoIlegal = true;
         for (Evento evAdmin : listaEventosAdmin) {
-            System.out.println("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
             if (evAdmin.getNumEmpleadoAdministradorEvento().getCorreoAdministrador().getCorreo().equalsIgnoreCase(this.evento.getNumEmpleadoAdministradorEvento().getCorreoAdministrador().getCorreo())) {
-                System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
                 borradoIlegal = false;
             }
         }
 
         if (borradoIlegal) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Solo puede eliminar eventos creados por usted"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Solo se pueden eliminar eventos creados por usted:", "Seleccione eventos propios"));
+            PrimeFaces.current().ajax().update("form:messages", "form:dt-products");
         } else {
-            System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
             manejoEventoHelper.eliminarEvento(evento);
             actualizarListaEventos();
             evento = null;
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Evento eliminado"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Evento eliminado",""));
             PrimeFaces.current().ajax().update("form:messages", "form:dt-products");
         }
     }
@@ -235,29 +253,28 @@ public class ManejoEventoBeanUI implements Serializable {
         boolean borradoIlegal = true;
 
         //Objeto identificaadmin para asignarle un administrador de eventos al objeto evento.
-        idAdmin = manejoEventoHelper.identificarAdmin(correo);
+        admin = manejoEventoHelper.identificarAdmin(correo);
 
         //Lista de eventos creados por el administrador de eventos.
-        listaEventosAdmin = manejoEventoHelper.listaEventoAdmin(idAdmin);
+        listaEventosAdmin = manejoEventoHelper.listaEventoAdmin(admin);
 
         for (Evento evTemp : listaEventosTemp) {
             borradoIlegal = true;
-            System.out.println("CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC");
             for (Evento evAdmin : listaEventosAdmin) {
                 if (evAdmin.getNumEmpleadoAdministradorEvento().getCorreoAdministrador().getCorreo().equalsIgnoreCase(evTemp.getNumEmpleadoAdministradorEvento().getCorreoAdministrador().getCorreo())) {
                     borradoIlegal = false;
-                    System.out.println("DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD");
                 }
             }
         }
 
         if (borradoIlegal) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Solo se pueden eliminar eventos creados por usted:", "Seleccione eventos propios"));
+            PrimeFaces.current().ajax().update("form:messages", "form:dt-products");
         } else {
             manejoEventoHelper.eliminarListaEventos(listaEventosTemp);
             actualizarListaEventos();
             listaEventosTemp = null;
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Eventos eliminados"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Eventos eliminados",""));
             PrimeFaces.current().ajax().update("form:messages", "form:dt-products");
             PrimeFaces.current().executeScript("PF('dtProducts').clearFilters()");
         }
@@ -278,7 +295,25 @@ public class ManejoEventoBeanUI implements Serializable {
         listaEventos = manejoEventoHelper.listaEventos();
     }
 
-    // Getters y setters    
+    public void subirArchivoImagen(FileUploadEvent event) {
+        archivoImagen = event.getFile();
+        if (archivoImagen != null) {
+            evento.setImagenEvento(archivoImagen.getContent());
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Se ha guardado la imágen:", "" + archivoImagen.getFileName()));
+        }
+    }
+
+    public String getImagenDatos(byte[] eventoImagen) {
+        if (eventoImagen == null) {
+            return null;
+        } else {
+            String imagenBase64 = Base64.getEncoder().encodeToString(eventoImagen);
+            return imagenBase64;
+        }
+
+    }
+
+// Getters y setters    
     public List<Evento> getListaEventosTemp() {
         return listaEventosTemp;
     }
@@ -333,6 +368,22 @@ public class ManejoEventoBeanUI implements Serializable {
 
     public void setFacultadesEvento(List<Facultad> facultadesEvento) {
         this.facultadesEvento = facultadesEvento;
+    }
+
+    public String getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
+    }
+
+    public UploadedFile getArchivoImagen() {
+        return archivoImagen;
+    }
+
+    public void setArchivoImagen(UploadedFile archivoImagen) {
+        this.archivoImagen = archivoImagen;
     }
 
 }
