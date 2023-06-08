@@ -177,7 +177,7 @@ public class ManejoEventoBeanUI implements Serializable {
             return size > 1 ? size + " Eventos seleccionados" : "1 Evento seleccionado";
         }
 
-        return "Eliminar";
+        return "Eliminación Multiple";
     }
 
     public boolean hayEventosSeleccionados() {

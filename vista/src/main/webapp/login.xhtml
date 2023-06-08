@@ -9,33 +9,39 @@
 
         <style>
             *{
-                text-align: center;
+                text-align: center; /* Su uso es para centrar todo el texto de la página web. */  
             }
 
             body {
-                height: 100%;
-                padding-left: 0px;
+                height: 100%; /* Se establece que la altura es del 100%. */
+                padding-left: 0px; /* Se refiere a el tamaño de separacion que existe entre el body. */
+                background: #00723F; /* Color verde */
             }
 
             .header{
-                margin-bottom: 50px;
+                margin-bottom: 50px; /* Se establece una separación del margen del header a unos 50 pixeles.*/
+                border-width: 5px; /* Grosor del borde de 5 pixeles. */
+                border-color: #FEBE10; /* Color amarillo. */
+                border-style: solid; /* Estilo de borde solido. */
+                border-radius: 9px; /* Redondea todas las esquinas con un radio de 9 pixeles. */
             }
-            h3{
-                color: #00723F;
+            
+            h2{
+                color: #00723F; /* Color verde */
             }
-
-            .customPanelGrid .ui-panelgrid-content {
-                align-items: center;
-            }
-
+            
             .logo{
-                width: 80px;
+                width: 80px; /* Se establece un ancho de 80 pixeles para el logo del header. */
             }
 
             .text-center{
                 float: none;
                 margin: 0 auto;
                 display: table;
+                border-width: 5px; /* Grosor del borde de 5 pixeles. */
+                border-color: #FEBE10; /* Color amarillo. */
+                border-style: solid; /* Estilo de borde solido. */
+                border-radius: 9px; /* Redondea todas las esquinas con un radio de 9 pixeles. */
             }
 
             @font-face {
@@ -55,14 +61,11 @@
                     <h1 style= "font-family: 'SourceSansPro'">UNIVERSIDAD AUTÓNOMA DE BAJA CALIFORNIA</h1>
                     <h2 style="font-family: 'Roboto', sans-serif;">SACI -Sistema para la Administración del Carnet Institucional</h2>
                 </p:panel>
-
             </div>
 
             <div class="text-center">
                 <h:form>
-
-
-                    <br></br>
+                    
                     <p:messages id="messages" showDetail="true" closable="true" globalOnly="true">
                     </p:messages>
 
@@ -70,7 +73,7 @@
                         <h:panelGrid columns="3" cellpadding="10" >
 
                             <h:outputLabel for="correoInstitucional" value="Correo institucional:"/>
-                            <p:inputText id="correoInstitucional" value="#{loginUI.usuarios.correo}" required="true" placeholder="Ingrese correo" requiredMessage="Un correo es requerido">
+                            <p:inputText id="correoInstitucional" value="#{loginUI.usuarios.correo}" required="true" placeholder="Ingrese correo" requiredMessage="Ingrese un correo">
                             </p:inputText> 
 
                             <p:message for="correoInstitucional" />

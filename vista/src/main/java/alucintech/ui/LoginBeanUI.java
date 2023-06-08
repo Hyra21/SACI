@@ -59,7 +59,7 @@ public class LoginBeanUI implements Serializable {
         Usuarios us = new Usuarios();
         us = loginHelper.Login(usuario.getCorreo(), usuario.getContrasenaUsuario());
 
-        //Este if sirve para decidiri a que ventana enviar al usuario 
+        //Este if sirve para decidir a que ventana enviar al usuario 
         //dependiendo de su tipo y además para mostrar el mensaje de error 
         //en caso de que la validación no regrese un objeto evento.
         if (us != null && us.getCorreo() != null) {
@@ -68,7 +68,7 @@ public class LoginBeanUI implements Serializable {
                 FacesContext.getCurrentInstance().getExternalContext().redirect(FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath() + "/index.xhtml");
             }
             if (us.getTipoUsuario().compareToIgnoreCase("Cordinador de carrera") == 0) {
-
+                FacesContext.getCurrentInstance().getExternalContext().redirect(FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath() + "/index.xhtml");
             }
             if (us.getTipoUsuario().compareToIgnoreCase("Subdireccion") == 0) {
 
