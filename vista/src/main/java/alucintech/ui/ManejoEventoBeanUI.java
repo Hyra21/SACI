@@ -60,13 +60,14 @@ public class ManejoEventoBeanUI implements Serializable {
     private LocalTime minTime;
     private LocalTime maxTime;
 
-    private boolean mostrarForm;
-    private boolean mostrarForm2;
+//    private boolean mostrarForm;
+//    private boolean mostrarForm2;
+    
     //Constructor
     public ManejoEventoBeanUI() {
         manejoEventoHelper = new ManejoEventoHelper();
-        mostrarForm = true;
-        mostrarForm2 = false;
+//        mostrarForm = true;
+//        mostrarForm2 = false;
     }
 
     /**
@@ -94,7 +95,11 @@ public class ManejoEventoBeanUI implements Serializable {
         //Lista de facultades existentes en la base de datos.
         facultadesEvento = manejoEventoHelper.obtenerFacultades();
         
+        //Variables para el componente datePicker que servirá para obtener el horario.
+        
+        //minTime es para asignarle que solo deje elegir a partir de las 7:00 AM.
         minTime = LocalTime.of(7, 0);
+        //mazTime es para asignarle que solo deje elegir hasta las 10:00 PM.
         maxTime = LocalTime.of(22, 0);
 
     }
@@ -103,15 +108,19 @@ public class ManejoEventoBeanUI implements Serializable {
 //        this.mostrarForm = mostrarForm;
 //    }
     
-    public void mostrarForm() {
-        mostrarForm = true;
-        mostrarForm2 = false;
-    }
-
-    public void mostrarForm2() {
-        mostrarForm = false;
-        mostrarForm2 = true;
-    }
+//    public void mostrarForm(ActionEvent event) {
+//        mostrarForm = true;
+//        mostrarForm2 = false;
+//        FacesContext.getCurrentInstance().getPartialViewContext().getRenderIds().add("form");
+//        FacesContext.getCurrentInstance().getPartialViewContext().getRenderIds().add("form2");
+//    }
+//
+//    public void mostrarForm2(ActionEvent event) {
+//        mostrarForm = false;
+//        mostrarForm2 = true;
+//        FacesContext.getCurrentInstance().getPartialViewContext().getRenderIds().add("form");
+//        FacesContext.getCurrentInstance().getPartialViewContext().getRenderIds().add("form2");
+//    }
     
     /**
      * Método que que modifica registros de los eventos.
@@ -527,11 +536,11 @@ public class ManejoEventoBeanUI implements Serializable {
         this.maxTime = maxTime;
     }
     
-    public boolean isMostrarForm() {
-        return mostrarForm;
-    }
-    
-    public boolean isMostrarForm2() {
-        return mostrarForm2;
-    }
+//    public boolean isMostrarForm() {
+//        return mostrarForm;
+//    }
+//    
+//    public boolean isMostrarForm2() {
+//        return mostrarForm2;
+//    }
 }
