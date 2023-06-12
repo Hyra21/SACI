@@ -64,9 +64,9 @@ public class DelegateEvento {
         //Verificar Fecha de inicio y fecha de fin
         if (evento.getCicloEscolarEvento().charAt(evento.getCicloEscolarEvento().length() - 1) == '1') {
             fechaInicioMin.set(evento.getFechaInicioEvento().getYear() + 1900, 0, 30);
-            System.out.println("IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII"+fechaInicioMin.getTime().toString());
+            System.out.println("IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII" + fechaInicioMin.getTime().toString());
             fechaFinMax.set(evento.getFechaInicioEvento().getYear() + 1900, 5, 3);
-            System.out.println("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF"+fechaFinMax.getTime().toString());
+            System.out.println("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF" + fechaFinMax.getTime().toString());
             if (evento.getFechaInicioEvento().before(fechaInicioMin.getTime()) || evento.getFechaInicioEvento().after(fechaFinMax.getTime())) {
                 errores[0] = 1;
             }
@@ -95,8 +95,12 @@ public class DelegateEvento {
             if (ev.getNombreEvento().compareToIgnoreCase(evento.getNombreEvento()) == 0 && ev.getCicloEscolarEvento().compareToIgnoreCase(evento.getCicloEscolarEvento()) == 0) {
                 contador++;
             }
+
         }
-        if(contador == 2){
+        if (contador == 2) {
+            errores[1] = 1;
+        }
+        if (contador == 1 && evento.getIdEvento() == null) {
             errores[1] = 1;
         }
         return errores;
@@ -143,11 +147,11 @@ public class DelegateEvento {
             ServiceLocator.getInstanceEventoDAO().delete(ev);
         }
     }
-    
-    public Evento obtenerEvento(Integer idEvento){
+
+    public Evento obtenerEvento(Integer idEvento) {
         Evento eventoEncontrado = new Evento();
-        for(Evento ev: ServiceLocator.getInstanceEventoDAO().findAll()){
-            if(ev.getIdEvento() == idEvento){
+        for (Evento ev : ServiceLocator.getInstanceEventoDAO().findAll()) {
+            if (ev.getIdEvento() == idEvento) {
                 eventoEncontrado = ev;
             }
         }

@@ -92,9 +92,17 @@ public class DelegateActividad {
             }
 
             //Si la actividad se encuentra 2 veces en alguna de las validaciones quiere decir que los datos se repiten.
-            if (contadorPonente == 2 && contadorRepeticion == 2) {
-                errores[1] = 1;
+            if (contadorPonente == 2) {
                 errores[2] = 1;
+            }
+            if (contadorRepeticion == 2) {
+                errores[1] = 1;
+            }
+            if (contadorPonente == 1 && actividad.getIdActividad() == null) {
+                errores[2] = 1;
+            }
+            if (contadorRepeticion == 1 && actividad.getIdActividad() == null) {
+                errores[1] = 1;
             }
         }
 
