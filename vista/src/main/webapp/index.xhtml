@@ -6,7 +6,7 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui">
     <h:head>
-        <title>SACI</title> <!-- Título de la página -->
+        <title>SACI-Evento</title> <!-- Título de la página -->
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </h:head>
 
@@ -167,7 +167,7 @@
                 <h3 style="font-family: 'Roboto', sans-serif;">
                     SAEA -Sistema para la Administración de Eventos y Actividades</h3> <!-- Se inserta el tipo de fuente de letra -->
                     <div style="text-align: right">
-                        <strong>Usuario: </strong> <h:outputText value="#{loginUI.usuarios.correo}" />
+                        <i class="pi pi-user"> <strong>Usuario: </strong> <h:outputText value="#{loginUI.usuarios.correo}" /> </i>
                     </div>
             </p:panel>
             
@@ -260,10 +260,6 @@
                     <p:column headerText="Estado" sortBy="#{ev.estadoEvento}">
                         <h:outputText styleClass="product-badge status-#{ev.estadoEvento.toLowerCase()}"
                                       value="#{ev.estadoEvento}" />
-                    </p:column>
-
-                    <p:column headerText="Correo del administrador" sortBy="#{ev.numEmpleadoAdministradorEvento.correoAdministrador.correo}">
-                        <h:outputText value="#{ev.numEmpleadoAdministradorEvento.correoAdministrador.correo}" />
                     </p:column>
 
                     <!-- Botones para visualizar, modificar y eliminar -->

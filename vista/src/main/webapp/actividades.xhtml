@@ -6,7 +6,7 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui">
     <h:head>
-        <title>SACI</title> <!-- Título de la página -->
+        <title>SACI-Actividad</title> <!-- Título de la página -->
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </h:head>
 
@@ -167,7 +167,7 @@
                 <h3 style="font-family: 'Roboto', sans-serif;">
                     SAEA -Sistema para la Administración de Eventos y Actividades</h3> <!-- Se inserta el tipo de fuente de letra -->
                 <div style="text-align: right">
-                    <strong>Usuario: </strong> <h:outputText value="#{loginUI.usuarios.correo}" />
+                    <i class="pi pi-user"> <strong>Usuario: </strong> <h:outputText value="#{loginUI.usuarios.correo}" /> </i>
                 </div>
             </p:panel>
 
@@ -191,7 +191,7 @@
             </h:form>
         </div> <!-- Termina el Menú Principal-->
 
-        <!-- Empiezan las opciones para el evento -->
+        <!-- Empiezan las opciones para la actividad -->
         <div class="card">
             <h:form id="form">
                 <p:growl id="messages" showDetail="true" />
@@ -207,7 +207,7 @@
                         <p:commandButton id="delete-products-button" value="#{ManejoActividadUI.mensajeBotonEliminar}"
                                          icon="pi pi-trash" actionListener="#{ManejoActividadUI.eliminarListaActividades()}"
                                          styleClass="ui-button-danger" disabled="#{!ManejoActividadUI.hayActividadesSeleccionadas()}" update="@this">
-                            <p:confirm header="Confirmación" message="¿Desea eliminar los eventos seleccionados?"
+                            <p:confirm header="Confirmación" message="¿Desea eliminar las actividades seleccionadas?"
                                        icon="pi pi-exclamation-triangle" />
                         </p:commandButton>
                     </p:toolbarGroup>
@@ -217,7 +217,7 @@
                             <p:inputText id="globalFilter" onkeyup="PF('dtProducts').filter()" placeholder="Buscar" />
                         </span>
                     </p:toolbarGroup>
-                </p:toolbar> <!-- Terminan las opciones del evento -->
+                </p:toolbar> <!-- Terminan las opciones de la actividad -->
 
                 <!-- Empieza la tabla de consulta-->
                 <p:dataTable id="dt-products" widgetVar="dtProducts" var="act" value="#{ManejoActividadUI.listaActividades}"
@@ -249,10 +249,6 @@
                         <h:outputText value="#{act.idEvento.nombreEvento}" />
                     </p:column>
 
-                    <p:column headerText="Ponente" sortBy="#{act.ponenteActividad}" >
-                        <h:outputText value="#{act.ponenteActividad}" />
-                    </p:column>
-
                     <p:column headerText="Tipo" sortBy="#{act.tipoActividad}">
                         <h:outputText value="#{act.tipoActividad}" />
                     </p:column>
@@ -261,12 +257,8 @@
                         <h:outputText value="#{act.fechaActividad}" />
                     </p:column>
 
-                    <p:column headerText="Horario de inicio" sortBy="#{act.horarioInicioActividad}">
-                        <h:outputText value="#{act.horarioInicioActividad}" />
-                    </p:column>
-
-                    <p:column headerText="Horario de fin" sortBy="#{act.horarioFinActividad}">
-                        <h:outputText value="#{act.horarioFinActividad}" />
+                    <p:column headerText="Horario">
+                        <h:outputText value="#{act.horarioInicioActividad} - #{act.horarioFinActividad}" />
                     </p:column>
 
                     <p:column headerText="Estado" sortBy="#{act.estadoActividad}">
@@ -278,22 +270,14 @@
                         <h:outputText value="#{act.modalidadActividad}" />
                     </p:column>
 
-                    <p:column headerText="Enlace" sortBy="#{act.enlaceVirtual}">
-                        <h:outputText value="#{act.enlaceVirtual}" />
+                    <p:column headerText="Código QR de inicio">
+                        <p:barcode class="product-image" id="qrcodeinicio" value="#{act.nombreActividad}" type="qr" format="png" />
                     </p:column>
-
-                    <p:column headerText="Espacios disponibles" sortBy="#{act.espaciosDisponiblesActividad}">
-                        <h:outputText value="#{act.espaciosDisponiblesActividad}" />
+                    
+                    <p:column headerText="Código QR de fin">
+                        <p:barcode class="product-image" id="qrcodefin" value="#{act.nombreActividad}asistio" type="qr" format="png" />
                     </p:column>
-
-                    <p:column headerText="Descripción" sortBy="#{act.descripcionActividad}">
-                        <h:outputText value="#{act.descripcionActividad}" />
-                    </p:column>
-
-                    <p:column headerText="Correo del administrador" sortBy="#{act.numEmpleadoAdministradorActividad.correoAdministrador.correo}">
-                        <h:outputText value="#{act.numEmpleadoAdministradorActividad.correoAdministrador.correo}" />
-                    </p:column>
-
+                    
                     <!-- Botones para visualizar, modificar y eliminar -->
                     <p:column exportable="false" width="9%">
 
@@ -326,7 +310,7 @@
                 </p:dataTable>
             </h:form> <!-- Termina la tabla de consulta -->
 
-            <!-- Empieza el código para el registro del evento -->
+            <!-- Empieza el código para el registro de la actividad -->
             <h:form id="dialogs2" >
                 <p:dialog header="Información de actividad" showEffect="fade" modal="true" widgetVar="manageProductDialog2"
                           responsive="true" draggable="false" class="dialog">
@@ -509,7 +493,7 @@
 
                 <!-- Empiezan los mensajes de confirmación para modificar una actividad -->    
                 <p:confirmDialog widgetVar="manageProductDialog3" showEffect="fade" width="300"
-                                 message="¿Desea modificar el evento?" header="Confirmación" severity="warn">
+                                 message="¿Desea modificar la actividad?" header="Confirmación" severity="warn">
                     <p:commandButton value="Aceptar"  icon="pi pi-check" actionListener="#{ManejoActividadUI.modificacionActividad()}"
                                      process="@this" update="manage-product-content2" 
                                      oncomplete="PF('manageProductDialog3').hide()" style="background-color: #50B848; color: #FFF;" />
@@ -518,9 +502,9 @@
                 </p:confirmDialog>
                 <!-- Terminan los mensajes de confirmación para modificar una actividad -->
 
-                <!-- Empiezan los mensajes de confirmación para eliminar un evento -->
+                <!-- Empiezan los mensajes de confirmación para eliminar una actividad -->
                 <p:confirmDialog widgetVar="deleteProductDialog" showEffect="fade" width="300"
-                                 message="¿Desea eliminar el evento?" header="Confirmación" severity="warn">
+                                 message="¿Desea eliminar la actividad?" header="Confirmación" severity="warn">
                     <p:commandButton value="Aceptar" icon="pi pi-check" actionListener="#{ManejoActividadUI.eliminarActividad()}"
                                      process="@this" update=":form:delete-products-button"
                                      oncomplete="PF('deleteProductDialog').hide()" style="background-color: #50B848; color: #FFF;" />

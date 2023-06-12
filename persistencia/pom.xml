@@ -46,6 +46,16 @@
             <artifactId>mysql-connector-java-5.1.23-bin</artifactId>
             <version>SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>org.primefaces.extensions</groupId>
+            <artifactId>barcode4j-light</artifactId>
+            <version>2.3.0</version>
+        </dependency>
+        <dependency>
+            <groupId>io.nayuki</groupId>
+            <artifactId>qrcodegen</artifactId>
+            <version>1.8.0</version>
+        </dependency>
     </dependencies>
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
