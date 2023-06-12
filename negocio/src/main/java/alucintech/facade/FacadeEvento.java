@@ -26,10 +26,6 @@ public class FacadeEvento {
         return delegateEvento.consultarEventos();
     }
     
-    public Evento eventoSeleccionado(int id){
-        return delegateEvento.eventoSeleccionado(id);
-    }
-    
     public void registrarEvento(Evento evento){
         delegateEvento.registrarEvento(evento);
     }

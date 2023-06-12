@@ -15,7 +15,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.Lob;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -41,6 +43,11 @@ public class Sello implements Serializable {
     @Lob
     @Column(name = "imagenSello")
     private byte[] imagenSello;
+    @JoinTable(name = "tienesello", joinColumns = {
+        @JoinColumn(name = "idSello", referencedColumnName = "idSello")}, inverseJoinColumns = {
+        @JoinColumn(name = "numFolioCarnet", referencedColumnName = "numFolio")})
+    @ManyToMany
+    private List<Carnet> carnetList;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -135,6 +142,15 @@ public class Sello implements Serializable {
 
     public void setImagenSello(byte[] imagenSello) {
         this.imagenSello = imagenSello;
+    }
+
+    @XmlTransient
+    public List<Carnet> getCarnetList() {
+        return carnetList;
+    }
+
+    public void setCarnetList(List<Carnet> carnetList) {
+        this.carnetList = carnetList;
     }
     
 }

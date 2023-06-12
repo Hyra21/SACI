@@ -6,7 +6,9 @@
 package alucintech.facade;
 
 import alucintech.delegate.DelegateProgramaEducativo;
+import alucintech.entidad.Actividad;
 import alucintech.entidad.Programaeducativo;
+import java.util.List;
 
 /**
  *
@@ -18,6 +20,18 @@ public class FacadeProgramaEducativo {
 
     public FacadeProgramaEducativo() {
         this.delegateProgramaEducativo = new DelegateProgramaEducativo();
+    }
+    
+    public List<Programaeducativo> consultarProgramas(){
+        return delegateProgramaEducativo.consultarProgramas();
+    }
+    
+     public void asignarProgramasElegidos(Integer[] codigoProgramasElegidos, Actividad actividad) {
+        delegateProgramaEducativo.asignarProgramasElegidos(codigoProgramasElegidos, actividad);
+    }
+
+    public boolean validarProgramasEducativos(Actividad actividad, Integer[] codigoProgramasElegidos) {
+        return delegateProgramaEducativo.validarProgramasEducativos(actividad, codigoProgramasElegidos);
     }
     
 }

@@ -11,6 +11,7 @@ import alucintech.entidad.Facultad;
 import alucintech.entidad.Identificaadministrador;
 import alucintech.helper.ManejoEventoHelper;
 import java.io.IOException;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Calendar;
@@ -53,10 +54,20 @@ public class ManejoEventoBeanUI implements Serializable {
     private List<Facultad> facultadesEvento;
     //Archivo que recibirá la imagen ingresada por el usuario.
     private UploadedFile archivoImagen;
+    
+    private LocalTime time8;
+    private LocalTime time9;
+    private LocalTime minTime;
+    private LocalTime maxTime;
 
+//    private boolean mostrarForm;
+//    private boolean mostrarForm2;
+    
     //Constructor
     public ManejoEventoBeanUI() {
         manejoEventoHelper = new ManejoEventoHelper();
+//        mostrarForm = true;
+//        mostrarForm2 = false;
     }
 
     /**
@@ -80,9 +91,34 @@ public class ManejoEventoBeanUI implements Serializable {
 
         //Lista de facultades existentes en la base de datos.
         facultadesEvento = manejoEventoHelper.obtenerFacultades();
+        
+        //Variables para el componente datePicker que servirá para obtener el horario.
+        
+        //minTime es para asignarle que solo deje elegir a partir de las 7:00 AM.
+        minTime = LocalTime.of(7, 0);
+        //mazTime es para asignarle que solo deje elegir hasta las 10:00 PM.
+        maxTime = LocalTime.of(22, 0);
 
     }
 
+//    public void setMostrarForm(boolean mostrarForm) {
+//        this.mostrarForm = mostrarForm;
+//    }
+    
+//    public void mostrarForm(ActionEvent event) {
+//        mostrarForm = true;
+//        mostrarForm2 = false;
+//        FacesContext.getCurrentInstance().getPartialViewContext().getRenderIds().add("form");
+//        FacesContext.getCurrentInstance().getPartialViewContext().getRenderIds().add("form2");
+//    }
+//
+//    public void mostrarForm2(ActionEvent event) {
+//        mostrarForm = false;
+//        mostrarForm2 = true;
+//        FacesContext.getCurrentInstance().getPartialViewContext().getRenderIds().add("form");
+//        FacesContext.getCurrentInstance().getPartialViewContext().getRenderIds().add("form2");
+//    }
+    
     /**
      * Método que que modifica registros de los eventos.
      *
@@ -131,7 +167,7 @@ public class ManejoEventoBeanUI implements Serializable {
             if (error == false) {
                 //Método que modifica al evento en la base de datos.
                 manejoEventoHelper.modificarEvento(evento);
-
+                manejoEventoHelper.asignarFacultadesElegidas(idFacultades, evento);
                 //Actualiza la lista de eventos para que se aprecien los cambios en la consulta.
                 actualizarListaEventos();
 
@@ -179,7 +215,7 @@ public class ManejoEventoBeanUI implements Serializable {
 
             //Se cambia el estado del evento
             evento.setEstadoEvento("Postulado");
-
+            
             //Aquí se llena el arreglo dependiendo de los errores encontrados. 
             errores = manejoEventoHelper.validarEvento(evento);
 
@@ -246,7 +282,7 @@ public class ManejoEventoBeanUI implements Serializable {
             return size > 1 ? size + " Eventos seleccionados" : "1 Evento seleccionado";
         }
 
-        return "Eliminación multiple";
+        return "Eliminación múltiple";
     }
 
     /**
@@ -450,6 +486,47 @@ public class ManejoEventoBeanUI implements Serializable {
         this.archivoImagen = archivoImagen;
     }
 
+    public LocalTime getTime8() {
+        return time8;
+    }
+
+    public void setTime8(LocalTime time8) {
+        this.time8 = time8;
+    }
+    
+    public LocalTime getTime9() {
+        return time9;
+    }
+
+    public void setTime9(LocalTime time9) {
+        this.time8 = time9;
+    }
+    
+    public LocalTime getMinTime() {
+        return minTime;
+    }
+
+    public void setMinTime(LocalTime minTime) {
+        this.minTime = minTime;
+    }
+
+    public LocalTime getMaxTime() {
+        return maxTime;
+    }
+
+    public void setMaxTime(LocalTime maxTime) {
+        this.maxTime = maxTime;
+    }
+    
+    
+//    public boolean isMostrarForm() {
+//        return mostrarForm;
+//    }
+//    
+//    public boolean isMostrarForm2() {
+//        return mostrarForm2;
+//    }
+
     public Integer[] getIdFacultades() {
         return idFacultades;
     }
@@ -457,5 +534,4 @@ public class ManejoEventoBeanUI implements Serializable {
     public void setIdFacultades(Integer[] idFacultades) {
         this.idFacultades = idFacultades;
     }
-
 }

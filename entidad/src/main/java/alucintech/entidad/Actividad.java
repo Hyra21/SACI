@@ -45,7 +45,6 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Actividad.findByHorarioInicioActividad", query = "SELECT a FROM Actividad a WHERE a.horarioInicioActividad = :horarioInicioActividad")
     , @NamedQuery(name = "Actividad.findByHorarioFinActividad", query = "SELECT a FROM Actividad a WHERE a.horarioFinActividad = :horarioFinActividad")
     , @NamedQuery(name = "Actividad.findByDireccionActividad", query = "SELECT a FROM Actividad a WHERE a.direccionActividad = :direccionActividad")
-    , @NamedQuery(name = "Actividad.findByLugarActividad", query = "SELECT a FROM Actividad a WHERE a.lugarActividad = :lugarActividad")
     , @NamedQuery(name = "Actividad.findByEspaciosDisponiblesActividad", query = "SELECT a FROM Actividad a WHERE a.espaciosDisponiblesActividad = :espaciosDisponiblesActividad")
     , @NamedQuery(name = "Actividad.findByModalidadActividad", query = "SELECT a FROM Actividad a WHERE a.modalidadActividad = :modalidadActividad")
     , @NamedQuery(name = "Actividad.findByEnlaceVirtual", query = "SELECT a FROM Actividad a WHERE a.enlaceVirtual = :enlaceVirtual")
@@ -55,6 +54,11 @@ public class Actividad implements Serializable {
     @Lob
     @Column(name = "imagenActividad")
     private byte[] imagenActividad;
+    @Basic(optional = false)
+    @Column(name = "estadoActividad")
+    private String estadoActividad;
+    @Column(name = "ponenteActividad")
+    private String ponenteActividad;
 
     @Basic(optional = false)
     @Column(name = "tipoActividad")
@@ -87,9 +91,6 @@ public class Actividad implements Serializable {
     @Basic(optional = false)
     @Column(name = "direccionActividad")
     private String direccionActividad;
-    @Basic(optional = false)
-    @Column(name = "lugarActividad")
-    private String lugarActividad;
     @Basic(optional = false)
     @Column(name = "espaciosDisponiblesActividad")
     private int espaciosDisponiblesActividad;
@@ -126,7 +127,6 @@ public class Actividad implements Serializable {
         this.horarioInicioActividad = horarioInicioActividad;
         this.horarioFinActividad = horarioFinActividad;
         this.direccionActividad = direccionActividad;
-        this.lugarActividad = lugarActividad;
         this.espaciosDisponiblesActividad = espaciosDisponiblesActividad;
         this.modalidadActividad = modalidadActividad;
     }
@@ -185,14 +185,6 @@ public class Actividad implements Serializable {
 
     public void setDireccionActividad(String direccionActividad) {
         this.direccionActividad = direccionActividad;
-    }
-
-    public String getLugarActividad() {
-        return lugarActividad;
-    }
-
-    public void setLugarActividad(String lugarActividad) {
-        this.lugarActividad = lugarActividad;
     }
 
     public int getEspaciosDisponiblesActividad() {
@@ -293,6 +285,24 @@ public class Actividad implements Serializable {
 
     public void setTipoActividad(String tipoActividad) {
         this.tipoActividad = tipoActividad;
+    }
+
+
+    public String getPonenteActividad() {
+        return ponenteActividad;
+    }
+
+    public void setPonenteActividad(String ponenteActividad) {
+        this.ponenteActividad = ponenteActividad;
+    }
+
+
+    public String getEstadoActividad() {
+        return estadoActividad;
+    }
+
+    public void setEstadoActividad(String estadoActividad) {
+        this.estadoActividad = estadoActividad;
     }
 
     public byte[] getImagenActividad() {

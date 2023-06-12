@@ -19,10 +19,6 @@ import java.util.List;
  * @author 980014102
  */
 public class ManejoEventoHelper implements Serializable {
-    
-    public Evento eventoSeleccionado(int id) {
-        return ServiceFacadeLocator.getInstanceFacadeEvento().eventoSeleccionado(id);
-    }
 
     /**
      * Método que registra el objeto evento en la base de datos
@@ -130,5 +126,9 @@ public class ManejoEventoHelper implements Serializable {
     
     public void actualizarFacultad(Facultad facultad){
         ServiceFacadeLocator.getInstanceFacadeFacultad().actualizarFacultad(facultad);
+    }
+    
+    public void asignarFacultadesElegidas(Integer[] idFacultadesElegidas, Evento evento) {
+        ServiceFacadeLocator.getInstanceFacadeFacultad().asignarFacultadesElegidas(idFacultadesElegidas, evento);
     }
 }

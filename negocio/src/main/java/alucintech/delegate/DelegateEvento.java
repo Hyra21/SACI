@@ -46,17 +46,6 @@ public class DelegateEvento {
         return ServiceLocator.getInstanceEventoDAO().findAll();
     }
 
-    public Evento eventoSeleccionado(int id) {
-        List<Evento> listaEventos = ServiceLocator.getInstanceEventoDAO().findAll();
-        Evento evento = new Evento();
-        for (Evento ev : listaEventos) {
-            if (ev.getIdEvento() == id) {
-                evento = ev;
-            }
-        }
-        return evento;
-    }
-
     /**
      * Método que valida la información del ovjeto evento para que concuerde con
      * las reglas de negocio. Evita que se registre un evento con información
@@ -73,9 +62,10 @@ public class DelegateEvento {
 
         //Verificar Fecha de inicio y fecha de fin
         if (evento.getCicloEscolarEvento().charAt(evento.getCicloEscolarEvento().length() - 1) == '1') {
-            fechaInicioMin.set(evento.getFechaInicioEvento().getYear() + 1900, 1, 30);
-            fechaFinMax.set(evento.getFechaInicioEvento().getYear() + 1900, 6, 3);
-
+            fechaInicioMin.set(evento.getFechaInicioEvento().getYear() + 1900, 0, 30);
+            System.out.println("IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII"+fechaInicioMin.getTime().toString());
+            fechaFinMax.set(evento.getFechaInicioEvento().getYear() + 1900, 5, 3);
+            System.out.println("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF"+fechaFinMax.getTime().toString());
             if (evento.getFechaInicioEvento().before(fechaInicioMin.getTime()) || evento.getFechaInicioEvento().after(fechaFinMax.getTime())) {
                 errores[0] = 1;
             }
@@ -87,8 +77,8 @@ public class DelegateEvento {
             }
         }
         if (evento.getCicloEscolarEvento().charAt(evento.getCicloEscolarEvento().length() - 1) == '2') {
-            fechaInicioMin.set(evento.getFechaInicioEvento().getYear() + 1900, 8, 7);
-            fechaFinMax.set(evento.getFechaInicioEvento().getYear() + 1900, 12, 3);
+            fechaInicioMin.set(evento.getFechaInicioEvento().getYear() + 1900, 7, 7);
+            fechaFinMax.set(evento.getFechaInicioEvento().getYear() + 1900, 11, 3);
             if (evento.getFechaFinEvento().before(fechaInicioMin.getTime()) || evento.getFechaFinEvento().after(fechaFinMax.getTime())) {
                 errores[0] = 1;
             }
@@ -104,7 +94,7 @@ public class DelegateEvento {
             if (ev.getNombreEvento().compareToIgnoreCase(evento.getNombreEvento()) == 0 && ev.getCicloEscolarEvento().compareToIgnoreCase(evento.getCicloEscolarEvento()) == 0) {
                 errores[1] = 1;
             }
-            if(evento.getIdEvento()!=null){
+            if (evento.getIdEvento() != null) {
                 if (ev.getIdEvento() == evento.getIdEvento()) {
                     errores[1] = 0;
                 }
@@ -146,7 +136,8 @@ public class DelegateEvento {
     /**
      * Método que elimina la lista de eventos enviados como parámetro de la base
      * de datos.- Se utiiza para eliminar eventos cancelados.
-     * @param eventos 
+     *
+     * @param eventos
      */
     public void eliminarListaEventos(List<Evento> eventos) {
         for (Evento ev : eventos) {

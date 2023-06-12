@@ -7,6 +7,7 @@ package alucintech.facade;
 
 import alucintech.delegate.DelegateSello;
 import alucintech.entidad.Sello;
+import java.util.List;
 
 /**
  *
@@ -18,5 +19,17 @@ public class FacadeSello {
 
     public FacadeSello() {
         this.delegateSello = new DelegateSello();
+    }
+    
+    public void registrarSello(Sello sello) {
+        delegateSello.registrarSello(sello);
+    }
+    
+    public List<Sello> consultarSellos(){
+        return delegateSello.consultarSellos();
+    }
+    
+    public void actualizarSello(Sello sello){
+        delegateSello.actualizarSello(sello);
     }
 }

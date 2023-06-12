@@ -26,18 +26,12 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Tienesello.findAll", query = "SELECT t FROM Tienesello t")
     , @NamedQuery(name = "Tienesello.findByIdSello", query = "SELECT t FROM Tienesello t WHERE t.tieneselloPK.idSello = :idSello")
-    , @NamedQuery(name = "Tienesello.findByNumFolioCarnet", query = "SELECT t FROM Tienesello t WHERE t.tieneselloPK.numFolioCarnet = :numFolioCarnet")
-    , @NamedQuery(name = "Tienesello.findByQrInicio", query = "SELECT t FROM Tienesello t WHERE t.qrInicio = :qrInicio")
-    , @NamedQuery(name = "Tienesello.findByQrFin", query = "SELECT t FROM Tienesello t WHERE t.qrFin = :qrFin")})
+    , @NamedQuery(name = "Tienesello.findByNumFolioCarnet", query = "SELECT t FROM Tienesello t WHERE t.tieneselloPK.numFolioCarnet = :numFolioCarnet")})
 public class Tienesello implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected TieneselloPK tieneselloPK;
-    @Column(name = "qrInicio")
-    private String qrInicio;
-    @Column(name = "qrFin")
-    private String qrFin;
     @JoinColumn(name = "idSello", referencedColumnName = "idSello", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Sello sello;
@@ -63,23 +57,7 @@ public class Tienesello implements Serializable {
     public void setTieneselloPK(TieneselloPK tieneselloPK) {
         this.tieneselloPK = tieneselloPK;
     }
-
-    public String getQrInicio() {
-        return qrInicio;
-    }
-
-    public void setQrInicio(String qrInicio) {
-        this.qrInicio = qrInicio;
-    }
-
-    public String getQrFin() {
-        return qrFin;
-    }
-
-    public void setQrFin(String qrFin) {
-        this.qrFin = qrFin;
-    }
-
+    
     public Sello getSello() {
         return sello;
     }

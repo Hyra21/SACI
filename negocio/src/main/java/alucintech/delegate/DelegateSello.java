@@ -7,8 +7,10 @@ package alucintech.delegate;
  */
 
 
+import alucintech.entidad.Actividad;
 import alucintech.entidad.Sello;
 import alucintech.integracion.ServiceLocator;
+import java.util.List;
 
 /**
  *
@@ -16,4 +18,15 @@ import alucintech.integracion.ServiceLocator;
  */
 public class DelegateSello {
     
+    public void registrarSello(Sello sello) {
+        ServiceLocator.getInstanceSelloDAO().save(sello);
+    }
+    
+    public List<Sello> consultarSellos(){
+        return ServiceLocator.getInstanceSelloDAO().findAll();
+    }
+    
+    public void actualizarSello(Sello sello){
+        ServiceLocator.getInstanceSelloDAO().update(sello);
+    }
 }

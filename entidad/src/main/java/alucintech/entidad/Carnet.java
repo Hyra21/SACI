@@ -14,6 +14,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -40,6 +41,9 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Carnet.findByEstadoCarnet", query = "SELECT c FROM Carnet c WHERE c.estadoCarnet = :estadoCarnet")
     , @NamedQuery(name = "Carnet.findByCodigoCarnet", query = "SELECT c FROM Carnet c WHERE c.codigoCarnet = :codigoCarnet")})
 public class Carnet implements Serializable {
+
+    @ManyToMany(mappedBy = "carnetList")
+    private List<Sello> selloList;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -172,6 +176,15 @@ public class Carnet implements Serializable {
     @Override
     public String toString() {
         return "alucintech.entidad.Carnet[ numFolio=" + numFolio + " ]";
+    }
+
+    @XmlTransient
+    public List<Sello> getSelloList() {
+        return selloList;
+    }
+
+    public void setSelloList(List<Sello> selloList) {
+        this.selloList = selloList;
     }
     
 }

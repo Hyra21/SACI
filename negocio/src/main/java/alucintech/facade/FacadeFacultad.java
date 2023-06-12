@@ -6,6 +6,7 @@
 package alucintech.facade;
 
 import alucintech.delegate.DelegateFacultad;
+import alucintech.entidad.Evento;
 import alucintech.entidad.Facultad;
 import java.util.List;
 
@@ -14,19 +15,24 @@ import java.util.List;
  * @author EduardoCardona <>
  */
 public class FacadeFacultad {
-    
+
     private final DelegateFacultad delegateFacultad;
 
     public FacadeFacultad() {
         this.delegateFacultad = new DelegateFacultad();
     }
-    
-    public List<Facultad> obtenerFacultades(){
+
+    public List<Facultad> obtenerFacultades() {
         return delegateFacultad.obtenerFacultades();
     }
-    
-        public void actualizarFacultad(Facultad facultad) {
+
+    public void actualizarFacultad(Facultad facultad) {
         delegateFacultad.actualizarFacultad(facultad);
     }
+
+    public void asignarFacultadesElegidas(Integer[] idFacultadesElegidas, Evento evento) {
+        delegateFacultad.asignarFacultadesElegidas(idFacultadesElegidas, evento);
+    }
+
     
 }
