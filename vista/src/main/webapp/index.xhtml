@@ -306,7 +306,7 @@
                             </p:messages>
                             <br></br>
                             <p:outputLabel for="subirImagen" value="Flyer:"/>
-                            <div class="fieldImagen">
+                            <div class="product-image">
                                 <p:fileUpload id="subirImagen"
                                               styleClass="color-fileUpload"
                                               uploadLabel="Subir"
@@ -337,7 +337,7 @@
                                 </p:selectOneMenu>
                                 <p:message for="cicloEscolar" />
                             </div>
-                            <div class="field" style="width: 35%">
+                            <div class="field" style="width: auto">
                                 <h:outputLabel for="facultad" value="Facultad: *" />
                                 <br></br>
                                 <p:selectCheckboxMenu id="facultad" value="#{ManejoEventoUI.idFacultades}" label="Facultades" style="min-width: 5rem" required="true" requiredMessage="Ingrese las facultades correspondientes al evento"
@@ -399,9 +399,9 @@
 
                 <!-- Empiezan los mensajes de confirmación para la eliminacion multiple de los eventos -->
                 <p:confirmDialog global="true" showEffect="fade" width="300">
-                    <p:commandButton value="Aceptar" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+                    <p:commandButton value="Aceptar" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" style="background-color: #50B848; color: #FFF;" />
                     <p:commandButton value="Cancelar" type="button" styleClass="ui-confirmdialog-no ui-button-secondary"
-                                     icon="pi pi-times" />
+                                     icon="pi pi-times" style="background-color: red; color: #FFF;" />
                 </p:confirmDialog>
                 <!-- Terminan los mensajes de confirmación para la eliminacion multiple de los eventos -->
             </h:form>
