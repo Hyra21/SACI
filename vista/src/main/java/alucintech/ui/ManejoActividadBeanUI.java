@@ -59,7 +59,7 @@ public class ManejoActividadBeanUI implements Serializable {
     //Objeto que se usará para asignar los eventos ingresados por el usuario a la actividad.
     private Evento evento;
     //Lista de los eventos guardados en la base de datos.
-    private Integer EventoSeleccionado;
+    private Integer eventoSeleccionado;
     //Objeto tipo Sello que se usará para almacenar la información del sello ingresada por el usuario
     private Sello sello;
     //Archivo que recibirá la imagen ingresada por el usuario.
@@ -145,7 +145,7 @@ public class ManejoActividadBeanUI implements Serializable {
             actividad.setEstadoActividad("Postulada");
 
             //Se busca el evento seleccionado mediante su ID.
-            evento = manejoActividadHelper.obtenerEvento(EventoSeleccionado);
+            evento = manejoActividadHelper.obtenerEvento(eventoSeleccionado);
 
             //Se asigna el evento seleccionado a la actividad.
             actividad.setIdEvento(evento);
@@ -170,9 +170,9 @@ public class ManejoActividadBeanUI implements Serializable {
             actividad.getHorarioFinActividad().setMinutes(horaFinActividad.getMinute());
 */
             //Se revisan los errores encontrados
-            if (errores[0] == 1 || errores[1] == 1) {
+            if (errores[0] == 1 || errores[1] == 1 || errores[2] == 1) {
                 error = true;
-
+                System.out.println("EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
             }
 
             if (error == false) {
@@ -183,7 +183,7 @@ public class ManejoActividadBeanUI implements Serializable {
                     actividad.setIdActividad(listaActividades.get(listaActividades.size() - 1).getIdActividad() + 1);
                 }
 
-                if (!manejoActividadHelper.validarProgramasEducativos(actividad, listaProgramasTemp)) {
+                if (!manejoActividadHelper.validarProgramasEducativos(eventoSeleccionado, listaProgramasTemp)) {
                     manejoActividadHelper.asignarProgramasElegidos(listaProgramasTemp, actividad);
                 }
 
@@ -232,9 +232,6 @@ public class ManejoActividadBeanUI implements Serializable {
                 sello.setIdSello(listaSellos.get(listaSellos.size() - 1).getIdSello() + 1);
             }
 
-            do{
-                
-            }while(!listo);
             List<Sello> sellos = new ArrayList();
             
             sellos.add(sello);
@@ -294,7 +291,7 @@ public class ManejoActividadBeanUI implements Serializable {
             }
         }
 
-        if (!manejoActividadHelper.validarProgramasEducativos(actividad, listaProgramasTemp)) {
+        if (!manejoActividadHelper.validarProgramasEducativos(eventoSeleccionado, listaProgramasTemp)) {
             manejoActividadHelper.asignarProgramasElegidos(listaProgramasTemp, actividad);
         } else {
             error = true;
@@ -641,11 +638,11 @@ public class ManejoActividadBeanUI implements Serializable {
     }
 
     public Integer getEventoSeleccionado() {
-        return EventoSeleccionado;
+        return eventoSeleccionado;
     }
 
     public void setEventoSeleccionado(Integer EventoSeleccionado) {
-        this.EventoSeleccionado = EventoSeleccionado;
+        this.eventoSeleccionado = EventoSeleccionado;
     }
 
     public List<Evento> getListaEventos() {

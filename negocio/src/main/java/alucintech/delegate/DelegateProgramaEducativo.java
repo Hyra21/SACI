@@ -6,6 +6,7 @@ package alucintech.delegate;
  * and open the template in the editor.
  */
 import alucintech.entidad.Actividad;
+import alucintech.entidad.Evento;
 import alucintech.entidad.Programaeducativo;
 import alucintech.integracion.ServiceLocator;
 import java.util.ArrayList;
@@ -55,16 +56,17 @@ public class DelegateProgramaEducativo {
         }
     }
 
-    public boolean validarProgramasEducativos(Actividad actividad, Integer[] codigoProgramasElegidos) {
-        boolean error = false;
+    public boolean validarProgramasEducativos(Integer idEvento, Integer[] codigoProgramasElegidos) {
+        boolean error = true;
 
         for (Integer codigoProgramaElegido : codigoProgramasElegidos) {
             for (Programaeducativo p : consultarProgramas()) {
                 if (p.getCodigoProgramaEducativo() == codigoProgramaElegido) {
-
-                    if (!p.getIdFacultadProgramaEducativo().getEventoList().contains(actividad.getIdEvento())) {
-                        System.out.println("SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSE ENCOTRÓ UN ERROR");
-                        error = true;
+                    for (Evento ev : p.getIdFacultadProgramaEducativo().getEventoList()) {
+                        if (ev.getIdEvento() == idEvento) {
+                            System.out.println("SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS");
+                            error = false;
+                        }
                     }
 
                 }

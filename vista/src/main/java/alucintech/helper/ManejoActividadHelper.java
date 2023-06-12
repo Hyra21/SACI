@@ -110,8 +110,8 @@ public class ManejoActividadHelper implements Serializable {
         ServiceFacadeLocator.getInstanceFacadeProgramaEducativo().asignarProgramasElegidos(codigoProgramasElegidos, actividad);
     }
 
-    public boolean validarProgramasEducativos(Actividad actividad, Integer[] codigoProgramasElegidos) {
-        return ServiceFacadeLocator.getInstanceFacadeProgramaEducativo().validarProgramasEducativos(actividad, codigoProgramasElegidos);
+    public boolean validarProgramasEducativos(Integer idEvento, Integer[] codigoProgramasElegidos) {
+        return ServiceFacadeLocator.getInstanceFacadeProgramaEducativo().validarProgramasEducativos(idEvento, codigoProgramasElegidos);
     }
 
     public List<Programaeducativo> consultarProgramas() {
