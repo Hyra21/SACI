@@ -47,8 +47,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Actividad.findByDireccionActividad", query = "SELECT a FROM Actividad a WHERE a.direccionActividad = :direccionActividad")
     , @NamedQuery(name = "Actividad.findByEspaciosDisponiblesActividad", query = "SELECT a FROM Actividad a WHERE a.espaciosDisponiblesActividad = :espaciosDisponiblesActividad")
     , @NamedQuery(name = "Actividad.findByModalidadActividad", query = "SELECT a FROM Actividad a WHERE a.modalidadActividad = :modalidadActividad")
-    , @NamedQuery(name = "Actividad.findByEnlaceVirtual", query = "SELECT a FROM Actividad a WHERE a.enlaceVirtual = :enlaceVirtual")
-    , @NamedQuery(name = "Actividad.findByComentarioActividad", query = "SELECT a FROM Actividad a WHERE a.comentarioActividad = :comentarioActividad")})
+    , @NamedQuery(name = "Actividad.findByEnlaceVirtual", query = "SELECT a FROM Actividad a WHERE a.enlaceVirtual = :enlaceVirtual")})
 public class Actividad implements Serializable {
 
     @Lob
@@ -99,8 +98,6 @@ public class Actividad implements Serializable {
     private String modalidadActividad;
     @Column(name = "enlaceVirtual")
     private String enlaceVirtual;
-    @Column(name = "comentarioActividad")
-    private String comentarioActividad;
     @ManyToMany(mappedBy = "actividadList")
     private List<Programaeducativo> programaeducativoList;
     @JoinColumn(name = "idEvento", referencedColumnName = "idEvento")
@@ -119,7 +116,7 @@ public class Actividad implements Serializable {
         this.idActividad = idActividad;
     }
 
-    public Actividad(Integer idActividad, String nombreActividad, String descripcionActividad, Date fechaActividad, Date horarioInicioActividad, Date horarioFinActividad, String direccionActividad, String lugarActividad, int espaciosDisponiblesActividad, String modalidadActividad) {
+    public Actividad(Integer idActividad, String nombreActividad, String descripcionActividad, Date fechaActividad, Date horarioInicioActividad, Date horarioFinActividad, String direccionActividad, String lugarActividad, int espaciosDisponiblesActividad, String modalidadActividad, byte[] imagenActividad, String estadoActividad, String ponenteActividad, String tipoActividad) {
         this.idActividad = idActividad;
         this.nombreActividad = nombreActividad;
         this.descripcionActividad = descripcionActividad;
@@ -129,6 +126,10 @@ public class Actividad implements Serializable {
         this.direccionActividad = direccionActividad;
         this.espaciosDisponiblesActividad = espaciosDisponiblesActividad;
         this.modalidadActividad = modalidadActividad;
+        this.imagenActividad = imagenActividad;
+        this.estadoActividad = estadoActividad;
+        this.ponenteActividad = ponenteActividad;
+        this.tipoActividad = tipoActividad;
     }
 
     public Integer getIdActividad() {
@@ -209,15 +210,6 @@ public class Actividad implements Serializable {
 
     public void setEnlaceVirtual(String enlaceVirtual) {
         this.enlaceVirtual = enlaceVirtual;
-    }
-
-
-    public String getComentarioActividad() {
-        return comentarioActividad;
-    }
-
-    public void setComentarioActividad(String comentarioActividad) {
-        this.comentarioActividad = comentarioActividad;
     }
 
     @XmlTransient

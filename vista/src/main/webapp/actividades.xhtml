@@ -71,7 +71,7 @@
         .field{
             padding-bottom: 5px;
         }
-        
+
         .fieldImagen{
             align-items: center;
             display: flex;
@@ -89,49 +89,49 @@
             max-height: 98vh;
             overflow-y: auto; /* Muestra un scrollbar cuando el contenido excede el límite */
         }
-        
+
         .color-fileUpload .ui-fileupload-buttonbar {
             background-color: #FEBE10; /* Color amarillo de fondo  */
             color: #FFF; /* Cambia el color del icono de la fecha a blanco. */
             border-color: #FEBE10; /* Color amarillo de los bordes  */
         }
-        
+
         .color-fileUpload:hover .ui-fileupload {
             background-color: #FEBE10; /* Color amarillo de fondo  */
             color: #FFF; /* Cambia el color del icono de la fecha a blanco. */
             border-color: #FEBE10; /* Color amarillo de los bordes  */
         }
-        
+
         .color-fileUpload .ui-fileupload-choose{
             background-color: #FEBE10; /* Color amarillo de fondo  */
             color: #FFF; /* Cambia el color del icono de la fecha a blanco. */
             border-color: #FEBE10; /* Color amarillo de los bordes  */
         }
-        
+
         .color-fileUpload:hover .ui-fileupload-choose{
             background-color: #FEBE10; /* Color amarillo de fondo  */
             color: #FFF; /* Cambia el color del icono de la fecha a blanco. */
             border-color: #FEBE10; /* Color amarillo de los bordes  */
         }
-        
+
         .color-fileUpload .ui-fileupload-upload{
             background-color: #FEBE10; /* Color amarillo de fondo  */
             color: #FFF; /* Cambia el color del icono de la fecha a blanco. */
             border-color: #FEBE10; /* Color amarillo de los bordes  */
         }
-        
+
         .color-fileUpload:hover .ui-fileupload-upload {
             background-color: #FEBE10; /* Color amarillo de fondo  */
             color: #FFF; /* Cambia el color del icono de la fecha a blanco. */
             border-color: #FEBE10; /* Color amarillo de los bordes  */
         }
-        
+
         .color-fileUpload .ui-fileupload-cancel{
             background-color: #FEBE10; /* Color amarillo de fondo  */
             color: #FFF; /* Cambia el color del icono de la fecha a blanco. */
             border-color: #FEBE10; /* Color amarillo de los bordes  */
         }
-        
+
         .color-fileUpload:hover .ui-fileupload-cancel {
             background-color: #FEBE10; /* Color amarillo de fondo  */
             color: #FFF; /* Cambia el color del icono de la fecha a blanco. */
@@ -166,11 +166,11 @@
                 <p:graphicImage url="resources/facu_logo.png" class="logo"/> <!-- Se inserta la imagen del logo -->
                 <h3 style="font-family: 'Roboto', sans-serif;">
                     SAEA -Sistema para la Administración de Eventos y Actividades</h3> <!-- Se inserta el tipo de fuente de letra -->
-                    <div style="text-align: right">
-                        <strong>Usuario: </strong> <h:outputText value="#{loginUI.usuarios.correo}" />
-                    </div>
+                <div style="text-align: right">
+                    <strong>Usuario: </strong> <h:outputText value="#{loginUI.usuarios.correo}" />
+                </div>
             </p:panel>
-            
+
         </div><!-- Termina el Encabezado -->
 
         <!-- Empieza el Menú Principal. -->
@@ -199,14 +199,14 @@
                 <p:toolbar>
 
                     <p:toolbarGroup>
-                        <p:commandButton value="Agregar" icon="pi pi-plus" actionListener="#{ManejoEventoUI.actualizarDatosEvento()}"
-                                         update=":dialogs:manage-product-content" oncomplete="PF('manageProductDialog').show()"
+                        <p:commandButton value="Agregar" icon="pi pi-plus" actionListener="#{ManejoActividadUI.actualizarDatosActividad()}"
+                                         update=":dialogs2:manage-product-content2" oncomplete="PF('manageProductDialog2').show()"
                                          styleClass="ui-button-success" style="margin-right: .5rem">
-                            <p:resetInput target=":dialogs:manage-product-content" />
+                            <p:resetInput target=":dialogs2:manage-product-content2" />
                         </p:commandButton>
-                        <p:commandButton id="delete-products-button" value="#{ManejoEventoUI.mensajeBotonEliminar}"
-                                         icon="pi pi-trash" actionListener="#{ManejoEventoUI.eliminarListaEventos()}"
-                                         styleClass="ui-button-danger" disabled="#{!ManejoEventoUI.hayEventosSeleccionados()}" update="@this">
+                        <p:commandButton id="delete-products-button" value="#{ManejoActividadUI.mensajeBotonEliminar}"
+                                         icon="pi pi-trash" actionListener="#{ManejoActividadUI.eliminarListaActividades()}"
+                                         styleClass="ui-button-danger" disabled="#{!ManejoActividadUI.hayActividadesSeleccionadas()}" update="@this">
                             <p:confirm header="Confirmación" message="¿Desea eliminar los eventos seleccionados?"
                                        icon="pi pi-exclamation-triangle" />
                         </p:commandButton>
@@ -220,12 +220,12 @@
                 </p:toolbar> <!-- Terminan las opciones del evento -->
 
                 <!-- Empieza la tabla de consulta-->
-                <p:dataTable id="dt-products" widgetVar="dtProducts" var="ev" value="#{ManejoEventoUI.listaEventos}"
-                             reflow="true" styleClass="products-table" selection="#{ManejoEventoUI.listaEventosTemp}"
-                             rowKey="#{ev.idEvento}" paginator="false" rows="10" rowSelectMode="add">
+                <p:dataTable id="dt-products" widgetVar="dtProducts" var="act" value="#{ManejoActividadUI.listaActividades}"
+                             reflow="true" styleClass="products-table" selection="#{ManejoActividadUI.listaActividadesTemp}"
+                             rowKey="#{act.idActividad}" paginator="false" rows="10" rowSelectMode="add">
                     <f:facet name="header">
                         <div class="products-table-header">
-                            <span style="font-weight: bold">Lista de actividades</span>
+                            <span style="font-weight: bold">Lista de Actividades</span>
                         </div>
                     </f:facet>
 
@@ -238,32 +238,60 @@
                     <p:column selectionMode="multiple" exportable="false" width="10px"></p:column>
 
                     <p:column headerText="Flyer" exportable="false">
-                        <h:graphicImage value="data:image/png;base64,#{ManejoEventoUI.getImagenDatos(ev.imagenEvento)}" rendered="#{not empty ManejoEventoUI.getImagenDatos(ev.imagenEvento)}" styleClass="product-image" />
+                        <h:graphicImage value="data:image/png;base64,#{ManejoActividadUI.getImagenDatos(act.imagenActividad)}" rendered="#{not empty ManejoActividadUI.getImagenDatos(act.imagenActividad)}" styleClass="product-image" />
                     </p:column>
 
-                    <p:column headerText="Nombre" sortBy="#{ev.nombreEvento}">
-                        <h:outputText value="#{ev.nombreEvento}" />
+                    <p:column headerText="Nombre" sortBy="#{act.nombreActividad}">
+                        <h:outputText value="#{act.nombreActividad}" />
                     </p:column>
 
-                    <p:column headerText="Ciclo escolar" sortBy="#{ev.cicloEscolarEvento}" >
-                        <h:outputText value="#{ev.cicloEscolarEvento}" />
+                    <p:column headerText="Evento" sortBy="#{act.idEvento.nombreEvento}">
+                        <h:outputText value="#{act.idEvento.nombreEvento}" />
                     </p:column>
 
-                    <p:column headerText="Fecha de inicio" sortBy="#{ev.fechaInicioEvento}">
-                        <h:outputText value="#{ev.fechaInicioEvento}" />
+                    <p:column headerText="Ponente" sortBy="#{act.ponenteActividad}" >
+                        <h:outputText value="#{act.ponenteActividad}" />
                     </p:column>
 
-                    <p:column headerText="Fecha de fin" sortBy="#{ev.fechaFinEvento}">
-                        <h:outputText value="#{ev.fechaFinEvento}" />
+                    <p:column headerText="Tipo" sortBy="#{act.tipoActividad}">
+                        <h:outputText value="#{act.tipoActividad}" />
                     </p:column>
 
-                    <p:column headerText="Estado" sortBy="#{ev.estadoEvento}">
-                        <h:outputText styleClass="product-badge status-#{ev.estadoEvento.toLowerCase()}"
-                                      value="#{ev.estadoEvento}" />
+                    <p:column headerText="Fecha" sortBy="#{act.fechaActividad}">
+                        <h:outputText value="#{act.fechaActividad}" />
                     </p:column>
 
-                    <p:column headerText="Correo del administrador" sortBy="#{ev.numEmpleadoAdministradorEvento.correoAdministrador.correo}">
-                        <h:outputText value="#{ev.numEmpleadoAdministradorEvento.correoAdministrador.correo}" />
+                    <p:column headerText="Horario de inicio" sortBy="#{act.horarioInicioActividad}">
+                        <h:outputText value="#{act.horarioInicioActividad}" />
+                    </p:column>
+
+                    <p:column headerText="Horario de fin" sortBy="#{act.horarioFinActividad}">
+                        <h:outputText value="#{act.horarioFinActividad}" />
+                    </p:column>
+
+                    <p:column headerText="Lugar" sortBy="#{act.estadoActividad}">
+                        <h:outputText styleClass="product-badge status-#{act.estadoActividad.toLowerCase()}"
+                                      value="#{act.estadoActividad}" />
+                    </p:column>
+
+                    <p:column headerText="Modalidad" sortBy="#{act.modalidadActividad}">
+                        <h:outputText value="#{act.modalidadActividad}" />
+                    </p:column>
+
+                    <p:column headerText="Enlace" sortBy="#{act.enlaceVirtual}">
+                        <h:outputText value="#{act.enlaceVirtual}" />
+                    </p:column>
+
+                    <p:column headerText="Espacios disponibles" sortBy="#{act.espaciosDisponiblesActividad}">
+                        <h:outputText value="#{act.espaciosDisponiblesActividad}" />
+                    </p:column>
+
+                    <p:column headerText="Descripción" sortBy="#{act.descripcionActividad}">
+                        <h:outputText value="#{act.descripcionActividad}" />
+                    </p:column>
+
+                    <p:column headerText="Correo del administrador" sortBy="#{act.numEmpleadoAdministradorActividad.correoAdministrador.correo}">
+                        <h:outputText value="#{act.numEmpleadoAdministradorActividad.correoAdministrador.correo}" />
                     </p:column>
 
                     <!-- Botones para visualizar, modificar y eliminar -->
@@ -278,19 +306,20 @@
                             <f:setPropertyActionListener value="" target=""/>
                         </p:commandButton> -->
 
-                        <!-- Botón para modificar la información del evento -->
+                        <!-- Botón para modificar la información de la actividad -->
                         <p:commandButton icon="pi pi-pencil" update=":dialogs:manage-product-content"
-                                         oncomplete="PF('manageProductDialog').show()"
+                                         oncomplete="PF('manageProductDialog2').show()"
                                          styleClass="edit-button rounded-button ui-button-success" process="@this">
-                            <f:setPropertyActionListener value="#{ev}" target="#{ManejoEventoUI.evento}" />
+                            <f:setPropertyActionListener value="#{act}" target="#{ManejoActividadUI.actividad}" />
+                            <f:actionListener binding="#{ManejoActividadUI.obtenerSello()}" />
                             <p:resetInput target=":dialogs:manage-product-content" />
                         </p:commandButton>
 
-                        <!-- Botón para eliminar el evento -->
+                        <!-- Botón para eliminar la actividad -->
                         <p:commandButton class="ui-button-warning rounded-button" icon="pi pi-trash"
                                          process="@this"
                                          oncomplete="PF('deleteProductDialog').show()">
-                            <f:setPropertyActionListener value="#{ev}" target="#{ManejoEventoUI.evento}" />
+                            <f:setPropertyActionListener value="#{act}" target="#{ManejoActividadUI.actividad}" />
                         </p:commandButton>
                     </p:column>
 
@@ -298,133 +327,20 @@
             </h:form> <!-- Termina la tabla de consulta -->
 
             <!-- Empieza el código para el registro del evento -->
-            <h:form id="dialogs" >
-                <p:dialog header="Información del evento" showEffect="fade" modal="true" widgetVar="manageProductDialog"
-                          responsive="true" class="dialog" draggable="false" resizable="false" >
-
-                    <p:outputPanel id="manage-product-content" class="ui-fluid">
-
-                        <p:outputPanel rendered="#{not empty ManejoEventoUI.evento}">
-
-                            <p:messages id="messages" showDetail="true" closable="true" globalOnly="true">
-                            </p:messages>
-                            <br></br>
-                            <p:outputLabel for="subirImagen" value="Flyer:"/>
-                            <div class="fieldImagen">
-                                <p:fileUpload id="subirImagen"
-                                              styleClass="color-fileUpload"
-                                              uploadLabel="Subir"
-                                              uploadButtonTitle="Sube un archivo PNG"
-                                              cancelLabel="Cancelar"
-                                              cancelButtonTitle="Cancelar proceso"
-                                              mode="advanced"
-                                              multiple="false"
-                                              sizeLimit="5242880" allowTypes="/(\.|\/)(png)$/"
-                                              invalidSizeMessage="El tamaño de la imágen debe de ser menor a 5 MB"
-                                              invalidFileMessage="Solo se permiten archivos png"
-                                              listener="#{ManejoEventoUI.subirArchivoImagen}"/>
-                            </div>
-                            <br></br>
-                            <div class="fieldImagen">
-                                <h:graphicImage id="imagenEvento" value="data:image/png;base64,#{ManejoEventoUI.getImagenDatos(ManejoEventoUI.evento.imagenEvento)}" rendered="#{not empty ManejoEventoUI.evento.imagenEvento}" />                            
-                            </div>
-                            <div class="field">
-                                <p:outputLabel for="name" value="Nombre:"/>
-                                <p:inputText id="name" value="#{ManejoEventoUI.evento.nombreEvento}" required="true" placeholder="Ingrese el nombre del evento" requiredMessage="Ingrese el nombre del evento"/>
-                                <p:message for="name" />
-                            </div>
-                            <div class="field" style="width: 35%">
-                                <p:outputLabel for="cicloEscolar" value="Ciclo escolar:"/>
-                                <p:selectOneMenu id="cicloEscolar" value="#{ManejoEventoUI.evento.cicloEscolarEvento}" required="true" requiredMessage="Ingrese la fecha de inicio">
-                                    <f:selectItem itemLabel="2023-1" itemValue="2023-1"/>
-                                    <f:selectItem itemLabel="2023-2" itemValue="2023-2"/>
-                                </p:selectOneMenu>
-                                <p:message for="cicloEscolar" />
-                            </div>
-                            <div class="field" style="width: 35%">
-                                <h:outputLabel for="facultad" value="Facultad: *" />
-                                <br></br>
-                                <p:selectCheckboxMenu id="facultad" value="#{ManejoEventoUI.idFacultades}" label="Facultades" style="min-width: 5rem" required="true" requiredMessage="Ingrese las facultades correspondientes al evento"
-                                                      multiple="true" dynamic="true" filter="true" filterMatchMode="startsWith" panelStyle="width: 20rem" scrollHeight="100"
-                                                      emptyLabel="Seleccione" updateLabel="true">
-                                    <f:selectItems value="#{ManejoEventoUI.facultadesEvento}" var="facultad" itemLabel="#{facultad.nombreFacultad}" itemValue="#{facultad.idFacultad}"/>
-                                </p:selectCheckboxMenu>
-                                <p:message for="facultad" />
-                            </div> 
-                            <div class="field" style="width: 70%">
-                                <p:outputLabel for="fechaI" value="Fecha de inicio:"/>
-                                <p:datePicker id="fechaI" value="#{ManejoEventoUI.evento.fechaInicioEvento}" showIcon="true" required="true" placeholder="Ingrese la fecha de inicio" requiredMessage="Ingrese la fecha de inicio" styleClass="custom-datepicker"/>
-                                <p:message for="fechaI" />
-                            </div>
-                            <div class="field" style="width: 70%">
-                                <p:outputLabel for="fechaF" value="Fecha de fin:"/>
-                                <p:datePicker id="fechaF" value="#{ManejoEventoUI.evento.fechaFinEvento}" showIcon="true" required="true" placeholder="Ingrese la fecha de fin" requiredMessage="Ingrese la fecha de fin" styleClass="custom-datepicker"/>
-                                <p:message for="fechaF" />
-                            </div>
-                            <div class="field">
-                                <p:outputLabel for="descripcion" value="Descripción:"/>
-                                <p:inputTextarea id="descripcion" value="#{ManejoEventoUI.evento.descripcionEvento}" required="true" placeholder="Ingrese una descripción" requiredMessage="Ingrese una descripción"/>
-                                <p:message for="descripcion" />
-                            </div>
-                        </p:outputPanel>
-                    </p:outputPanel>
-
-                    <f:facet name="footer">
-                        <p:commandButton value="Aceptar" icon="pi pi-check" actionListener="#{ManejoEventoUI.registroEvento()}"
-                                         update="manage-product-content" process="manage-product-content @this"  style="background-color: #50B848; color: #FFF;"/>
-                        <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('manageProductDialog').hide()"
-                                         class="ui-button-secondary" type="button" style="background-color: red; color: #FFF;" />
-                    </f:facet>
-
-                </p:dialog> 
-                <!-- Termina el código para el registro del evento -->
-
-                <!-- Empiezan los mensajes de confirmación para modificar un evento -->    
-                <p:confirmDialog widgetVar="manageProductDialog3" showEffect="fade" width="300"
-                                 message="¿Desea modificar el evento?" header="Confirmación" severity="warn">
-                    <p:commandButton value="Aceptar"  icon="pi pi-check" actionListener="#{ManejoEventoUI.modificarEvento()}"
-                                     process="@this" update="manage-product-content" 
-                                     oncomplete="PF('manageProductDialog3').hide()" style="background-color: #50B848; color: #FFF;" />
-                    <p:commandButton value="Cancelar" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
-                                     onclick="PF('manageProductDialog3').hide()" style="background-color: red; color: #FFF;" />
-                </p:confirmDialog>
-                <!-- Terminan los mensajes de confirmación para modificar un evento -->
-
-                <!-- Empiezan los mensajes de confirmación para eliminar un evento -->
-                <p:confirmDialog widgetVar="deleteProductDialog" showEffect="fade" width="300"
-                                 message="¿Desea eliminar el evento?" header="Confirmación" severity="warn">
-                    <p:commandButton value="Aceptar" icon="pi pi-check" actionListener="#{ManejoEventoUI.eliminarEvento()}"
-                                     process="@this" update=":form:delete-products-button"
-                                     oncomplete="PF('deleteProductDialog').hide()" style="background-color: #50B848; color: #FFF;" />
-                    <p:commandButton value="Cancelar" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
-                                     onclick="PF('deleteProductDialog').hide()" style="background-color: red; color: #FFF;" />
-                </p:confirmDialog>
-                <!-- Terminan los mensajes de confirmación para eliminar un evento -->
-
-                <!-- Empiezan los mensajes de confirmación para la eliminacion multiple de los eventos -->
-                <p:confirmDialog global="true" showEffect="fade" width="300">
-                    <p:commandButton value="Aceptar" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
-                    <p:commandButton value="Cancelar" type="button" styleClass="ui-confirmdialog-no ui-button-secondary"
-                                     icon="pi pi-times" />
-                </p:confirmDialog>
-                <!-- Terminan los mensajes de confirmación para la eliminacion multiple de los eventos -->
-            </h:form>
-
-            <!-- Empieza el código para el registro de actividad -->
             <h:form id="dialogs2" >
                 <p:dialog header="Información de actividad" showEffect="fade" modal="true" widgetVar="manageProductDialog2"
                           responsive="true" draggable="false" class="dialog">
 
                     <p:outputPanel id="manage-product-content2" class="ui-fluid">
 
-                        <p:outputPanel rendered="#{not empty ManejoEventoUI.evento}">
+                        <p:outputPanel rendered="#{not empty ManejoActividadUI.actividad}">
 
                             <p:messages id="messages2" showDetail="true" closable="true" globalOnly="true">
                             </p:messages>
                             <br></br>   
-                            <p:outputLabel for="subirImagen" value="Flyer:"/>
+                            <p:outputLabel for="subirImagenActividad" value="Flyer de la actividad:"/>
                             <div class="fieldImagen">
-                                <p:fileUpload id="subirImagen"
+                                <p:fileUpload id="subirImagenActividad"
                                               styleClass="color-fileUpload"
                                               uploadLabel="Subir"
                                               uploadButtonTitle="Sube un archivo PNG"
@@ -435,125 +351,195 @@
                                               sizeLimit="5242880" allowTypes="/(\.|\/)(png)$/"
                                               invalidSizeMessage="El tamaño de la imágen debe de ser menor a 5 MB"
                                               invalidFileMessage="Solo se permiten archivos png"
-                                              listener="#{ManejoEventoUI.subirArchivoImagen}"
+                                              listener="#{ManejoActividadUI.subirArchivoImagenActividad}"
                                               />
                             </div>
                             <br></br>
                             <div class="fieldImagen">
-                                <h:graphicImage id="imagenEvento" value="data:image/png;base64,#{ManejoEventoUI.getImagenDatos(ManejoEventoUI.evento.imagenEvento)}" rendered="#{not empty ManejoEventoUI.evento.imagenEvento}" />                            
+                                <h:graphicImage value="data:image/png;base64,#{ManejoActividadUI.getImagenDatos(act.imagenActividad)}" rendered="#{not empty ManejoActividadUI.getImagenDatos(act.imagenActividad)}" styleClass="product-image" />
                             </div>
                             <div class="field" style="width: auto">
                                 <p:outputLabel for="evento" value="Evento:"/>
-                                <p:selectOneMenu id="evento" value="#{ManejoEventoUI.evento.cicloEscolarEvento}" required="true" requiredMessage="Ingrese un evento registrado">
-                                    <f:selectItems value="#{ManejoEventoUI.listaEventos}" var="evento" itemLabel="#{evento.nombreEvento}" itemValue="#{evento}"/>
+                                <p:selectOneMenu id="evento" value="#{ManejoActividadUI.eventoSeleccionado}" required="true" requiredMessage="Ingrese un evento registrado">
+                                    <f:selectItems value="#{ManejoActividadUI.listaEventos}" var="evento" itemLabel="#{evento.nombreEvento}" itemValue="#{evento.idEvento}"/>
                                 </p:selectOneMenu>
                                 <p:message for="evento" />
                             </div>
-                            
+
+                            <div class="field" style="width: 35%">
+                                <h:outputLabel for="programa" value="Programas educativos: *" />
+                                <br></br>
+                                <p:selectCheckboxMenu id="programa" value="#{ManejoActividadUI.listaProgramasTemp}" label="Programas educativos" style="min-width: 5rem" required="true" requiredMessage="Ingrese los programas educativos afines a la actividad"
+                                                      multiple="true" dynamic="true" filter="true" filterMatchMode="startsWith" panelStyle="width: 20rem" scrollHeight="100"
+                                                      emptyLabel="Seleccione" updateLabel="true">
+                                    <f:selectItems value="#{ManejoActividadUI.listaProgramas}" var="programa" itemLabel="#{programa.nombreProgramaEducativo}" itemValue="#{programa.codigoProgramaEducativo}"/>
+                                </p:selectCheckboxMenu>
+                                <p:message for="programa" />
+                            </div> 
+
                             <div class="field">
                                 <p:outputLabel for="name" value="Nombre:"/>
-                                <p:inputText id="name" value="#{ManejoEventoUI.evento.nombreEvento}" required="true" placeholder="Ingrese el nombre de actividad" requiredMessage="Ingrese el nombre de actividad"/>
+                                <p:inputText id="name" value="#{ManejoActividadUI.actividad.nombreActividad}" required="true" placeholder="Ingrese el nombre de actividad" requiredMessage="Ingrese el nombre de actividad"/>
                                 <p:message for="name" />
                             </div>
-                            
+
                             <div class="field">
                                 <p:outputLabel for="ponente" value="Ponente:"/>
-                                <p:inputText id="ponente" value="#{ManejoEventoUI.evento.nombreEvento}" required="true" placeholder="Ingrese el ponente" requiredMessage="Ingrese el ponente"/>
+                                <p:inputText id="ponente" value="#{ManejoActividadUI.actividad.ponenteActividad}" required="true" placeholder="Ingrese el ponente" requiredMessage="Ingrese el ponente"/>
                                 <p:message for="ponente" />
                             </div>
-                            
+
                             <div class="field" style="width: 35%">
                                 <p:outputLabel for="tipo" value="Tipo:"/>
-                                <p:selectOneMenu id="tipo" value="#{ManejoEventoUI.evento.cicloEscolarEvento}" required="true" requiredMessage="Ingrese la fecha de inicio">
+                                <p:selectOneMenu id="tipo" value="#{ManejoActividadUI.actividad.tipoActividad}" required="true" requiredMessage="Ingrese la fecha de inicio">
                                     <f:selectItem itemLabel="Taller" itemValue="Taller"/>
                                     <f:selectItem itemLabel="Platica" itemValue="Platica"/>
                                     <f:selectItem itemLabel="Conferencia" itemValue="Conferencia"/>
                                 </p:selectOneMenu>
                                 <p:message for="tipo" />
                             </div>
-                            
+
                             <div class="field" style="width: 45%">
                                 <p:outputLabel for="fecha" value="Fecha:"/>
-                                <p:datePicker id="fecha" value="#{ManejoEventoUI.evento.fechaInicioEvento}" showIcon="true" required="true" placeholder="Ingrese la fecha" requiredMessage="Ingrese la fecha" styleClass="custom-datepicker"/>
+                                <p:datePicker id="fecha" value="#{ManejoActividadUI.actividad.fechaActividad}" showIcon="true" required="true" placeholder="Ingrese la fecha" requiredMessage="Ingrese la fecha" styleClass="custom-datepicker"/>
                                 <p:message for="fecha" />
                             </div>
-                            
+
                             <div class="field" style="width: 35%">
                                 <p:outputLabel for="timeonly8" value="Horario de inicio:"/>
-                                <p:datePicker id="timeonly8" required="true" style="width: 70%" hourFormat="12" value="#{ManejoEventoUI.time8}"
-                                  mindate="#{ManejoEventoUI.minTime}"
-                                  maxdate="#{ManejoEventoUI.maxTime}"
-                                 />
+                                <p:datePicker id="timeonly8" required="true" style="width: 70%" hourFormat="12" value="#{ManejoActividadUI.horaInicioActividad}"
+                                              mindate="#{ManejoActividadUI.minTime}"
+                                              maxdate="#{ManejoActividadUI.maxTime}"
+                                              />
                             </div>
                             <div class="field">
-                                (Rango permitido entre <h:outputText value="#{ManejoEventoUI.minTime}"></h:outputText>AM y
-                                <h:outputText value="#{ManejoEventoUI.maxTime}"></h:outputText>PM)
+                                (Rango permitido entre <h:outputText value="#{ManejoActividadUI.minTime}"></h:outputText>AM y
+                                <h:outputText value="#{ManejoActividadUI.maxTime}"></h:outputText>PM)
                             </div>
                             <br></br>  
                             <div class="field" style="width: 35%">
                                 <p:outputLabel for="timeonly9" value="Horario de fin:"/>
-                                <p:datePicker id="timeonly9" required="true" style="width: 70%" hourFormat="12" value="#{ManejoEventoUI.time9}"
-                                  mindate="#{ManejoEventoUI.minTime}"
-                                  maxdate="#{ManejoEventoUI.maxTime}"
-                                 />
-                                
+                                <p:datePicker id="timeonly9" required="true" style="width: 70%" hourFormat="12" value="#{ManejoActividadUI.horaFinActividad}"
+                                              mindate="#{ManejoActividadUI.minTime}"
+                                              maxdate="#{ManejoActividadUI.maxTime}"
+                                              />
+
                             </div>
                             <div class="field">
-                                (Rango permitido entre <h:outputText value="#{ManejoEventoUI.minTime}"></h:outputText>AM y
-                                <h:outputText value="#{ManejoEventoUI.maxTime}"></h:outputText>PM)
+                                (Rango permitido entre <h:outputText value="#{ManejoActividadUI.minTime}"></h:outputText>AM y
+                                <h:outputText value="#{ManejoActividadUI.maxTime}"></h:outputText>PM)
                             </div>
                             <br></br>  
                             <div class="field">
-                                <p:outputLabel for="lugar" value="Lugar:"/>
-                                <p:inputText id="lugar" value="#{ManejoEventoUI.evento.descripcionEvento}" required="true" placeholder="Ingrese un lugar" requiredMessage="Ingrese un lugar"/>
-                                <p:message for="lugar" />
+                                <p:outputLabel for="Direccion" value="Dirección:"/>
+                                <p:inputText id="Direccion" value="#{ManejoActividadUI.actividad.direccionActividad}" required="true" placeholder="Ingrese una direccion" requiredMessage="Ingrese una direccion"/>
+                                <p:message for="Direccion" />
                             </div>   
-                            
+
                             <div class="field" style="width: 35%">
                                 <p:outputLabel for="modalidad" value="Modalidad:"/>
-                                <p:selectOneMenu id="modalidad" value="#{ManejoEventoUI.evento.cicloEscolarEvento}" required="true" requiredMessage="Ingrese una modalidad">
+                                <p:selectOneMenu id="modalidad" value="#{ManejoActividadUI.actividad.modalidadActividad}" required="true" requiredMessage="Ingrese una modalidad">
                                     <f:selectItem itemLabel="Presencial" itemValue="Presencial"/>
                                     <f:selectItem itemLabel="Virtual" itemValue="Virtual"/>
                                 </p:selectOneMenu>
                                 <p:message for="modalidad" />
                             </div>
-                            
+
                             <div class="field">
                                 <p:outputLabel for="enlace" value="Enlace virtual:"/>
-                                <p:inputText id="enlace" value="#{ManejoEventoUI.evento.descripcionEvento}" required="true" placeholder="Ingrese un enlace virtual" requiredMessage="Ingrese un enlace virtual"/>
+                                <p:inputText id="enlace" value="#{ManejoActividadUI.actividad.enlaceVirtual}" required="true" placeholder="Ingrese un enlace virtual" requiredMessage="Ingrese un enlace virtual"/>
                                 <p:message for="enlace" />
                             </div>
-                            
+
                             <div class="field" style="width: 65%">
                                 <p:outputLabel for="espacios" value="Espacios disponibles:"/>
-                                <p:inputText id="espacios" value="#{ManejoEventoUI.evento.descripcionEvento}" required="true" placeholder="Ingrese los espacios disponibles" requiredMessage="Ingrese los espacios disponibles">
+                                <p:inputText id="espacios" value="#{ManejoActividadUI.actividad.espaciosDisponiblesActividad}" required="true" placeholder="Ingrese los espacios disponibles" requiredMessage="Ingrese los espacios disponibles">
                                     <p:keyFilter mask="num" />
                                 </p:inputText>
                                 <p:message for="espacios" />
                             </div>   
-                            
+
                             <div class="field">
                                 <p:outputLabel for="descripcion" value="Descripción:"/>
-                                <p:inputTextarea id="descripcion" value="#{ManejoEventoUI.evento.descripcionEvento}" required="true" placeholder="Ingrese una descripción" requiredMessage="Ingrese una descripción"/>
+                                <p:inputTextarea id="descripcion" value="#{ManejoActividadUI.actividad.descripcionActividad}" required="true" placeholder="Ingrese una descripción" requiredMessage="Ingrese una descripción"/>
                                 <p:message for="descripcion" />
                             </div>
                             
+                            <p:outputLabel for="subirImagenSello" value="Imagen del sello:"/>
+                            <div class="fieldImagen">
+                                <p:fileUpload id="subirImagenSello"
+                                              styleClass="color-fileUpload"
+                                              uploadLabel="Subir"
+                                              uploadButtonTitle="Sube un archivo PNG"
+                                              cancelLabel="Cancelar"
+                                              cancelButtonTitle="Cancelar proceso"
+                                              mode="advanced"
+                                              multiple="false"
+                                              sizeLimit="5242880" allowTypes="/(\.|\/)(png)$/"
+                                              invalidSizeMessage="El tamaño de la imágen debe de ser menor a 5 MB"
+                                              invalidFileMessage="Solo se permiten archivos png"
+                                              listener="#{ManejoActividadUI.subirArchivoImagenSello}"
+                                              />
+                            </div>
+                            <br></br>
+                            <div class="fieldImagen">
+                                <h:graphicImage value="data:image/png;base64,#{ManejoActividadUI.getImagenDatos(ManejoActividadUI.sello.imagenSello)}" rendered="#{not empty ManejoActividadUI.getImagenDatos(ManejoActividadUI.sello.imagenSello)}" styleClass="product-image" />
+                            </div>
+                            
+                            <div class="field">
+                                <p:outputLabel for="valorSello" value="Valor del sello:"/>
+                                <p:inputText id="valorSello" value="#{ManejoActividadUI.sello.cantidad}" required="true" placeholder="Ingrese el valor del sello" requiredMessage="Ingrese un valor">
+                                    <p:keyFilter mask="num" />
+                                </p:inputText>
+                                <p:message for="valorSello" />
+                            </div>
+
                         </p:outputPanel>
                     </p:outputPanel>
 
                     <f:facet name="footer">
-                        <p:commandButton value="Aceptar" icon="pi pi-check" actionListener="#{ManejoEventoUI.registroEvento()}"
+                        <p:commandButton value="Aceptar" icon="pi pi-check" actionListener="#{ManejoActividadUI.registroActividad()}"
                                          update="manage-product-content2" process="manage-product-content2 @this"  style="background-color: #50B848; color: #FFF;"/>
                         <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('manageProductDialog2').hide()"
                                          class="ui-button-secondary" type="button" style="background-color: red; color: #FFF;" />
                     </f:facet>
 
                 </p:dialog> 
-            </h:form><!-- Termina el código para el registro de actividad -->
+                <!-- Termina el código para el registro de actividad -->
 
+                <!-- Empiezan los mensajes de confirmación para modificar una actividad -->    
+                <p:confirmDialog widgetVar="manageProductDialog3" showEffect="fade" width="300"
+                                 message="¿Desea modificar el evento?" header="Confirmación" severity="warn">
+                    <p:commandButton value="Aceptar"  icon="pi pi-check" actionListener="#{ManejoActividadUI.modificacionActividad()}"
+                                     process="@this" update="manage-product-content2" 
+                                     oncomplete="PF('manageProductDialog3').hide()" style="background-color: #50B848; color: #FFF;" />
+                    <p:commandButton value="Cancelar" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
+                                     onclick="PF('manageProductDialog3').hide()" style="background-color: red; color: #FFF;" />
+                </p:confirmDialog>
+                <!-- Terminan los mensajes de confirmación para modificar una actividad -->
+
+                <!-- Empiezan los mensajes de confirmación para eliminar un evento -->
+                <p:confirmDialog widgetVar="deleteProductDialog" showEffect="fade" width="300"
+                                 message="¿Desea eliminar el evento?" header="Confirmación" severity="warn">
+                    <p:commandButton value="Aceptar" icon="pi pi-check" actionListener="#{ManejoActividadUI.eliminarActividad()}"
+                                     process="@this" update=":form:delete-products-button"
+                                     oncomplete="PF('deleteProductDialog').hide()" style="background-color: #50B848; color: #FFF;" />
+                    <p:commandButton value="Cancelar" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
+                                     onclick="PF('deleteProductDialog').hide()" style="background-color: red; color: #FFF;" />
+                </p:confirmDialog>
+                <!-- Terminan los mensajes de confirmación para eliminar una actividad -->
+
+                <!-- Empiezan los mensajes de confirmación para la eliminacion multiple de las actividades -->
+                <p:confirmDialog global="true" showEffect="fade" width="300">
+                    <p:commandButton value="Aceptar" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+                    <p:commandButton value="Cancelar" type="button" styleClass="ui-confirmdialog-no ui-button-secondary"
+                                     icon="pi pi-times" />
+                </p:confirmDialog>
+                <!-- Terminan los mensajes de confirmación para la eliminacion multiple de las actividades -->
+            </h:form>
         </div>
-        
+
         <!-- Se asigna el correo del tipo de usuario -->
-        <h:outputLabel for="correo" value="#{ManejoEventoUI.setCorreo(loginUI.usuarios.correo)}"/>
+        <h:outputLabel for="correo" value="#{ManejoActividadUI.setCorreo(loginUI.usuarios.correo)}"/>
     </body>
 </html>

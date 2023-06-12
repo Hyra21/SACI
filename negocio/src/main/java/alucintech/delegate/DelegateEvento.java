@@ -144,5 +144,15 @@ public class DelegateEvento {
             ServiceLocator.getInstanceEventoDAO().delete(ev);
         }
     }
+    
+    public Evento obtenerEvento(Integer idEvento){
+        Evento eventoEncontrado = new Evento();
+        for(Evento ev: ServiceLocator.getInstanceEventoDAO().findAll()){
+            if(ev.getIdEvento() == idEvento){
+                eventoEncontrado = ev;
+            }
+        }
+        return eventoEncontrado;
+    }
 
 }

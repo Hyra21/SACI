@@ -54,4 +54,8 @@ public class FacadeEvento {
     public void eliminarListaEventos(List<Evento> eventos) {
         delegateEvento.eliminarListaEventos(eventos);
     }
+    
+     public Evento obtenerEvento(Integer idEvento){
+         return delegateEvento.obtenerEvento(idEvento);
+     }
 }
