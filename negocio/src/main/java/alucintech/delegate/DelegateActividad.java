@@ -59,8 +59,6 @@ public class DelegateActividad {
         Calendar fechaInicioMin = Calendar.getInstance();
         Calendar fechaFinMax = Calendar.getInstance();
         List<Actividad> actividades = consultarActividades();
-        int contadorRepeticion = 0;
-        int contadorPonente = 0;
         int[] errores = new int[3];
 
         //Verificar Fecha de la actividad
@@ -78,7 +76,7 @@ public class DelegateActividad {
                     && act.getModalidadActividad().equalsIgnoreCase(actividad.getModalidadActividad())
                     && act.getHorarioInicioActividad().toString().equalsIgnoreCase(actividad.getHorarioInicioActividad().toString())
                     && act.getHorarioFinActividad().toString().equalsIgnoreCase(actividad.getHorarioFinActividad().toString())) {
-                contadorRepeticion++;
+                errores[1] = 1;
 
             }
 
@@ -87,23 +85,9 @@ public class DelegateActividad {
                     && act.getHorarioInicioActividad().toString().equalsIgnoreCase(actividad.getHorarioInicioActividad().toString())
                     && act.getHorarioFinActividad().toString().equalsIgnoreCase(actividad.getHorarioFinActividad().toString())
                     && act.getPonenteActividad().equalsIgnoreCase(actividad.getPonenteActividad())) {
-                contadorPonente++;
-
-            }
-
-            //Si la actividad se encuentra 2 veces en alguna de las validaciones quiere decir que los datos se repiten.
-            if (contadorPonente == 2) {
                 errores[2] = 1;
-            }
-            if (contadorRepeticion == 2) {
-                errores[1] = 1;
-            }
-            if (contadorPonente == 1 && actividad.getIdActividad() == null) {
-                errores[2] = 1;
-            }
-            if (contadorRepeticion == 1 && actividad.getIdActividad() == null) {
-                errores[1] = 1;
-            }
+
+            }            
         }
 
         //

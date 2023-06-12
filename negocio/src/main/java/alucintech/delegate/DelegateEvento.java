@@ -58,15 +58,12 @@ public class DelegateEvento {
         Calendar fechaInicioMin = Calendar.getInstance();
         Calendar fechaFinMax = Calendar.getInstance();
         int[] errores = new int[3];
-        int contador = 0;
         List<Evento> eventos = consultarEventos();
 
         //Verificar Fecha de inicio y fecha de fin
         if (evento.getCicloEscolarEvento().charAt(evento.getCicloEscolarEvento().length() - 1) == '1') {
             fechaInicioMin.set(evento.getFechaInicioEvento().getYear() + 1900, 0, 30);
-            System.out.println("IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII" + fechaInicioMin.getTime().toString());
             fechaFinMax.set(evento.getFechaInicioEvento().getYear() + 1900, 5, 3);
-            System.out.println("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF" + fechaFinMax.getTime().toString());
             if (evento.getFechaInicioEvento().before(fechaInicioMin.getTime()) || evento.getFechaInicioEvento().after(fechaFinMax.getTime())) {
                 errores[0] = 1;
             }
@@ -93,15 +90,9 @@ public class DelegateEvento {
         //Verificar nombre y ciclo escolar
         for (Evento ev : eventos) {
             if (ev.getNombreEvento().compareToIgnoreCase(evento.getNombreEvento()) == 0 && ev.getCicloEscolarEvento().compareToIgnoreCase(evento.getCicloEscolarEvento()) == 0) {
-                contador++;
+                errores[1] = 1;
             }
 
-        }
-        if (contador == 2) {
-            errores[1] = 1;
-        }
-        if (contador == 1 && evento.getIdEvento() == null) {
-            errores[1] = 1;
         }
         return errores;
     }
