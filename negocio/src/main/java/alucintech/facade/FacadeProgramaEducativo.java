@@ -30,8 +30,8 @@ public class FacadeProgramaEducativo {
         delegateProgramaEducativo.asignarProgramasElegidos(codigoProgramasElegidos, actividad);
     }
 
-    public boolean validarProgramasEducativos(Integer idEvento, Integer[] codigoProgramasElegidos) {
-        return delegateProgramaEducativo.validarProgramasEducativos(idEvento, codigoProgramasElegidos);
+    public boolean validarProgramasEducativos(Integer idEventoActividad, Integer[] codigoProgramasElegidos) {
+        return delegateProgramaEducativo.validarProgramasEducativos(idEventoActividad, codigoProgramasElegidos);
     }
     
 }

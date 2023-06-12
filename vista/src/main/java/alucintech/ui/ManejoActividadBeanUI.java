@@ -128,9 +128,9 @@ public class ManejoActividadBeanUI implements Serializable {
 
             //Variable que indica si un error ha sido encontrado.
             boolean error = false;
-            
+
             //Variable que indica si ya se terminó de subir la actividad.
-            boolean listo = false;
+            boolean errorP = false;
 
             //La variable admin almacena la información del administrador dueño del correo que se envía como parámetro
             admin = manejoActividadHelper.identificarAdmin(correo);
@@ -156,19 +156,12 @@ public class ManejoActividadBeanUI implements Serializable {
             // Convertir LocalTime a LocalDateTime
             LocalDate localDate = LocalDate.now();
             LocalDateTime localDateTime = LocalDateTime.of(localDate, horaInicioActividad);
-            LocalDateTime localDateTime2 = LocalDateTime.of(localDate, horaInicioActividad);
+            LocalDateTime localDateTime2 = LocalDateTime.of(localDate, horaFinActividad);
 
-            // Convertir LocalDateTime a Date
-            actividad.getHorarioInicioActividad().from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
-            actividad.getHorarioFinActividad().from(localDateTime2.atZone(ZoneId.systemDefault()).toInstant());
+            // Convertir LocalDateTime a Date y se asignan las horas seleccionadas a la actividad
+            actividad.setHorarioInicioActividad(actividad.getHorarioInicioActividad().from(localDateTime.atZone(ZoneId.systemDefault()).toInstant()));
+            actividad.setHorarioFinActividad(actividad.getHorarioFinActividad().from(localDateTime2.atZone(ZoneId.systemDefault()).toInstant()));
 
-            //Se asignan las horas seleccionadas a la actividad
-            /*actividad.getHorarioInicioActividad().setHours(horaInicioActividad.getHour());
-            actividad.getHorarioInicioActividad().setMinutes(horaInicioActividad.getMinute());
-
-            actividad.getHorarioFinActividad().setHours(horaFinActividad.getHour());
-            actividad.getHorarioFinActividad().setMinutes(horaFinActividad.getMinute());
-*/
             //Se revisan los errores encontrados
             if (errores[0] == 1 || errores[1] == 1 || errores[2] == 1) {
                 error = true;
@@ -184,21 +177,40 @@ public class ManejoActividadBeanUI implements Serializable {
                 }
 
                 if (!manejoActividadHelper.validarProgramasEducativos(eventoSeleccionado, listaProgramasTemp)) {
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Los programas educativos no concuerdan con la facultad del evento", "Intente de nuevo"));
+                    actividad.setIdActividad(null);
+                } else {
+                    //Se registra la actividad.
+                    manejoActividadHelper.registrarActividad(actividad);
+
                     manejoActividadHelper.asignarProgramasElegidos(listaProgramasTemp, actividad);
+
+                    sello.setIdActividad(actividad);
+
+                    List<Sello> listaSellos = manejoActividadHelper.consultarSellos();
+
+                    //Si no hay sellos se asigna el id 1, en caso contrario se asigna un id con un valor 1 unidad mayor que la id anterior
+                    if (listaActividades.isEmpty()) {
+                        sello.setIdSello(1);
+                    } else {
+                        sello.setIdSello(listaSellos.get(listaSellos.size() - 1).getIdSello() + 1);
+                    }
+
+                    List<Sello> sellos = new ArrayList();
+
+                    sellos.add(sello);
+
+                    actividad.setSelloList(sellos);
+
+                    sello = new Sello();
+                    //Se actualiza la lista de las actividades para que se vea reflejada en la consulta
+                    actualizarListaActividades();
+
+                    //Se cambia y muestra el mensaje que aparecerá al terminar el registro
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Actividad registrada", ""));
+                    PrimeFaces.current().executeScript("PF('manageProductDialog2').hide()");
+                    PrimeFaces.current().ajax().update("form:messages", "form:dt-products");
                 }
-
-                //Se registra la actividad.
-                manejoActividadHelper.registrarActividad(actividad);
-                listo = true;
-
-                //Se actualiza la lista de las actividades para que se vea reflejada en la consulta
-                actualizarListaActividades();
-
-                //Se cambia y muestra el mensaje que aparecerá al terminar el registro
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Actividad registrada", ""));
-                PrimeFaces.current().executeScript("PF('manageProductDialog').hide()");
-                PrimeFaces.current().ajax().update("form:messages", "form:dt-products");
-
                 //Dependiendo del tipo de error, se determina la alerta.
             } else {
                 if (errores[0] == 1 && errores[1] == 1 && errores[2] == 1) {
@@ -220,25 +232,6 @@ public class ManejoActividadBeanUI implements Serializable {
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "El ponente ya tiene ese horario asignado en otra actividad:", "Ingrese otra fecha"));
                 }
             }
-
-            sello.setIdActividad(actividad);
-
-            List<Sello> listaSellos = manejoActividadHelper.consultarSellos();
-
-            //Si no hay sellos se asigna el id 1, en caso contrario se asigna un id con un valor 1 unidad mayor que la id anterior
-            if (listaActividades.isEmpty()) {
-                sello.setIdSello(1);
-            } else {
-                sello.setIdSello(listaSellos.get(listaSellos.size() - 1).getIdSello() + 1);
-            }
-
-            List<Sello> sellos = new ArrayList();
-            
-            sellos.add(sello);
-            
-            actividad.setSelloList(sellos);
-            
-            sello = new Sello();
 
         } else {
             //En caso de detectar una modificación se ejecuta el cuadro de confirmación que acepta o cancela la modificación.
@@ -268,15 +261,17 @@ public class ManejoActividadBeanUI implements Serializable {
         //Se obtiene la lista de eventos que le pertenecen al administrador que se envía como parámetro, que luego se usará para validar si intenta modificar eventos ajenos.
         listaActividadesAdmin = manejoActividadHelper.listaActividadesAdmin(admin);
 
-        //Se asignan las horas seleccionadas a la actividad
-        actividad.getHorarioInicioActividad().setHours(horaFinActividad.getHour());
-        actividad.getHorarioInicioActividad().setMinutes(horaFinActividad.getMinute());
+        // Convertir LocalTime a LocalDateTime
+        LocalDate localDate = LocalDate.now();
+        LocalDateTime localDateTime = LocalDateTime.of(localDate, horaInicioActividad);
+        LocalDateTime localDateTime2 = LocalDateTime.of(localDate, horaFinActividad);
 
-        actividad.getHorarioFinActividad().setHours(horaInicioActividad.getHour());
-        actividad.getHorarioFinActividad().setMinutes(horaInicioActividad.getMinute());
+        // Convertir LocalDateTime a Date y se asignan las horas seleccionadas a la actividad.
+        actividad.setHorarioInicioActividad(actividad.getHorarioInicioActividad().from(localDateTime.atZone(ZoneId.systemDefault()).toInstant()));
+        actividad.setHorarioFinActividad(actividad.getHorarioFinActividad().from(localDateTime2.atZone(ZoneId.systemDefault()).toInstant()));
 
         //Este if se encarga de cambiar la variable "error" a true en caso de que el arreglo se haya llenado, indicando que existe un error.
-        if (errores[0] == 1 || errores[1] == 1) {
+        if (errores[0] == 1 || errores[1] == 1 || errores[2] == 1) {
             error = true;
 
         }
@@ -291,31 +286,30 @@ public class ManejoActividadBeanUI implements Serializable {
             }
         }
 
-        if (!manejoActividadHelper.validarProgramasEducativos(eventoSeleccionado, listaProgramasTemp)) {
-            manejoActividadHelper.asignarProgramasElegidos(listaProgramasTemp, actividad);
-        } else {
-            error = true;
-        }
-
         if (modificacionIlegal) {
             //Se cambia y muestra el mensaje que aparecerá en caso de que se identifique un borrado ilegal.
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Solo puede modificar actividades creadas por usted"));
-            PrimeFaces.current().executeScript("PF('manageProductDialog').hide()");
+            PrimeFaces.current().executeScript("PF('manageProductDialog2').hide()");
             PrimeFaces.current().ajax().update("form:messages", "form:dt-products");
         } else {
 
             //Este if valida si se lleva a cabo la modificación o se muestra algún mensaje de error tomando en cuenta la variable "error".
             if (error == false) {
                 //Método que modifica al evento en la base de datos.
-                manejoActividadHelper.modificarActividad(actividad);
+                if (!manejoActividadHelper.validarProgramasEducativos(eventoSeleccionado, listaProgramasTemp)) {
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Los programas educativos no concuerdan con la facultad del evento", "Intente de nuevo"));
+                } else {
+                    manejoActividadHelper.asignarProgramasElegidos(listaProgramasTemp, actividad);
+                    manejoActividadHelper.modificarActividad(actividad);
+                    manejoActividadHelper.actualizarSello(sello);
+                    //Se actualiza la lista de las actividades para que se vea reflejada en la consulta
+                    actualizarListaActividades();
 
-                //Se actualiza la lista de las actividades para que se vea reflejada en la consulta
-                actualizarListaActividades();
-
-                //Se cambia y muestra el mensaje que aparecerá al terminar la modificación.
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Evento actualizado", ""));
-                PrimeFaces.current().executeScript("PF('manageProductDialog').hide()");
-                PrimeFaces.current().ajax().update("form:messages", "form:dt-products");
+                    //Se cambia y muestra el mensaje que aparecerá al terminar la modificación.
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Actividad actualizada", ""));
+                    PrimeFaces.current().executeScript("PF('manageProductDialog2').hide()");
+                    PrimeFaces.current().ajax().update("form:messages", "form:dt-products");
+                }
 
             } else {
                 if (errores[0] == 1 && errores[1] == 1 && errores[2] == 1) {
@@ -338,7 +332,7 @@ public class ManejoActividadBeanUI implements Serializable {
                 }
             }
 
-            manejoActividadHelper.actualizarSello(sello);
+
 
         }
     }
@@ -517,6 +511,11 @@ public class ManejoActividadBeanUI implements Serializable {
      */
     public void actualizarDatosActividad() {
         this.actividad = new Actividad();
+
+    }
+
+    public void actualizarListaEventos() {
+        listaEventos = manejoActividadHelper.consultaEventos();
     }
 
     /**

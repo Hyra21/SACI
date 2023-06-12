@@ -56,16 +56,16 @@ public class DelegateProgramaEducativo {
         }
     }
 
-    public boolean validarProgramasEducativos(Integer idEvento, Integer[] codigoProgramasElegidos) {
-        boolean error = true;
+    public boolean validarProgramasEducativos(Integer idEventoActividad, Integer[] codigoProgramasElegidos) {
+        boolean validado = false;
 
         for (Integer codigoProgramaElegido : codigoProgramasElegidos) {
             for (Programaeducativo p : consultarProgramas()) {
                 if (p.getCodigoProgramaEducativo() == codigoProgramaElegido) {
                     for (Evento ev : p.getIdFacultadProgramaEducativo().getEventoList()) {
-                        if (ev.getIdEvento() == idEvento) {
+                        if (ev.getIdEvento() == idEventoActividad) {
                             System.out.println("SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS");
-                            error = false;
+                            validado = true;
                         }
                     }
 
@@ -73,7 +73,7 @@ public class DelegateProgramaEducativo {
             }
         }
 
-        return error;
+        return validado;
     }
 
     public void actualizarProgramaEducativo(Programaeducativo programa) {
