@@ -150,6 +150,17 @@
             background-color: #FEBE10; /* Color amarillo de fondo  */
             border-color: #FEBE10; /* Color amarillo de los bordes  */
         }
+        
+        .custom-spinner .ui-spinner-button{
+            background-color: #FEBE10; /* Color amarillo de fondo  */
+            color: #FFF; /* Cambia el color del icono de la fecha a blanco. */
+            border-color: #FEBE10; /* Color amarillo de los bordes  */
+        }
+        
+        .custom-spinner:hover .ui-spinner-button{
+            background-color: #FEBE10; /* Color amarillo de fondo  */
+            border-color: #FEBE10; /* Color amarillo de los bordes  */
+        }
 
         /* Aqui se menciona la familia del font que se usara para la letra  */
         @font-face {
@@ -350,7 +361,7 @@
                                 <p:message for="evento" />
                             </div>
 
-                            <div class="field" style="width: 35%">
+                            <div class="field" style="width: 55%">
                                 <h:outputLabel for="programa" value="Programas educativos: *" />
                                 <br></br>
                                 <p:selectCheckboxMenu id="programa" value="#{ManejoActividadUI.listaProgramasTemp}" label="Programas educativos" style="min-width: 5rem" required="true" requiredMessage="Ingrese los programas educativos afines a la actividad"
@@ -435,11 +446,10 @@
                                 <p:message for="enlace" />
                             </div>
 
-                            <div class="field" style="width: 65%">
+                            <div class="field" style="width: 55%">
                                 <p:outputLabel for="espacios" value="Espacios disponibles:"/>
-                                <p:inputText id="espacios" value="#{ManejoActividadUI.actividad.espaciosDisponiblesActividad}" required="true" placeholder="Ingrese los espacios disponibles" requiredMessage="Ingrese los espacios disponibles">
-                                    <p:keyFilter mask="num" />
-                                </p:inputText>
+                                <p:spinner styleClass="custom-spinner" style="width: 48%" id="espacios" value="#{ManejoActividadUI.actividad.espaciosDisponiblesActividad}" required="true" min="1" max="200" requiredMessage="Ingrese los espacios disponibles">
+                                </p:spinner>
                                 <p:message for="espacios" />
                             </div>   
 
@@ -470,11 +480,10 @@
                                 <h:graphicImage value="data:image/png;base64,#{ManejoActividadUI.getImagenDatos(ManejoActividadUI.sello.imagenSello)}" rendered="#{not empty ManejoActividadUI.getImagenDatos(ManejoActividadUI.sello.imagenSello)}" styleClass="product-image" />
                             </div>
                             
-                            <div class="field">
+                            <div class="field" style="width: 28%">
                                 <p:outputLabel for="valorSello" value="Valor del sello:"/>
-                                <p:inputText id="valorSello" value="#{ManejoActividadUI.sello.cantidad}" required="true" placeholder="Ingrese el valor del sello" requiredMessage="Ingrese un valor">
-                                    <p:keyFilter mask="num" />
-                                </p:inputText>
+                                <p:spinner styleClass="custom-spinner" id="valorSello" value="#{ManejoActividadUI.sello.cantidad}" min="1" max="3" required="true" requiredMessage="Ingrese un valor">
+                                </p:spinner>
                                 <p:message for="valorSello" />
                             </div>
 
