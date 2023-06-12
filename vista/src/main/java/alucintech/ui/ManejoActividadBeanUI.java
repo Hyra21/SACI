@@ -190,7 +190,7 @@ public class ManejoActividadBeanUI implements Serializable {
                     List<Sello> listaSellos = manejoActividadHelper.consultarSellos();
 
                     //Si no hay sellos se asigna el id 1, en caso contrario se asigna un id con un valor 1 unidad mayor que la id anterior
-                    if (listaActividades.isEmpty()) {
+                    if (listaSellos.isEmpty()) {
                         sello.setIdSello(1);
                     } else {
                         sello.setIdSello(listaSellos.get(listaSellos.size() - 1).getIdSello() + 1);
@@ -214,19 +214,19 @@ public class ManejoActividadBeanUI implements Serializable {
                 //Dependiendo del tipo de error, se determina la alerta.
             } else {
                 if (errores[0] == 1 && errores[1] == 1 && errores[2] == 1) {
-                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "El evento ya existe, la fecha no está dentro del rango permitido y el ponente ya tiene ese horario asignado en otra actividad:", "Intente de nuevo"));
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "La actividad ya existe, la fecha no está dentro del rango permitido y el ponente ya tiene ese horario asignado en otra actividad:", "Intente de nuevo"));
                 }
                 if (errores[0] == 1 && errores[1] == 1 && errores[2] == 0) {
-                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "El evento ya existe y la fecha no está dentro del rango permitido:", "Ingrese otros datos"));
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "La actividad ya existe y la fecha no está dentro del rango permitido:", "Ingrese otros datos"));
                 }
                 if (errores[0] == 1 && errores[1] == 0 && errores[2] == 0) {
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "La fecha no está dentro del rango permitido:", "Ingrese otra fecha"));
                 }
                 if (errores[0] == 0 && errores[1] == 1 && errores[2] == 0) {
-                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "El evento ya existe", ""));
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "La actividad ya existe", ""));
                 }
                 if (errores[0] == 0 && errores[1] == 1 && errores[2] == 1) {
-                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "El evento ya existe y el ponente ya tiene ese horario asignado en otra actividad:", "Intente otros datos"));
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "La actividad ya existe y el ponente ya tiene ese horario asignado en otra actividad:", "Intente otros datos"));
                 }
                 if (errores[0] == 0 && errores[1] == 0 && errores[2] == 1) {
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "El ponente ya tiene ese horario asignado en otra actividad:", "Ingrese otra fecha"));
@@ -511,6 +511,7 @@ public class ManejoActividadBeanUI implements Serializable {
      */
     public void actualizarDatosActividad() {
         this.actividad = new Actividad();
+        listaEventos = manejoActividadHelper.consultaEventos();
 
     }
 
