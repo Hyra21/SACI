@@ -32,7 +32,7 @@ import org.primefaces.model.file.UploadedFile;
 @SessionScoped
 
 public class ManejoEventoBeanUI implements Serializable {
-    
+
     //Objeto que se apoya al bean con los métodos que afectan a la base de datos.
     private ManejoEventoHelper manejoEventoHelper;
     //Objeto que se usará para almacenar la información de los eventos ingresados por el usuario.
@@ -47,8 +47,8 @@ public class ManejoEventoBeanUI implements Serializable {
     private List<Evento> listaEventos;
     //Lista de eventos seleccionados por el usuario.
     private List<Evento> listaEventosTemp;
-    //Lista de facultades seleccionadas por el usuario.
-    private List<Facultad> facultadesEventoTemp;
+    //Lista de IDs de las facultades seleccionadas por el usuario.
+    private Integer[] idFacultades;
     //Lista de facultades almacenadas en la base de datos.
     private List<Facultad> facultadesEvento;
     //Archivo que recibirá la imagen ingresada por el usuario.
@@ -78,9 +78,6 @@ public class ManejoEventoBeanUI implements Serializable {
         //Lista de eventos seleccionados por el usuario.
         listaEventosTemp = new ArrayList();
 
-        //Lista de facultades seleccionadas por el usuario.
-        facultadesEventoTemp = new ArrayList();
-
         //Lista de facultades existentes en la base de datos.
         facultadesEvento = manejoEventoHelper.obtenerFacultades();
 
@@ -100,9 +97,6 @@ public class ManejoEventoBeanUI implements Serializable {
 
         //Aquí se llena el arreglo dependiendo de los errores encontrados. 
         errores = manejoEventoHelper.validarEvento(evento);
-
-        //Las facultades seleccionadas se asignan al objeto evento.
-        evento.setFacultadList(facultadesEventoTemp);
 
         //La variable admin almacena la información del administrador dueño del correo que se envía como parámetro.
         admin = manejoEventoHelper.identificarAdmin(correo);
@@ -137,13 +131,10 @@ public class ManejoEventoBeanUI implements Serializable {
             if (error == false) {
                 //Método que modifica al evento en la base de datos.
                 manejoEventoHelper.modificarEvento(evento);
-                
+
                 //Actualiza la lista de eventos para que se aprecien los cambios en la consulta.
                 actualizarListaEventos();
-                
-                //Limpiar las facultades seleccionadas, esto sirve para evitar que nuevos registros o modificaciones aparezcan con facultades ya seleccionadas
-                facultadesEventoTemp.clear();
-                
+
                 //Se cambia y muestra el mensaje que aparecerá al terminar la modificación.
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Evento actualizado", ""));
                 PrimeFaces.current().executeScript("PF('manageProductDialog').hide()");
@@ -165,8 +156,8 @@ public class ManejoEventoBeanUI implements Serializable {
 
     /**
      * Método que registra los eventos en la base de datos.
-     * 
-     * @throws IOException 
+     *
+     * @throws IOException
      */
     public void registroEvento() throws IOException {
         //Este if verifica si lo que se intenta hacer es un registro o modificación al revisar si el evento ya tiene un ID asignado.
@@ -189,11 +180,6 @@ public class ManejoEventoBeanUI implements Serializable {
             //Se cambia el estado del evento
             evento.setEstadoEvento("Postulado");
 
-            //Se asignan las facultades seleccionadas por el administrador
-            evento.setFacultadList(facultadesEventoTemp);
-            
-            
-
             //Aquí se llena el arreglo dependiendo de los errores encontrados. 
             errores = manejoEventoHelper.validarEvento(evento);
 
@@ -210,16 +196,19 @@ public class ManejoEventoBeanUI implements Serializable {
                 } else {
                     evento.setIdEvento(listaEventos.get(listaEventos.size() - 1).getIdEvento() + 1);
                 }
-             
+
                 //Se registra el evento
                 manejoEventoHelper.registroEvento(evento);
+                manejoEventoHelper.asignarFacultadesElegidas(idFacultades, evento);
 
                 //Se actualiza la lista de los eventos para que se vea reflejada en la consulta
                 actualizarListaEventos();
 
                 //Limpiar las facultades seleccionadas, esto sirve para evitar que nuevos registros o modificaciones aparezcan con facultades ya seleccionadas
-                facultadesEventoTemp.clear();
-                
+                for (int j = 0; j < idFacultades.length; j++) {
+                    idFacultades[j] = 0;
+                }
+
                 //Se cambia y muestra el mensaje que aparecerá al terminar el registro
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Evento registrado", ""));
                 PrimeFaces.current().executeScript("PF('manageProductDialog').hide()");
@@ -246,9 +235,10 @@ public class ManejoEventoBeanUI implements Serializable {
     }
 
     /**
-     * Este método determina el texto que aparecerá en el boton para eliminaciones multiples.
-     * 
-     * @return 
+     * Este método determina el texto que aparecerá en el boton para
+     * eliminaciones multiples.
+     *
+     * @return
      */
     public String getMensajeBotonEliminar() {
         if (hayEventosSeleccionados()) {
@@ -428,14 +418,6 @@ public class ManejoEventoBeanUI implements Serializable {
         this.listaEventosAdmin = listaEventosAdmin;
     }
 
-    public List<Facultad> getFacultadesEventoTemp() {
-        return facultadesEventoTemp;
-    }
-
-    public void setFacultadesEventoTemp(List<Facultad> facultadesEventoTemp) {
-        this.facultadesEventoTemp = facultadesEventoTemp;
-    }
-
     public Evento getEvento() {
         return evento;
     }
@@ -466,6 +448,14 @@ public class ManejoEventoBeanUI implements Serializable {
 
     public void setArchivoImagen(UploadedFile archivoImagen) {
         this.archivoImagen = archivoImagen;
+    }
+
+    public Integer[] getIdFacultades() {
+        return idFacultades;
+    }
+
+    public void setIdFacultades(Integer[] idFacultades) {
+        this.idFacultades = idFacultades;
     }
 
 }
