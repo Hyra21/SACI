@@ -201,6 +201,8 @@ public class ManejoActividadBeanUI implements Serializable {
                     sellos.add(sello);
 
                     actividad.setSelloList(sellos);
+                    
+                    manejoActividadHelper.registrarSello(sello);
 
                     sello = new Sello();
                     //Se actualiza la lista de las actividades para que se vea reflejada en la consulta
