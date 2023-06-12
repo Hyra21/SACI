@@ -14,12 +14,9 @@ import java.io.IOException;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Base64;
-import java.util.Calendar;
 import java.util.List;
 import org.primefaces.PrimeFaces;
-import org.primefaces.context.PrimeFacesContext;
 import org.primefaces.event.FileUploadEvent;
-import org.primefaces.event.UnselectEvent;
 import org.primefaces.model.file.UploadedFile;
 
 /**

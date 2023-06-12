@@ -58,6 +58,7 @@ public class DelegateEvento {
         Calendar fechaInicioMin = Calendar.getInstance();
         Calendar fechaFinMax = Calendar.getInstance();
         int[] errores = new int[3];
+        int contador = 0;
         List<Evento> eventos = consultarEventos();
 
         //Verificar Fecha de inicio y fecha de fin
@@ -92,13 +93,11 @@ public class DelegateEvento {
         //Verificar nombre y ciclo escolar
         for (Evento ev : eventos) {
             if (ev.getNombreEvento().compareToIgnoreCase(evento.getNombreEvento()) == 0 && ev.getCicloEscolarEvento().compareToIgnoreCase(evento.getCicloEscolarEvento()) == 0) {
-                errores[1] = 1;
+                contador++;
             }
-            if (evento.getIdEvento() != null) {
-                if (ev.getIdEvento() == evento.getIdEvento()) {
-                    errores[1] = 0;
-                }
-            }
+        }
+        if(contador == 2){
+            errores[1] = 1;
         }
         return errores;
     }

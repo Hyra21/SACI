@@ -8,6 +8,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import alucintech.entidad.Evento;
+import alucintech.entidad.Facultad;
 import alucintech.entidad.Identificaadministrador;
 import alucintech.entidad.Programaeducativo;
 import alucintech.entidad.Sello;
@@ -150,9 +151,6 @@ public class ManejoActividadBeanUI implements Serializable {
             //Se asigna el evento seleccionado a la actividad.
             actividad.setIdEvento(evento);
 
-            //Aquí se llena el arreglo dependiendo de los errores encontrados. 
-            errores = manejoActividadHelper.validarActividad(actividad);
-
             // Convertir LocalTime a LocalDateTime
             LocalDate localDate = LocalDate.now();
             LocalDateTime localDateTime = LocalDateTime.of(localDate, horaInicioActividad);
@@ -161,11 +159,13 @@ public class ManejoActividadBeanUI implements Serializable {
             // Convertir LocalDateTime a Date y se asignan las horas seleccionadas a la actividad
             actividad.setHorarioInicioActividad(actividad.getHorarioInicioActividad().from(localDateTime.atZone(ZoneId.systemDefault()).toInstant()));
             actividad.setHorarioFinActividad(actividad.getHorarioFinActividad().from(localDateTime2.atZone(ZoneId.systemDefault()).toInstant()));
-
+            
+            //Aquí se llena el arreglo dependiendo de los errores encontrados. 
+            errores = manejoActividadHelper.validarActividad(actividad);
+            
             //Se revisan los errores encontrados
             if (errores[0] == 1 || errores[1] == 1 || errores[2] == 1) {
                 error = true;
-                System.out.println("EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
             }
 
             if (error == false) {
@@ -201,10 +201,13 @@ public class ManejoActividadBeanUI implements Serializable {
                     sellos.add(sello);
 
                     actividad.setSelloList(sellos);
-                    
+
                     manejoActividadHelper.registrarSello(sello);
 
-                    sello = new Sello();
+                    for (Integer programa : listaProgramasTemp) {
+                        programa = 0;
+                    }
+
                     //Se actualiza la lista de las actividades para que se vea reflejada en la consulta
                     actualizarListaActividades();
 
@@ -333,8 +336,6 @@ public class ManejoActividadBeanUI implements Serializable {
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "El ponente ya tiene ese horario asignado en otra actividad:", "Ingrese otra fecha"));
                 }
             }
-
-
 
         }
     }
@@ -514,11 +515,27 @@ public class ManejoActividadBeanUI implements Serializable {
     public void actualizarDatosActividad() {
         this.actividad = new Actividad();
         listaEventos = manejoActividadHelper.consultaEventos();
+        sello = new Sello();
+        horaInicioActividad = LocalTime.of(0, 0);
+        horaFinActividad = LocalTime.of(0, 0);
 
     }
 
     public void actualizarListaEventos() {
         listaEventos = manejoActividadHelper.consultaEventos();
+    }
+
+    public void actualizarProgramas() {
+        this.listaProgramas.clear();
+        System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+        if (evento.getFacultadList() == null) {
+            listaProgramas = manejoActividadHelper.consultarProgramas();
+        } else {
+            for (Facultad f : evento.getFacultadList()) {
+                System.out.println("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
+                listaProgramas.addAll(f.getProgramaeducativoList());
+            }
+        }
     }
 
     /**

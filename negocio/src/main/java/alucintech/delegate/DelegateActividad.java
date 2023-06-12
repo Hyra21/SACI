@@ -59,6 +59,8 @@ public class DelegateActividad {
         Calendar fechaInicioMin = Calendar.getInstance();
         Calendar fechaFinMax = Calendar.getInstance();
         List<Actividad> actividades = consultarActividades();
+        int contadorRepeticion = 0;
+        int contadorPonente = 0;
         int[] errores = new int[3];
 
         //Verificar Fecha de la actividad
@@ -76,8 +78,8 @@ public class DelegateActividad {
                     && act.getModalidadActividad().equalsIgnoreCase(actividad.getModalidadActividad())
                     && act.getHorarioInicioActividad().toString().equalsIgnoreCase(actividad.getHorarioInicioActividad().toString())
                     && act.getHorarioFinActividad().toString().equalsIgnoreCase(actividad.getHorarioFinActividad().toString())) {
+                contadorRepeticion++;
 
-                errores[1] = 1;
             }
 
             //Verificar que el ponente de la actividad no se encuentre en otra al mismo tiempo.
@@ -85,15 +87,14 @@ public class DelegateActividad {
                     && act.getHorarioInicioActividad().toString().equalsIgnoreCase(actividad.getHorarioInicioActividad().toString())
                     && act.getHorarioFinActividad().toString().equalsIgnoreCase(actividad.getHorarioFinActividad().toString())
                     && act.getPonenteActividad().equalsIgnoreCase(actividad.getPonenteActividad())) {
-                errores[2] = 1;
+                contadorPonente++;
+
             }
 
-            //Si la actividad ya se encontraba en la base de datos, los datos en vez de repetirse se actualizarían por lo que los errores no deben de contarse.
-            if (actividad.getIdActividad() != null) {
-                if (act.getIdActividad() == actividad.getIdActividad()) {
-                    errores[1] = 0;
-                    errores[2] = 0;
-                }
+            //Si la actividad se encuentra 2 veces en alguna de las validaciones quiere decir que los datos se repiten.
+            if (contadorPonente == 2 && contadorRepeticion == 2) {
+                errores[1] = 1;
+                errores[2] = 1;
             }
         }
 
@@ -143,5 +144,4 @@ public class DelegateActividad {
         }
     }
 
-    
 }
