@@ -78,12 +78,11 @@
             justify-content: center;
         }
 
-        .product-image{
-            width:  95%; 
-            height: 100px; 
-            border-radius: 5%; 
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); 
-        }
+     .product-image {
+    max-width: 100%; /* Ancho máximo igual al contenedor */
+    height: auto; /* Altura ajustada automáticamente */
+}
+
 
         .dialog{
             max-height: 98vh;
@@ -161,6 +160,11 @@
             background-color: #FEBE10; /* Color amarillo de fondo  */
             border-color: #FEBE10; /* Color amarillo de los bordes  */
         }
+        .qr-code {
+    width: 60px; /* Ancho relativo */
+    height: auto; /* Altura ajustada automáticamente */
+}
+
 
         /* Aqui se menciona la familia del font que se usara para la letra  */
         @font-face {
@@ -171,38 +175,30 @@
         }
     </style>
     <body>
-        <!-- Empieza el Encabezado -->
-        <div class="header" visible="false">
-            <p:panel>
-                <p:graphicImage url="resources/facu_logo.png" class="logo"/> <!-- Se inserta la imagen del logo -->
-                <h3 style="font-family: 'Roboto', sans-serif;">
-                    SAEA -Sistema para la Administración de Eventos y Actividades</h3> <!-- Se inserta el tipo de fuente de letra -->
-                <div style="text-align: right">
-                    <i class="pi pi-user"> <strong>Usuario: </strong> <h:outputText value="#{loginUI.usuarios.correo}" /> </i>
-                </div>
-            </p:panel>
-
-        </div><!-- Termina el Encabezado -->
-
-        <!-- Empieza el Menú Principal. -->
+<h:form>
+    <div class="header" visible="false">
+        <p:panel>
+            <p:graphicImage url="resources/facu_logo.png" class="logo"/> <!-- Insertar la imagen del logo -->
+            <h3 style="font-family: 'Roboto', sans-serif;">
+                SAEA - Sistema para la Administración de Eventos y Actividades</h3> <!-- Tipo de fuente de letra -->
+            <div style="text-align: right">
+                <i class="pi pi-user"> <strong>Usuario: </strong> <h:outputText value="#{loginUI.usuarios.correo}" /> </i>
+                <p:commandButton value="Cerrar sesión" icon="pi pi-fw pi-sign-out" action="login.xhtml?faces-redirect=true"/>
+            </div>
+        </p:panel>
+    </div>
+</h:form>
         <div class="card2">
             <h:form>
                 <p:growl id="messages"/>
-
                 <p:menubar>
                     <p:menuitem value="Eventos" icon="pi pi-fw pi-calendar" outcome="index.xhtml"/>
                     <p:menuitem value="Actividades" icon="pi pi-fw pi-ticket" outcome="actividades.xhtml"/>
-
                     <p:divider layout="vertical"/>
-
                     <p:menuitem value="Ayuda" icon="pi pi-fw pi-question-circle"/>
-                    <p:menuitem value="Cerrar sesión" outcome="login.xhtml" icon="pi pi-fw pi-sign-out"/>
-
                 </p:menubar>
             </h:form>
-        </div> <!-- Termina el Menú Principal-->
-
-        <!-- Empiezan las opciones para la actividad -->
+        </div>
         <div class="card">
             <h:form id="form">
                 <p:growl id="messages" showDetail="true" />
@@ -281,27 +277,15 @@
                         <h:outputText value="#{act.modalidadActividad}" />
                     </p:column>
 
-                    <p:column headerText="Código QR de inicio">
-                        <p:barcode class="product-image" id="qrcodeinicio" value="#{act.nombreActividad}" type="qr" format="png" />
-                    </p:column>
-                    
-                    <p:column headerText="Código QR de fin">
-                        <p:barcode class="product-image" id="qrcodefin" value="#{act.nombreActividad}asistio" type="qr" format="png" />
-                    </p:column>
-                    
-                    <!-- Botones para visualizar, modificar y eliminar -->
+<p:column headerText="Código QR de inicio">
+    <p:barcode class="product-image qr-code" id="qrcodeinicio" value="#{act.nombreActividad}" type="qr" format="png" />
+</p:column>
+
+<p:column headerText="Código QR de fin">
+    <p:barcode class="product-image qr-code" id="qrcodefin" value="#{act.nombreActividad}asistio" type="qr" format="png" />
+</p:column>
+
                     <p:column exportable="false" width="9%">
-
-                        <!-- Botón para visualizar la información del evento 
-                        <p:commandButton update=":dialogs:manage-product-content" oncomplete="PF('manageproductDialog').show()"
-                                         icon="pi pi-eye"
-                                         process="@this"
-                                         styleClass="search-button rounded-button"
-                                         title="Haz clic para visualizar el evento">
-                            <f:setPropertyActionListener value="" target=""/>
-                        </p:commandButton> -->
-
-                        <!-- Botón para modificar la información de la actividad -->
                         <p:commandButton icon="pi pi-pencil" update=":dialogs2:manage-product-content2" actionListener="#{ManejoActividadUI.actualizarListaEventos()}"
                                          oncomplete="PF('manageProductDialog2').show()" 
                                          styleClass="edit-button rounded-button ui-button-success" process="@this">
@@ -388,7 +372,6 @@
                             <div class="field" style="width: 35%">
                                 <p:outputLabel for="tipo" value="Tipo:"/>
                                 <p:selectOneMenu id="tipo" value="#{ManejoActividadUI.actividad.tipoActividad}" required="true" requiredMessage="Ingrese la fecha de inicio">
-                                    <f:selectItem itemLabel="Seleccione" itemValue=""/>
                                     <f:selectItem itemLabel="Taller" itemValue="Taller"/>
                                     <f:selectItem itemLabel="Platica" itemValue="Platica"/>
                                     <f:selectItem itemLabel="Conferencia" itemValue="Conferencia"/>
@@ -500,10 +483,7 @@
                                          class="ui-button-secondary" type="button" style="background-color: red; color: #FFF;" />
                     </f:facet>
 
-                </p:dialog> 
-                <!-- Termina el código para el registro de actividad -->
-
-                <!-- Empiezan los mensajes de confirmación para modificar una actividad -->    
+                </p:dialog>    
                 <p:confirmDialog widgetVar="manageProductDialog3" showEffect="fade" width="300"
                                  message="¿Desea modificar la actividad?" header="Confirmación" severity="warn">
                     <p:commandButton value="Aceptar"  icon="pi pi-check" actionListener="#{ManejoActividadUI.modificacionActividad()}"
@@ -512,9 +492,6 @@
                     <p:commandButton value="Cancelar" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
                                      onclick="PF('manageProductDialog3').hide()" style="background-color: red; color: #FFF;" />
                 </p:confirmDialog>
-                <!-- Terminan los mensajes de confirmación para modificar una actividad -->
-
-                <!-- Empiezan los mensajes de confirmación para eliminar una actividad -->
                 <p:confirmDialog widgetVar="deleteProductDialog" showEffect="fade" width="300"
                                  message="¿Desea eliminar la actividad?" header="Confirmación" severity="warn">
                     <p:commandButton value="Aceptar" icon="pi pi-check" actionListener="#{ManejoActividadUI.eliminarActividad()}"
@@ -523,19 +500,13 @@
                     <p:commandButton value="Cancelar" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
                                      onclick="PF('deleteProductDialog').hide()" style="background-color: red; color: #FFF;" />
                 </p:confirmDialog>
-                <!-- Terminan los mensajes de confirmación para eliminar una actividad -->
-
-                <!-- Empiezan los mensajes de confirmación para la eliminacion multiple de las actividades -->
                 <p:confirmDialog global="true" showEffect="fade" width="300">
                     <p:commandButton value="Aceptar" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" style="background-color: #50B848; color: #FFF;" />
                     <p:commandButton value="Cancelar" type="button" styleClass="ui-confirmdialog-no ui-button-secondary"
                                      style="background-color: red; color: #FFF;" icon="pi pi-times" />
                 </p:confirmDialog>
-                <!-- Terminan los mensajes de confirmación para la eliminacion multiple de las actividades -->
             </h:form>
         </div>
-
-        <!-- Se asigna el correo del tipo de usuario -->
         <h:outputLabel for="correo" value="#{ManejoActividadUI.setCorreo(loginUI.usuarios.correo)}"/>
     </body>
 </html>
