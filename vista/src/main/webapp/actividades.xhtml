@@ -278,11 +278,11 @@
                     </p:column>
 
 <p:column headerText="Código QR de inicio">
-    <p:barcode class="product-image qr-code" id="qrcodeinicio" value="#{act.nombreActividad}" type="qr" format="png" />
+    <p:barcode class="product-image qr-code" id="qrcodeinicio" value="#{ManejoActividadUI.cifrar(""+act.idActividad+""+act.nombreActividad)}" type="qr" format="png" />
 </p:column>
 
 <p:column headerText="Código QR de fin">
-    <p:barcode class="product-image qr-code" id="qrcodefin" value="#{act.nombreActividad}asistio" type="qr" format="png" />
+    <p:barcode class="product-image qr-code" id="qrcodefin" value="#{ManejoActividadUI.cifrar(""+act.idActividad+""+act.nombreActividad)}asistio" type="qr" format="png" />
 </p:column>
 
                     <p:column exportable="false" width="9%">
