@@ -21,6 +21,8 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
+import javax.crypto.Cipher;
+import javax.crypto.spec.SecretKeySpec;
 import org.primefaces.PrimeFaces;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.file.UploadedFile;
@@ -65,6 +67,7 @@ public class ManejoActividadBeanUI implements Serializable {
     private Sello sello;
     //Archivo que recibirá la imagen ingresada por el usuario.
     private UploadedFile archivoImagen;
+
 
     private LocalTime minTime;
     private LocalTime maxTime;
@@ -434,7 +437,17 @@ public class ManejoActividadBeanUI implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Se ha guardado la imágen:", "" + archivoImagen.getFileName()));
         }
     }
+    
+    public String cifrar(String texto) throws Exception {    
+        String ALGORITMO = "AES";
+        String CLAVE_SECRETA = "clavecimarnetSACI7892234@"; // La clave debe tener 16, 24 o 32 bytes para AES
 
+        SecretKeySpec clave = new SecretKeySpec(CLAVE_SECRETA.getBytes(), ALGORITMO);
+        Cipher cifrador = Cipher.getInstance(ALGORITMO);
+        cifrador.init(Cipher.ENCRYPT_MODE, clave);
+        byte[] textoCifrado = cifrador.doFinal(texto.getBytes());
+        return Base64.getEncoder().encodeToString(textoCifrado);
+    }
     /**
      * Método que se encarga de guardar las imágenes que suba el usuario en el
      * objeto "sello".
