@@ -11,9 +11,9 @@
 <property
 name="hibernate.connection.provider_class">org.hibernate.c3p0.internal.C3P0ConnectionProvider</property>
 <property name="hibernate.connection.url">
-jdbc:mysql://127.0.0.1:3307/sacibd?zeroDateTimeBehavior=convertToNull
+jdbc:mysql://127.0.0.1:3306/sacibd?zeroDateTimeBehavior=convertToNull
 </property>
-<property name="hibernate.connection.username">alucintech</property>
+<property name="hibernate.connection.username">root</property>
 <property name="hibernate.connection.password">root</property>
 <property name="c3p0.autoCommitOnClose">true</property>
 <property name="c3p0.acquire_increment">1</property>
