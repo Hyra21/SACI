@@ -436,7 +436,7 @@
                             </div>
                             <br></br>
                             <div class="fieldImagen">
-                                <h:graphicImage id="imagenEvento" value="data:image/png;base64,#{ManejoEventoUI.getImagenDatos(ManejoEventoUI.evento.imagenEvento)}" rendered="#{not empty ManejoEventoUI.evento.imagenEvento}" />                            
+                                <h:graphicImage id="imagenEvento" value="#{ManejoEventoUI.getImagenDatos(ManejoEventoUI.evento.imagenEvento)}" rendered="#{not empty ManejoEventoUI.evento.imagenEvento}" />                            
                             </div>
                             <div class="field" style="width: auto">
                                 <p:outputLabel for="evento" value="Evento:"/>
