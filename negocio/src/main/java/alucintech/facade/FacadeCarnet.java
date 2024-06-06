@@ -1,17 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package alucintech.facade;
 
 import alucintech.delegate.DelegateCarnet;
 import alucintech.entidad.Carnet;
-
-/**
- *
- * @author EduardoCardona <>
- */
+import java.util.List;
 public class FacadeCarnet {
     
     private final DelegateCarnet delegateCarnet;
@@ -19,5 +11,9 @@ public class FacadeCarnet {
     public FacadeCarnet() {
         this.delegateCarnet = new DelegateCarnet();
     }
+      public List<Carnet> consultarCarnet() {
+        return delegateCarnet.consultarCarnet();
+    }
+
     
 }

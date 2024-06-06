@@ -38,8 +38,8 @@ public class FacadeEvento {
         return delegateEvento.listaEventoAdmin(admin);
     }
     
-    public int[] validarEvento(Evento evento, int intencion){
-        return delegateEvento.validarEvento(evento, intencion);
+    public int[] validarEvento(Evento evento){
+        return delegateEvento.validarEvento(evento);
     }
     
     public void eliminarEvento(Evento evento){

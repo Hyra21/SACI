@@ -1,19 +1,16 @@
 package alucintech.delegate;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 
 import alucintech.entidad.Carnet;
 import alucintech.integracion.ServiceLocator;
+import alucintech.integracion.ServiceLocator;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+import java.util.Objects;
 
-/**
- *
- * @author EduardoCardona <>
- */
 public class DelegateCarnet {
-    
+    public List<Carnet> consultarCarnet() {
+        return ServiceLocator.getInstanceCarnetDAO().findAll();
+    }
 }

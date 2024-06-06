@@ -54,7 +54,7 @@ public class DelegateEvento {
      * @param evento
      * @return
      */
-    public int[] validarEvento(Evento evento, int intencion) {
+    public int[] validarEvento(Evento evento) {
         Calendar fechaInicioMin = Calendar.getInstance();
         Calendar fechaFinMax = Calendar.getInstance();
         int[] errores = new int[3];
@@ -89,15 +89,10 @@ public class DelegateEvento {
         }
         //Verificar nombre y ciclo escolar
         for (Evento ev : eventos) {
-            if (intencion == 0) {
-                if (ev.getNombreEvento().compareToIgnoreCase(evento.getNombreEvento()) == 0 && ev.getCicloEscolarEvento().compareToIgnoreCase(evento.getCicloEscolarEvento()) == 0) {
-                    errores[1] = 1;
-                }
-            }else{
-                if (ev.getCicloEscolarEvento().compareToIgnoreCase(evento.getCicloEscolarEvento()) == 0) {
-                    errores[1] = 1;
-                }
+            if (ev.getNombreEvento().compareToIgnoreCase(evento.getNombreEvento()) == 0 && ev.getCicloEscolarEvento().compareToIgnoreCase(evento.getCicloEscolarEvento()) == 0) {
+                errores[1] = 1;
             }
+
         }
         return errores;
     }

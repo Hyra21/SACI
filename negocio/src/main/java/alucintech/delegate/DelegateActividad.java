@@ -86,7 +86,7 @@ public class DelegateActividad {
                     && act.getHorarioFinActividad().toString().equalsIgnoreCase(actividad.getHorarioFinActividad().toString())
                     && act.getPonenteActividad().equalsIgnoreCase(actividad.getPonenteActividad())) {
                 errores[2] = 1;
-
+                System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
             }            
         }
 
