@@ -129,7 +129,7 @@ public class ManejoEventoBeanUI implements Serializable {
         boolean error = false;
 
         //Aquí se llena el arreglo dependiendo de los errores encontrados. 
-        errores = manejoEventoHelper.validarEvento(evento, 1);
+        errores = manejoEventoHelper.validarEvento(evento);
 
         //La variable admin almacena la información del administrador dueño del correo que se envía como parámetro.
         admin = manejoEventoHelper.identificarAdmin(correo);
@@ -214,7 +214,7 @@ public class ManejoEventoBeanUI implements Serializable {
             evento.setEstadoEvento("Postulado");
             
             //Aquí se llena el arreglo dependiendo de los errores encontrados. 
-            errores = manejoEventoHelper.validarEvento(evento, 0);
+            errores = manejoEventoHelper.validarEvento(evento);
 
             //Se revisan los errores encontrados
             if (errores[0] == 1 || errores[1] == 1) {
@@ -421,7 +421,7 @@ public class ManejoEventoBeanUI implements Serializable {
         } else {
             //Aquí se hace la transformación de byte [] a Base 64.
             String imagenBase64 = Base64.getEncoder().encodeToString(eventoImagen);
-            return "data:image/png;base64,"+imagenBase64;
+            return imagenBase64;
         }
 
     }

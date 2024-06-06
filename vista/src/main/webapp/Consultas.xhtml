@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>SACI-Actividad</title> <!-- Título de la página -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    <style>
+        body {
+            height: 100%;
+            padding-left: 0px;
+            background-color: #00723F;
+        }
+
+        .header{
+            margin-bottom: 50px;
+            border-width: 5px; /* Grosor del borde de 5 píxeles */
+            border-color: #FEBE10; /* Color amarillo */
+            border-style: solid;
+            border-radius: 9px; /* Redondea todas las esquinas con un radio de 9 píxeles */
+        }
+        .right{
+            text-align: right;
+        }
+
+        .custom-menubar .ui-menuitem {
+            float: right;
+        }
+        .card{
+            background-color: #FFF;
+            border-width: 3px; /* Grosor del borde de 5 píxeles */
+            border-color: #FEBE10; /* Color amarillo */
+            border-style: solid;
+            border-radius: 9px; /* Redondea todas las esquinas con un radio de 9 píxeles */
+        }
+
+        .card2{
+            margin-bottom: 5px;
+            background-color: #FFF;
+            border-width: 3px; /* Grosor del borde de 5 píxeles */
+            border-color: #FEBE10; /* Color amarillo */
+            border-style: solid;
+            border-radius: 9px; /* Redondea todas las esquinas con un radio de 9 píxeles */
+        }
+
+        h3{
+            color: #00723F; /* Color verde para el encabezado */
+        }
+
+        .customPanelGrid .ui-panelgrid-content {
+            align-items: center;
+        }
+
+        .logo{
+            height: 100px; /* Altura de 100 pixeles */
+            width: 600px; /* Ancho de 600 pixeles */
+        }
+
+        .text-center{
+            float: none;
+            margin: 0 auto;
+            display: table;
+        }
+
+        .field{
+            padding-bottom: 5px;
+        }
+
+        .fieldImagen{
+            align-items: center;
+            display: flex;
+            justify-content: center;
+        }
+
+     .product-image {
+    max-width: 100%; /* Ancho máximo igual al contenedor */
+    height: auto; /* Altura ajustada automáticamente */
+}
+        .dialog{
+            max-height: 98vh;
+            overflow-y: auto; /* Muestra un scrollbar cuando el contenido excede el límite */
+        }
+
+        .color-fileUpload .ui-fileupload-buttonbar {
+            background-color: #FEBE10; /* Color amarillo de fondo  */
+            color: #FFF; /* Cambia el color del icono de la fecha a blanco. */
+            border-color: #FEBE10; /* Color amarillo de los bordes  */
+        }
+
+        .color-fileUpload:hover .ui-fileupload {
+            background-color: #FEBE10; /* Color amarillo de fondo  */
+            color: #FFF; /* Cambia el color del icono de la fecha a blanco. */
+            border-color: #FEBE10; /* Color amarillo de los bordes  */
+        }
+
+        .color-fileUpload .ui-fileupload-choose{
+            background-color: #FEBE10; /* Color amarillo de fondo  */
+            color: #FFF; /* Cambia el color del icono de la fecha a blanco. */
+            border-color: #FEBE10; /* Color amarillo de los bordes  */
+        }
+
+        .color-fileUpload:hover .ui-fileupload-choose{
+            background-color: #FEBE10; /* Color amarillo de fondo  */
+            color: #FFF; /* Cambia el color del icono de la fecha a blanco. */
+            border-color: #FEBE10; /* Color amarillo de los bordes  */
+        }
+
+        .color-fileUpload .ui-fileupload-upload{
+            background-color: #FEBE10; /* Color amarillo de fondo  */
+            color: #FFF; /* Cambia el color del icono de la fecha a blanco. */
+            border-color: #FEBE10; /* Color amarillo de los bordes  */
+        }
+
+        .color-fileUpload:hover .ui-fileupload-upload {
+            background-color: #FEBE10; /* Color amarillo de fondo  */
+            color: #FFF; /* Cambia el color del icono de la fecha a blanco. */
+            border-color: #FEBE10; /* Color amarillo de los bordes  */
+        }
+
+        .color-fileUpload .ui-fileupload-cancel{
+            background-color: #FEBE10; /* Color amarillo de fondo  */
+            color: #FFF; /* Cambia el color del icono de la fecha a blanco. */
+            border-color: #FEBE10; /* Color amarillo de los bordes  */
+        }
+
+        .color-fileUpload:hover .ui-fileupload-cancel {
+            background-color: #FEBE10; /* Color amarillo de fondo  */
+            color: #FFF; /* Cambia el color del icono de la fecha a blanco. */
+            border-color: #FEBE10; /* Color amarillo de los bordes  */
+        }
+
+        .custom-datepicker .ui-datepicker-trigger{
+            background-color: #FEBE10; /* Color amarillo de fondo  */
+            color: #FFF; /* Cambia el color del icono de la fecha a blanco. */
+            border-color: #FEBE10; /* Color amarillo de los bordes  */
+
+        }
+
+        /* Acciones que hará cuando el cursor este posicionado encima del icono de la fecha  */
+        .custom-datepicker:hover .ui-datepicker-trigger {
+            background-color: #FEBE10; /* Color amarillo de fondo  */
+            border-color: #FEBE10; /* Color amarillo de los bordes  */
+        }
+        
+        .custom-spinner .ui-spinner-button{
+            background-color: #FEBE10; /* Color amarillo de fondo  */
+            color: #FFF; /* Cambia el color del icono de la fecha a blanco. */
+            border-color: #FEBE10; /* Color amarillo de los bordes  */
+        }
+        
+        .custom-spinner:hover .ui-spinner-button{
+            background-color: #FEBE10; /* Color amarillo de fondo  */
+            border-color: #FEBE10; /* Color amarillo de los bordes  */
+        }
+        .qr-code {
+    width: 60px; /* Ancho relativo */
+    height: auto; /* Altura ajustada automáticamente */
+}
+
+
+        /* Aqui se menciona la familia del font que se usara para la letra  */
+        @font-face {
+            font-family: "SourceSansPro";
+            src: url("resources/SourceSansPro-Light.ttf") format("truetype");
+            font-family: "Roboto";
+            src: url("resources/Roboto-Light.ttf") format("truetype");
+        }
+    </style>
+   <body>
+        <h:form>
+            <div class="header">
+                <p:panel>
+                    <p:graphicImage url="resources/facu_logo.png" class="logo"/>
+                    <h3 style="font-family: 'Roboto', sans-serif;">
+                        SAEA - Sistema para la Administración de Eventos y Actividades
+                    </h3>
+                    <div style="text-align: right">
+                        <i class="pi pi-user">
+                            <strong>Usuario: </strong>
+                            <h:outputText value="#{loginUI.usuarios.correo}" />
+                        </i>
+                        <p:commandButton icon="pi pi-fw pi-sign-out" action="login.xhtml?faces-redirect=true"/>
+                        <p:commandButton icon="pi pi-fw pi-question-circle"/>
+                    </div>
+                </p:panel>
+            </div>
+        </h:form>
+
+        <div class="card2">
+            <h:form>
+                <p:growl id="messages"/>
+                <p:menubar>
+                    <p:menuitem value="Eventos" icon="pi pi-fw pi-calendar" outcome="index.xhtml"/>
+                    <p:menuitem value="Actividades" icon="pi pi-fw pi-ticket" outcome="actividades.xhtml"/>
+                    <p:divider layout="vertical"/>
+                    <p:menuitem value="Ayuda" icon="pi pi-fw pi-question-circle"/>
+                    <p:menuitem value="Consultas" icon="pi pi-fw pi-ticket" outcome="Consultas.xhtml"/>
+                </p:menubar>
+            </h:form>
+        </div>
+
+        <div class="card">
+            <h:form id="form">
+                <p:growl id="messages" showDetail="true" />
+                <p:toolbar>
+                    <p:toolbarGroup align="right">
+                        <span class="filter-container ui-input-icon-right">
+                            <i class="pi pi-search"></i>
+                            <p:inputText id="globalFilter" onkeyup="PF('dtProducts').filter()" placeholder="Buscar" />
+                        </span>
+                    </p:toolbarGroup>
+                </p:toolbar>
+                
+                <p:dataTable id="dt-products" widgetVar="dtProducts" var="act" value="#{ManejoCarnetUI.listaCarnets}">
+                    <f:facet name="header">
+                        <div class="products-table-header">
+                            <span style="font-weight: bold">Lista de Carnets</span>
+                        </div>
+                    </f:facet>
+
+                    <p:column headerText="Codigo Carnet" sortBy="#{act.codigoCarnet}">
+                        <h:outputText value="#{act.codigoCarnet}" />
+                    </p:column>
+
+                    <p:column headerText="Ciclo Escolar" sortBy="#{act.cicloEscolarCarnet}">
+                        <h:outputText value="#{act.cicloEscolarCarnet}" />
+                    </p:column>
+
+                    <p:column headerText="Matricula" sortBy="#{act.matriculaAlumno.matriculaAlumno}">
+                        <h:outputText value="#{act.matriculaAlumno.matriculaAlumno}" />
+                    </p:column>
+
+                    <p:column headerText="Numero de sellos" sortBy="#{act.numeroSellosCarnet}">
+                        <h:outputText value="#{act.numeroSellosCarnet}" />
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+        </div>
+    </body>
+</html>

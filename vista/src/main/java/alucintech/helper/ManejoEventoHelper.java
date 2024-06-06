@@ -47,8 +47,8 @@ public class ManejoEventoHelper implements Serializable {
      * @param evento
      * @return
      */
-    public int[] validarEvento(Evento evento, int intencion) {
-        return ServiceFacadeLocator.getInstanceFacadeEvento().validarEvento(evento, intencion);
+    public int[] validarEvento(Evento evento) {
+        return ServiceFacadeLocator.getInstanceFacadeEvento().validarEvento(evento);
     }
 
     /**

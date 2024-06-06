@@ -9,7 +9,6 @@
         <title>SACI-Actividad</title> <!-- Título de la página -->
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </h:head>
-
     <style>
         body {
             height: 100%;
@@ -24,7 +23,6 @@
             border-style: solid;
             border-radius: 9px; /* Redondea todas las esquinas con un radio de 9 píxeles */
         }
-
         .right{
             text-align: right;
         }
@@ -78,12 +76,10 @@
             justify-content: center;
         }
 
-        .product-image {
-            max-width: 100%; /* Ancho máximo igual al contenedor */
-            height: auto; /* Altura ajustada automáticamente */
-        }
-
-
+     .product-image {
+    max-width: 100%; /* Ancho máximo igual al contenedor */
+    height: auto; /* Altura ajustada automáticamente */
+}
         .dialog{
             max-height: 98vh;
             overflow-y: auto; /* Muestra un scrollbar cuando el contenido excede el límite */
@@ -149,21 +145,21 @@
             background-color: #FEBE10; /* Color amarillo de fondo  */
             border-color: #FEBE10; /* Color amarillo de los bordes  */
         }
-
+        
         .custom-spinner .ui-spinner-button{
             background-color: #FEBE10; /* Color amarillo de fondo  */
             color: #FFF; /* Cambia el color del icono de la fecha a blanco. */
             border-color: #FEBE10; /* Color amarillo de los bordes  */
         }
-
+        
         .custom-spinner:hover .ui-spinner-button{
             background-color: #FEBE10; /* Color amarillo de fondo  */
             border-color: #FEBE10; /* Color amarillo de los bordes  */
         }
         .qr-code {
-            width: 60px; /* Ancho relativo */
-            height: auto; /* Altura ajustada automáticamente */
-        }
+    width: 60px; /* Ancho relativo */
+    height: auto; /* Altura ajustada automáticamente */
+}
 
 
         /* Aqui se menciona la familia del font que se usara para la letra  */
@@ -175,19 +171,21 @@
         }
     </style>
     <body>
-        <h:form>
-            <div class="header" visible="false">
-                <p:panel>
-                    <p:graphicImage url="resources/facu_logo.png" class="logo"/> <!-- Insertar la imagen del logo -->
-                    <h3 style="font-family: 'Roboto', sans-serif;">
-                        SAEA - Sistema para la Administración de Eventos y Actividades</h3> <!-- Tipo de fuente de letra -->
-                    <div style="text-align: right">
-                        <i class="pi pi-user"> <strong>Usuario: </strong> <h:outputText value="#{loginUI.usuarios.correo}" /> </i>
-                        <p:commandButton value="Cerrar sesión" icon="pi pi-fw pi-sign-out" action="login.xhtml?faces-redirect=true"/>
-                    </div>
-                </p:panel>
+<h:form>
+    <div class="header" visible="false">
+        <p:panel>
+            <p:graphicImage url="resources/facu_logo.png" class="logo"/> <!-- Insertar la imagen del logo -->
+            <h3 style="font-family: 'Roboto', sans-serif;">
+                SAEA - Sistema para la Administración de Eventos y Actividades</h3> <!-- Tipo de fuente de letra -->
+            <div style="text-align: right">
+                <i class="pi pi-user"> <strong>Usuario: </strong> <h:outputText value="#{loginUI.usuarios.correo}" /> </i>
+                <p:commandButton  icon="pi pi-fw pi-sign-out" action="login.xhtml?faces-redirect=true"/>
+                <p:commandButton  icon="pi pi-fw pi-question-circle"/>
             </div>
-        </h:form>
+        </p:panel>
+    </div>
+</h:form>
+
         <div class="card2">
             <h:form>
                 <p:growl id="messages"/>
@@ -196,6 +194,7 @@
                     <p:menuitem value="Actividades" icon="pi pi-fw pi-ticket" outcome="actividades.xhtml"/>
                     <p:divider layout="vertical"/>
                     <p:menuitem value="Ayuda" icon="pi pi-fw pi-question-circle"/>
+                    <p:menuitem value="Consultas" icon="pi pi-fw pi-ticket" outcome="Consultas.xhtml"/>
                 </p:menubar>
             </h:form>
         </div>
@@ -277,13 +276,13 @@
                         <h:outputText value="#{act.modalidadActividad}" />
                     </p:column>
 
-                    <p:column headerText="Código QR de inicio">
-                        <p:barcode class="product-image qr-code" id="qrcodeinicio" value="#{ManejoActividadUI.cifrar(act.idActividad)}" type="qr" format="png" />
-                    </p:column>
+<p:column headerText="Código QR de inicio">
+    <p:barcode class="product-image qr-code" id="qrcodeinicio" value="#{act.nombreActividad}" type="qr" format="png" />
+</p:column>
 
-                    <p:column headerText="Código QR de fin">
-                        <p:barcode class="product-image qr-code" id="qrcodefin" value="#{ManejoActividadUI.cifrar(act.idActividad)}asistio" type="qr" format="png" />
-                    </p:column>
+<p:column headerText="Código QR de fin">
+    <p:barcode class="product-image qr-code" id="qrcodefin" value="#{act.nombreActividad}asistio" type="qr" format="png" />
+</p:column>
 
                     <p:column exportable="false" width="9%">
                         <p:commandButton icon="pi pi-pencil" update=":dialogs2:manage-product-content2" actionListener="#{ManejoActividadUI.actualizarListaEventos()}"
@@ -371,7 +370,7 @@
 
                             <div class="field" style="width: 35%">
                                 <p:outputLabel for="tipo" value="Tipo:"/>
-                                <p:selectOneMenu id="tipo" value="#{ManejoActividadUI.actividad.tipoActividad}" required="true" requiredMessage="Ingrese el tipo de actividad">
+                                <p:selectOneMenu id="tipo" value="#{ManejoActividadUI.actividad.tipoActividad}" required="true" requiredMessage="Ingrese la fecha de inicio">
                                     <f:selectItem itemLabel="Taller" itemValue="Taller"/>
                                     <f:selectItem itemLabel="Platica" itemValue="Platica"/>
                                     <f:selectItem itemLabel="Conferencia" itemValue="Conferencia"/>
@@ -444,7 +443,7 @@
                                 <p:inputTextarea id="descripcion" value="#{ManejoActividadUI.actividad.descripcionActividad}" required="true" placeholder="Ingrese una descripción" requiredMessage="Ingrese una descripción"/>
                                 <p:message for="descripcion" />
                             </div>
-
+                            
                             <p:outputLabel for="subirImagenSello" value="Imagen del sello:"/>
                             <br></br> 
                             <div class="fieldImagen">
@@ -466,7 +465,7 @@
                             <div class="fieldImagen">
                                 <h:graphicImage value="data:image/png;base64,#{ManejoActividadUI.getImagenDatos(ManejoActividadUI.sello.imagenSello)}" rendered="#{not empty ManejoActividadUI.getImagenDatos(ManejoActividadUI.sello.imagenSello)}" styleClass="product-image" />
                             </div>
-
+                            
                             <div class="field" style="width: 28%">
                                 <p:outputLabel for="valorSello" value="Valor del sello:"/>
                                 <p:spinner styleClass="custom-spinner" id="valorSello" value="#{ManejoActividadUI.sello.cantidad}" min="1" max="3" required="true" requiredMessage="Ingrese un valor"/>

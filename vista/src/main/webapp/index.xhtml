@@ -16,14 +16,20 @@
             padding-left: 0px;
             background-color: #00723F;
         }
+.header {
+    margin-bottom: 5px;
+    background-color: #FFF;
+    border-width: 3px;
+    border-color: #FEBE10;
+    border-style: solid;
+    border-radius: 9px;
+}
 
-        .header{
-            margin-bottom: 50px;
-            border-width: 5px; /* Grosor del borde de 5 píxeles */
-            border-color: #FEBE10; /* Color amarillo */
-            border-style: solid;
-            border-radius: 9px; /* Redondea todas las esquinas con un radio de 9 píxeles */
-        }
+.header .ui-button {
+    border: none; /* Elimina cualquier borde que pueda tener el botón */
+    margin: 0; /* Ajusta el margen del botón */
+}
+
 
         .right{
             text-align: right;
@@ -71,7 +77,7 @@
         .field{
             padding-bottom: 5px;
         }
-        
+
         .fieldImagen{
             align-items: center;
             display: flex;
@@ -89,49 +95,49 @@
             max-height: 98vh;
             overflow-y: auto; /* Muestra un scrollbar cuando el contenido excede el límite */
         }
-        
+
         .color-fileUpload .ui-fileupload-buttonbar {
             background-color: #FEBE10; /* Color amarillo de fondo  */
             color: #FFF; /* Cambia el color del icono de la fecha a blanco. */
             border-color: #FEBE10; /* Color amarillo de los bordes  */
         }
-        
+
         .color-fileUpload:hover .ui-fileupload {
             background-color: #FEBE10; /* Color amarillo de fondo  */
             color: #FFF; /* Cambia el color del icono de la fecha a blanco. */
             border-color: #FEBE10; /* Color amarillo de los bordes  */
         }
-        
+
         .color-fileUpload .ui-fileupload-choose{
             background-color: #FEBE10; /* Color amarillo de fondo  */
             color: #FFF; /* Cambia el color del icono de la fecha a blanco. */
             border-color: #FEBE10; /* Color amarillo de los bordes  */
         }
-        
+
         .color-fileUpload:hover .ui-fileupload-choose{
             background-color: #FEBE10; /* Color amarillo de fondo  */
             color: #FFF; /* Cambia el color del icono de la fecha a blanco. */
             border-color: #FEBE10; /* Color amarillo de los bordes  */
         }
-        
+
         .color-fileUpload .ui-fileupload-upload{
             background-color: #FEBE10; /* Color amarillo de fondo  */
             color: #FFF; /* Cambia el color del icono de la fecha a blanco. */
             border-color: #FEBE10; /* Color amarillo de los bordes  */
         }
-        
+
         .color-fileUpload:hover .ui-fileupload-upload {
             background-color: #FEBE10; /* Color amarillo de fondo  */
             color: #FFF; /* Cambia el color del icono de la fecha a blanco. */
             border-color: #FEBE10; /* Color amarillo de los bordes  */
         }
-        
+
         .color-fileUpload .ui-fileupload-cancel{
             background-color: #FEBE10; /* Color amarillo de fondo  */
             color: #FFF; /* Cambia el color del icono de la fecha a blanco. */
             border-color: #FEBE10; /* Color amarillo de los bordes  */
         }
-        
+
         .color-fileUpload:hover .ui-fileupload-cancel {
             background-color: #FEBE10; /* Color amarillo de fondo  */
             color: #FFF; /* Cambia el color del icono de la fecha a blanco. */
@@ -160,33 +166,29 @@
         }
     </style>
     <body>
-        <!-- Empieza el Encabezado -->
-        <div class="header" visible="false">
-            <p:panel>
-                <p:graphicImage url="resources/facu_logo.png" class="logo"/> <!-- Se inserta la imagen del logo -->
-                <h3 style="font-family: 'Roboto', sans-serif;">
-                    SAEA -Sistema para la Administración de Eventos y Actividades</h3> <!-- Se inserta el tipo de fuente de letra -->
-                    <div style="text-align: right">
-                        <i class="pi pi-user"> <strong>Usuario: </strong> <h:outputText value="#{loginUI.usuarios.correo}" /> </i>
-                    </div>
-            </p:panel>
-            
-        </div><!-- Termina el Encabezado -->
+<h:form>
+    <div class="header" visible="false">
+        <p:panel>
+            <p:graphicImage url="resources/facu_logo.png" class="logo"/> <!-- Insertar la imagen del logo -->
+            <h3 style="font-family: 'Roboto', sans-serif;">
+                SAEA - Sistema para la Administración de Eventos y Actividades</h3> <!-- Tipo de fuente de letra -->
+            <div style="text-align: right">
+                <i class="pi pi-user"> <strong>Usuario: </strong> <h:outputText value="#{loginUI.usuarios.correo}" /> </i>
+                <p:commandButton  icon="pi pi-fw pi-sign-out" action="login.xhtml?faces-redirect=true"/>
+            </div>
+        </p:panel>
+    </div>
+</h:form>
 
-        <!-- Empieza el Menú Principal. -->
         <div class="card2">
-            <h:form>
+       <h:form>
                 <p:growl id="messages"/>
-
                 <p:menubar>
                     <p:menuitem value="Eventos" icon="pi pi-fw pi-calendar" outcome="index.xhtml"/>
                     <p:menuitem value="Actividades" icon="pi pi-fw pi-ticket" outcome="actividades.xhtml"/>
-
                     <p:divider layout="vertical"/>
-
                     <p:menuitem value="Ayuda" icon="pi pi-fw pi-question-circle"/>
-                    <p:menuitem value="Cerrar sesión" outcome="login.xhtml" icon="pi pi-fw pi-sign-out"/>
-
+                    <p:menuitem value="Consultas" icon="pi pi-fw pi-ticket" outcome="Consultas.xhtml"/>
                 </p:menubar>
             </h:form>
         </div> <!-- Termina el Menú Principal-->
@@ -306,6 +308,7 @@
                             </p:messages>
                             <br></br>
                             <p:outputLabel for="subirImagen" value="Flyer:"/>
+                            <br></br>
                             <div class="product-image">
                                 <p:fileUpload id="subirImagen"
                                               styleClass="color-fileUpload"
@@ -318,7 +321,8 @@
                                               sizeLimit="5242880" allowTypes="/(\.|\/)(png)$/"
                                               invalidSizeMessage="El tamaño de la imágen debe de ser menor a 5 MB"
                                               invalidFileMessage="Solo se permiten archivos png"
-                                              listener="#{ManejoEventoUI.subirArchivoImagen}"/>
+                                              listener="#{ManejoEventoUI.subirArchivoImagen}"
+                                              />
                             </div>
                             <br></br>
                             <div class="fieldImagen">
@@ -332,8 +336,8 @@
                             <div class="field" style="width: 35%">
                                 <p:outputLabel for="cicloEscolar" value="Ciclo escolar:"/>
                                 <p:selectOneMenu id="cicloEscolar" value="#{ManejoEventoUI.evento.cicloEscolarEvento}" required="true" requiredMessage="Ingrese la fecha de inicio">
-                                    <f:selectItem itemLabel="2024-1" itemValue="2024-1"/>
-                                    <f:selectItem itemLabel="2024-2" itemValue="2024-2"/>
+                                    <f:selectItem itemLabel="2023-1" itemValue="2023-1"/>
+                                    <f:selectItem itemLabel="2023-2" itemValue="2023-2"/>
                                 </p:selectOneMenu>
                                 <p:message for="cicloEscolar" />
                             </div>
@@ -419,6 +423,7 @@
                             </p:messages>
                             <br></br>   
                             <p:outputLabel for="subirImagen" value="Flyer:"/>
+                            <br></br> 
                             <div class="fieldImagen">
                                 <p:fileUpload id="subirImagen"
                                               styleClass="color-fileUpload"
@@ -436,28 +441,28 @@
                             </div>
                             <br></br>
                             <div class="fieldImagen">
-                                <h:graphicImage id="imagenEvento" value="#{ManejoEventoUI.getImagenDatos(ManejoEventoUI.evento.imagenEvento)}" rendered="#{not empty ManejoEventoUI.evento.imagenEvento}" />                            
+                                <h:graphicImage id="imagenEvento" value="data:image/png;base64,#{ManejoEventoUI.getImagenDatos(ManejoEventoUI.evento.imagenEvento)}" rendered="#{not empty ManejoEventoUI.evento.imagenEvento}" />                            
                             </div>
-                            <div class="field" style="width: auto">
+                            <div class="field">
                                 <p:outputLabel for="evento" value="Evento:"/>
                                 <p:selectOneMenu id="evento" value="#{ManejoEventoUI.evento.cicloEscolarEvento}" required="true" requiredMessage="Ingrese un evento registrado">
                                     <f:selectItems value="#{ManejoEventoUI.listaEventos}" var="evento" itemLabel="#{evento.nombreEvento}" itemValue="#{evento}"/>
                                 </p:selectOneMenu>
                                 <p:message for="evento" />
                             </div>
-                            
+
                             <div class="field">
                                 <p:outputLabel for="name" value="Nombre:"/>
                                 <p:inputText id="name" value="#{ManejoEventoUI.evento.nombreEvento}" required="true" placeholder="Ingrese el nombre de actividad" requiredMessage="Ingrese el nombre de actividad"/>
                                 <p:message for="name" />
                             </div>
-                            
+
                             <div class="field">
                                 <p:outputLabel for="ponente" value="Ponente:"/>
                                 <p:inputText id="ponente" value="#{ManejoEventoUI.evento.nombreEvento}" required="true" placeholder="Ingrese el ponente" requiredMessage="Ingrese el ponente"/>
                                 <p:message for="ponente" />
                             </div>
-                            
+
                             <div class="field" style="width: 35%">
                                 <p:outputLabel for="tipo" value="Tipo:"/>
                                 <p:selectOneMenu id="tipo" value="#{ManejoEventoUI.evento.cicloEscolarEvento}" required="true" requiredMessage="Ingrese la fecha de inicio">
@@ -467,19 +472,19 @@
                                 </p:selectOneMenu>
                                 <p:message for="tipo" />
                             </div>
-                            
+
                             <div class="field" style="width: 45%">
                                 <p:outputLabel for="fecha" value="Fecha:"/>
                                 <p:datePicker id="fecha" value="#{ManejoEventoUI.evento.fechaInicioEvento}" showIcon="true" required="true" placeholder="Ingrese la fecha" requiredMessage="Ingrese la fecha" styleClass="custom-datepicker"/>
                                 <p:message for="fecha" />
                             </div>
-                            
+
                             <div class="field" style="width: 35%">
                                 <p:outputLabel for="timeonly8" value="Horario de inicio:"/>
                                 <p:datePicker id="timeonly8" required="true" style="width: 70%" hourFormat="12" value="#{ManejoEventoUI.time8}"
-                                  mindate="#{ManejoEventoUI.minTime}"
-                                  maxdate="#{ManejoEventoUI.maxTime}"
-                                 />
+                                              mindate="#{ManejoEventoUI.minTime}"
+                                              maxdate="#{ManejoEventoUI.maxTime}"
+                                              />
                             </div>
                             <div class="field">
                                 (Rango permitido entre <h:outputText value="#{ManejoEventoUI.minTime}"></h:outputText>AM y
@@ -489,10 +494,10 @@
                             <div class="field" style="width: 35%">
                                 <p:outputLabel for="timeonly9" value="Horario de fin:"/>
                                 <p:datePicker id="timeonly9" required="true" style="width: 70%" hourFormat="12" value="#{ManejoEventoUI.time9}"
-                                  mindate="#{ManejoEventoUI.minTime}"
-                                  maxdate="#{ManejoEventoUI.maxTime}"
-                                 />
-                                
+                                              mindate="#{ManejoEventoUI.minTime}"
+                                              maxdate="#{ManejoEventoUI.maxTime}"
+                                              />
+
                             </div>
                             <div class="field">
                                 (Rango permitido entre <h:outputText value="#{ManejoEventoUI.minTime}"></h:outputText>AM y
@@ -504,7 +509,7 @@
                                 <p:inputText id="lugar" value="#{ManejoEventoUI.evento.descripcionEvento}" required="true" placeholder="Ingrese un lugar" requiredMessage="Ingrese un lugar"/>
                                 <p:message for="lugar" />
                             </div>   
-                            
+
                             <div class="field" style="width: 35%">
                                 <p:outputLabel for="modalidad" value="Modalidad:"/>
                                 <p:selectOneMenu id="modalidad" value="#{ManejoEventoUI.evento.cicloEscolarEvento}" required="true" requiredMessage="Ingrese una modalidad">
@@ -513,13 +518,13 @@
                                 </p:selectOneMenu>
                                 <p:message for="modalidad" />
                             </div>
-                            
+
                             <div class="field">
                                 <p:outputLabel for="enlace" value="Enlace virtual:"/>
                                 <p:inputText id="enlace" value="#{ManejoEventoUI.evento.descripcionEvento}" required="true" placeholder="Ingrese un enlace virtual" requiredMessage="Ingrese un enlace virtual"/>
                                 <p:message for="enlace" />
                             </div>
-                            
+
                             <div class="field" style="width: 65%">
                                 <p:outputLabel for="espacios" value="Espacios disponibles:"/>
                                 <p:inputText id="espacios" value="#{ManejoEventoUI.evento.descripcionEvento}" required="true" placeholder="Ingrese los espacios disponibles" requiredMessage="Ingrese los espacios disponibles">
@@ -527,13 +532,13 @@
                                 </p:inputText>
                                 <p:message for="espacios" />
                             </div>   
-                            
+
                             <div class="field">
                                 <p:outputLabel for="descripcion" value="Descripción:"/>
                                 <p:inputTextarea id="descripcion" value="#{ManejoEventoUI.evento.descripcionEvento}" required="true" placeholder="Ingrese una descripción" requiredMessage="Ingrese una descripción"/>
                                 <p:message for="descripcion" />
                             </div>
-                            
+
                         </p:outputPanel>
                     </p:outputPanel>
 
@@ -548,7 +553,7 @@
             </h:form><!-- Termina el código para el registro de actividad -->
 
         </div>
-        
+
         <!-- Se asigna el correo del tipo de usuario -->
         <h:outputLabel for="correo" value="#{ManejoEventoUI.setCorreo(loginUI.usuarios.correo)}"/>
     </body>
